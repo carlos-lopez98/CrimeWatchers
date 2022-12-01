@@ -1,6 +1,6 @@
 package com.kenzie.capstone.service.dependency;
 
-import com.kenzie.marketing.referral.service.caching.CacheClient;
+import com.kenzie.capstone.service.caching.CacheClient;
 import dagger.Module;
 import dagger.Provides;
 import redis.clients.jedis.Jedis;
