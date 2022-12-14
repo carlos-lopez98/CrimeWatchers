@@ -37,6 +37,8 @@ public class ExampleDao {
         return exampleData;
     }
 
+
+
     public List<ExampleRecord> getExampleData(String id) {
         ExampleRecord exampleRecord = new ExampleRecord();
         exampleRecord.setId(id);
@@ -47,6 +49,8 @@ public class ExampleDao {
 
         return mapper.query(ExampleRecord.class, queryExpression);
     }
+
+
 
     public ExampleRecord setExampleData(String id, String data) {
         ExampleRecord exampleRecord = new ExampleRecord();
