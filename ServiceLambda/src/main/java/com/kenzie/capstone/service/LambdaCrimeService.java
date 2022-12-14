@@ -1,5 +1,8 @@
 package com.kenzie.capstone.service;
 
+import com.kenzie.capstone.service.dao.CrimeDao;
+import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.CrimeDataRecord;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.model.ExampleRecord;
@@ -10,13 +13,12 @@ import java.util.List;
 import java.util.UUID;
 
 
-//Need to implement CrimeDao
 public class LambdaCrimeService {
 
     private CrimeDao crimeDao;
 
     @Inject
-    public LambdaService(CrimeDao crimeDao) {
+    public LambdaCrimeService(CrimeDao crimeDao) {
         this.crimeDao = crimeDao;
     }
 

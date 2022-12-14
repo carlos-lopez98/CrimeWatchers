@@ -1,7 +1,10 @@
 package com.kenzie.capstone.service.lambda;
 
+import com.kenzie.capstone.service.LambdaCrimeService;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
+import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
@@ -28,8 +31,23 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
 
         log.info(gson.toJson(input));
 
-        ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        LambdaService lambdaService = serviceComponent.provideLambdaService();
+        //Added a new ServiceComponentCrime
+        /**
+         * CrimeServiceComponent is a spring/ Dagger dependency controller in a sense
+         * Our dependency folder is instantiating and packaging up a component, from which
+         * we can access different items
+         *
+         *-- In this case --
+         * Dao Module - Instantiates a DAO
+         * Service Module - Instantiates our service classes
+         *
+         * Then Service Component wraps them up into a component, in which we can access them from,
+         * This allows us to keep reusing them instead, of having to instantiate new instances
+         * in every class the we need them (they're dependencies for other classes)
+         */
+
+        ServiceComponentCrime serviceComponent = DaggerServiceComponent.create();
+        LambdaCrimeService lambdaCrimeService = serviceComponent.provideLambdaCrimeService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -45,9 +63,9 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
         }
 
         try {
-            //Change to CrimeService & CrimeExampleData
-            ExampleData exampleData = lambdaService.setExampleData(data);
-            String output = gson.toJson(exampleData);
+            //Changed to CrimeService & CrimeExampleData
+            CrimeData crimeData = lambdaCrimeService.setExampleData(data);
+            String output = gson.toJson(crimeData);
 
             return response
                     .withStatusCode(200)

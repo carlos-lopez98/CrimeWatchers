@@ -1,7 +1,10 @@
 package com.kenzie.capstone.service.lambda;
 
+import com.kenzie.capstone.service.LambdaCrimeService;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
+import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
@@ -17,6 +20,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
+
 public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     static final Logger log = LogManager.getLogger();
@@ -29,8 +35,8 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
 
         log.info(gson.toJson(input));
 
-        ServiceComponent serviceComponent = DaggerServiceComponent.create();
-        LambdaService lambdaService = serviceComponent.provideLambdaService();
+        ServiceComponentCrime serviceComponent = DaggerServiceComponent.create();
+        LambdaCrimeService lambdaCrimeService = serviceComponent.provideLambdaCrimeService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -46,9 +52,9 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
         }
 
         try {
-            //Change this to CrimeService & CrimeExampleData
-            ExampleData exampleData = lambdaService.getExampleData(id);
-            String output = gson.toJson(exampleData);
+            //Changed CrimeService & CrimeExampleData
+            CrimeData crimeData = lambdaCrimeService.getExampleData(id);
+            String output = gson.toJson(crimeData);
 
             return response
                     .withStatusCode(200)
