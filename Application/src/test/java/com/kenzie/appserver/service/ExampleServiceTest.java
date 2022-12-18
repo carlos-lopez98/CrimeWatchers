@@ -1,7 +1,9 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.ExampleRepository;
+import com.kenzie.appserver.repositories.model.CrimeRecord;
 import com.kenzie.appserver.repositories.model.ExampleRecord;
+import com.kenzie.appserver.service.model.Crime;
 import com.kenzie.appserver.service.model.Example;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.junit.jupiter.api.Assertions;
@@ -16,14 +18,14 @@ import static org.mockito.Mockito.when;
 
 public class ExampleServiceTest {
     private ExampleRepository exampleRepository;
-    private ExampleService exampleService;
+    private CrimeService crimeService;
     private LambdaServiceClient lambdaServiceClient;
 
     @BeforeEach
     void setup() {
         exampleRepository = mock(ExampleRepository.class);
         lambdaServiceClient = mock(LambdaServiceClient.class);
-        exampleService = new ExampleService(exampleRepository, lambdaServiceClient);
+        crimeService = new CrimeService(exampleRepository, lambdaServiceClient);
     }
     /** ------------------------------------------------------------------------
      *  exampleService.findById
@@ -34,18 +36,18 @@ public class ExampleServiceTest {
         // GIVEN
         String id = randomUUID().toString();
 
-        ExampleRecord record = new ExampleRecord();
-        record.setId(id);
-        record.setName("concertname");
+        CrimeRecord record = new CrimeRecord();
+        record.setCaseId(id);
+        record.setCrimeType("Theft");
 
         // WHEN
         when(exampleRepository.findById(id)).thenReturn(Optional.of(record));
-        Example example = exampleService.findById(id);
+        Crime crime = crimeService.findByCaseId(id);
 
         // THEN
-        Assertions.assertNotNull(example, "The object is returned");
-        Assertions.assertEquals(record.getId(), example.getId(), "The id matches");
-        Assertions.assertEquals(record.getName(), example.getName(), "The name matches");
+        Assertions.assertNotNull(crime, "The object is returned");
+        Assertions.assertEquals(record.getCaseId(), crime.getCaseId(), "The id matches");
+        Assertions.assertEquals(record.getCrimeType(), crime.getCrimeType(), "The type matches");
     }
 
     @Test
@@ -56,10 +58,10 @@ public class ExampleServiceTest {
         when(exampleRepository.findById(id)).thenReturn(Optional.empty());
 
         // WHEN
-        Example example = exampleService.findById(id);
+        Crime crime = crimeService.findByCaseId(id);
 
         // THEN
-        Assertions.assertNull(example, "The example is null when not found");
+        Assertions.assertNull(crime, "The example is null when not found");
     }
 
 }

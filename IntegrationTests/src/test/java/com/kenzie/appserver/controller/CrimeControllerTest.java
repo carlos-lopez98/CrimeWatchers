@@ -2,8 +2,8 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.ExampleCreateRequest;
-import com.kenzie.appserver.service.ExampleService;
-import com.kenzie.appserver.service.model.Example;
+import com.kenzie.appserver.service.CrimeService;
+import com.kenzie.appserver.service.model.Crime;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -21,12 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @IntegrationTest
-class ExampleControllerTest {
+class CrimeControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @Autowired
-    ExampleService exampleService;
+    CrimeService crimeService;
 
     private final MockNeat mockNeat = MockNeat.threadLocal();
 
@@ -37,12 +37,12 @@ class ExampleControllerTest {
 
         String name = mockNeat.strings().valStr();
 
-        Example persistedExample = exampleService.addNewExample(name);
-        mvc.perform(get("/example/{id}", persistedExample.getId())
+        Crime persistedCrime = crimeService.addNewCrime(name);
+        mvc.perform(get("/crimes/{caseId}", persistedCrime.getCaseId())
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("id")
+                .andExpect(jsonPath("caseId")
                         .isString())
-                .andExpect(jsonPath("name")
+                .andExpect(jsonPath("crimeType")
                         .value(is(name)))
                 .andExpect(status().is2xxSuccessful());
     }
@@ -56,13 +56,13 @@ class ExampleControllerTest {
 
         mapper.registerModule(new JavaTimeModule());
 
-        mvc.perform(post("/example")
+        mvc.perform(post("/crimes")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(exampleCreateRequest)))
-                .andExpect(jsonPath("id")
+                .andExpect(jsonPath("caseId")
                         .exists())
-                .andExpect(jsonPath("name")
+                .andExpect(jsonPath("crimeType")
                         .value(is(name)))
                 .andExpect(status().is2xxSuccessful());
     }

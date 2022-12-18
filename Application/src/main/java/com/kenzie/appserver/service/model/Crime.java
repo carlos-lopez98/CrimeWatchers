@@ -1,8 +1,6 @@
-package com.kenzie.capstone.service.model;
+package com.kenzie.appserver.service.model;
 
-import java.util.Objects;
-
-public class ExampleData {
+public class Crime {
     private final String caseId;
     private final String borough;
     private final String state;
@@ -10,8 +8,7 @@ public class ExampleData {
     private final String description;
     private final String zonedDateTime;;
 
-
-    public ExampleData(String caseId, String borough, String state, String crimeType, String description, String zonedDateTime) {
+    public Crime(String caseId, String borough, String state, String crimeType, String description, String zonedDateTime) {
         this.caseId = caseId;
         this.borough = borough;
         this.state = state;
@@ -19,7 +16,6 @@ public class ExampleData {
         this.description = description;
         this.zonedDateTime = zonedDateTime;
     }
-
 
     public String getCaseId() {
         return caseId;
@@ -43,22 +39,5 @@ public class ExampleData {
 
     public String getDateAndTime() {
         return zonedDateTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ExampleData that = (ExampleData) o;
-        return Objects.equals(caseId, that.caseId) && Objects.equals(crimeType, that.crimeType);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(caseId, crimeType);
     }
 }
