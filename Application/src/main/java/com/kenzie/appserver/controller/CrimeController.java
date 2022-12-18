@@ -14,11 +14,11 @@ import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/example")
-public class ExampleController {
+public class CrimeController {
 
     private ExampleService exampleService;
 
-    ExampleController(ExampleService exampleService) {
+    CrimeController(ExampleService exampleService) {
         this.exampleService = exampleService;
     }
 
