@@ -10,9 +10,18 @@ import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
 
+import javax.inject.Inject;
 import java.util.List;
 
 public class CrimeDao {
+
+    private DynamoDBMapper mapper;
+
+
+    public CrimeDao(DynamoDBMapper mapper){
+        this.mapper = mapper;
+    }
+
 
     public ExampleData storeExampleData(ExampleData exampleData) {
 
