@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service.dao;
 
+import com.kenzie.capstone.service.model.CrimeDataRecord;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.ExampleRecord;
 
@@ -17,13 +18,42 @@ public class CrimeDao {
 
     private DynamoDBMapper mapper;
 
-
     public CrimeDao(DynamoDBMapper mapper){
         this.mapper = mapper;
     }
 
+    //Gets Closed Case by ID from Lambda Table
+    public List<CrimeDataRecord> getClosedCase(String id) {
+        CrimeDataRecord crimeDataRecord = new CrimeDataRecord();
+        crimeDataRecord.setId(id);
 
-    public ExampleData storeExampleData(ExampleData exampleData) {
+        DynamoDBQueryExpression<CrimeDataRecord> queryExpression = new DynamoDBQueryExpression<CrimeDataRecord>()
+                .withHashKeyValues(crimeDataRecord)
+                .withConsistentRead(false);
+
+        return mapper.query(CrimeDataRecord.class, queryExpression);
+    }
+
+    //Will add a closed case to our Lambda Table -- Case must be closed
+    public CrimeDataRecord addClosedCase(CrimeDataRecord crimeDataRecord) {
+
+        try {
+            mapper.save(crimeDataRecord, new DynamoDBSaveExpression()
+                    .withExpected(ImmutableMap.of(
+                            "id",
+                            new ExpectedAttributeValue().withExists(false)
+                    )));
+        } catch (ConditionalCheckFailedException e) {
+            throw new IllegalArgumentException("id already exists");
+        }
+
+        return crimeDataRecord;
+    }
+
+
+
+    //Don't need this
+    /*    public ExampleData storeExampleData(ExampleData exampleData) {
 
         try {
             mapper.save(exampleData, new DynamoDBSaveExpression()
@@ -36,35 +66,6 @@ public class CrimeDao {
         }
 
         return exampleData;
-    }
-
-    public List<ExampleRecord> getExampleData(String id) {
-        ExampleRecord exampleRecord = new ExampleRecord();
-        exampleRecord.setId(id);
-
-        DynamoDBQueryExpression<ExampleRecord> queryExpression = new DynamoDBQueryExpression<ExampleRecord>()
-                .withHashKeyValues(exampleRecord)
-                .withConsistentRead(false);
-
-        return mapper.query(ExampleRecord.class, queryExpression);
-    }
-
-    public ExampleRecord setExampleData(String id, String data) {
-        ExampleRecord exampleRecord = new ExampleRecord();
-        exampleRecord.setId(id);
-        exampleRecord.setData(data);
-
-        try {
-            mapper.save(exampleRecord, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "id",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("id already exists");
-        }
-
-        return exampleRecord;
-    }
+    }*/
 
 }

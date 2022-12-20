@@ -6,6 +6,7 @@ import com.kenzie.appserver.service.CrimeService;
 
 
 import com.kenzie.appserver.service.model.Crime;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +19,15 @@ import static java.util.UUID.randomUUID;
 @RequestMapping("/crimes")
 public class CrimeController {
 
+    private LambdaServiceClient lambdaServiceClient;
     private CrimeService crimeService;
 
-    CrimeController(CrimeService crimeService) {
+    CrimeController(CrimeService crimeService, LambdaServiceClient lambdaServiceClient) {
         this.crimeService = crimeService;
+        this.lambdaServiceClient = lambdaServiceClient;
     }
 
-    @GetMapping
+   @GetMapping
     public ResponseEntity<List<Crime>> getAllCrimes() {
 
         List<Crime> allCrimes = crimeService.findAllCrimes();
@@ -38,7 +41,7 @@ public class CrimeController {
 
     @PostMapping
     public ResponseEntity<ExampleResponse> addCrime(@RequestBody ExampleCreateRequest exampleCreateRequest) {
-        Crime crime = crimeService.addNewCrime(exampleCreateRequest.getName());
+        Crime crime = crimeService.addNewActiveCrime(exampleCreateRequest.getName());
 
         ExampleResponse exampleResponse = new ExampleResponse();
         exampleResponse.setId(crime.getCaseId());
@@ -47,7 +50,7 @@ public class CrimeController {
         return ResponseEntity.ok(exampleResponse);
     }
 
-    @GetMapping("/{crimeType}")
+    @GetMapping("/active/{crimeType}")
     public ResponseEntity<ExampleResponse> getCrimeByType(@PathVariable("crimeType") String crimeType){
         Crime crime = crimeService.findByCrimeType(crimeType);
         if (crime == null) {
@@ -60,7 +63,7 @@ public class CrimeController {
         return ResponseEntity.ok(exampleResponse);
     }
 
-    @GetMapping("/{borough}")
+    @GetMapping("/active/{borough}")
     public ResponseEntity<ExampleResponse> getCrimeByBorough(@PathVariable("borough") String borough){
         Crime crime = crimeService.findCrimeByBorough(borough);
         if (crime == null) {

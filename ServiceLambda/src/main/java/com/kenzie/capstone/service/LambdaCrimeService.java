@@ -22,8 +22,8 @@ public class LambdaCrimeService {
         this.crimeDao = crimeDao;
     }
 
-    public CrimeData getExampleData(String id) {
-        List<CrimeDataRecord> records = crimeDao.getExampleData(id);
+    public CrimeData getClosedCase(String id) {
+        List<CrimeDataRecord> records = crimeDao.getClosedCase(id);
 
         if (records.size() > 0) {
             return new CrimeData(records.get(0).getId(), records.get(0).getData());
@@ -31,11 +31,12 @@ public class LambdaCrimeService {
         return null;
     }
 
-    public CrimeData setExampleData(String data) {
+    public CrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
 
         String id = UUID.randomUUID().toString();
 
         CrimeDataRecord record = crimeDao.setExampleData(id, data);
+
         return new CrimeData(id, data);
     }
 }
