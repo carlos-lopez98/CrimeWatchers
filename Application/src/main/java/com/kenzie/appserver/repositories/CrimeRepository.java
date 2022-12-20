@@ -6,5 +6,5 @@ import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
 import org.springframework.data.repository.CrudRepository;
 
 @EnableScan
-public interface ExampleRepository extends CrudRepository<CrimeRecord, String> {
+public interface CrimeRepository extends CrudRepository<CrimeRecord, String> {
 }

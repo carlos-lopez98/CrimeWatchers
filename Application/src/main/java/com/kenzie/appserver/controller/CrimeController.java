@@ -6,6 +6,7 @@ import com.kenzie.appserver.service.CrimeService;
 
 
 import com.kenzie.appserver.service.model.Crime;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +19,12 @@ import static java.util.UUID.randomUUID;
 @RequestMapping("/crimes")
 public class CrimeController {
 
+    private LambdaServiceClient lambdaServiceClient;
     private CrimeService crimeService;
 
-    CrimeController(CrimeService crimeService) {
+    CrimeController(CrimeService crimeService, LambdaServiceClient lambdaServiceClient) {
         this.crimeService = crimeService;
+        this.lambdaServiceClient = lambdaServiceClient;
     }
 
     @GetMapping

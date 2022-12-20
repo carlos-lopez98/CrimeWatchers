@@ -13,7 +13,8 @@ import java.util.List;
 
 @Service
 public class CrimeService {
-    private ExampleRepository exampleRepository;
+
+    private CrimeRepository crimeRepository;
     private LambdaServiceClient lambdaServiceClient;
 
     public CrimeService(ExampleRepository exampleRepository, LambdaServiceClient lambdaServiceClient) {
