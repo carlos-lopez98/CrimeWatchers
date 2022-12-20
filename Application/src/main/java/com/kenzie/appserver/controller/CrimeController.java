@@ -27,7 +27,7 @@ public class CrimeController {
         this.lambdaServiceClient = lambdaServiceClient;
     }
 
-    @GetMapping
+   @GetMapping
     public ResponseEntity<List<Crime>> getAllCrimes() {
 
         List<Crime> allCrimes = crimeService.findAllCrimes();
@@ -41,7 +41,7 @@ public class CrimeController {
 
     @PostMapping
     public ResponseEntity<ExampleResponse> addCrime(@RequestBody ExampleCreateRequest exampleCreateRequest) {
-        Crime crime = crimeService.addNewCrime(exampleCreateRequest.getName());
+        Crime crime = crimeService.addNewActiveCrime(exampleCreateRequest.getName());
 
         ExampleResponse exampleResponse = new ExampleResponse();
         exampleResponse.setId(crime.getCaseId());
@@ -50,7 +50,7 @@ public class CrimeController {
         return ResponseEntity.ok(exampleResponse);
     }
 
-    @GetMapping("/{crimeType}")
+    @GetMapping("/active/{crimeType}")
     public ResponseEntity<ExampleResponse> getCrimeByType(@PathVariable("crimeType") String crimeType){
         Crime crime = crimeService.findByCrimeType(crimeType);
         if (crime == null) {
@@ -63,7 +63,7 @@ public class CrimeController {
         return ResponseEntity.ok(exampleResponse);
     }
 
-    @GetMapping("/{borough}")
+    @GetMapping("/active/{borough}")
     public ResponseEntity<ExampleResponse> getCrimeByBorough(@PathVariable("borough") String borough){
         Crime crime = crimeService.findCrimeByBorough(borough);
         if (crime == null) {

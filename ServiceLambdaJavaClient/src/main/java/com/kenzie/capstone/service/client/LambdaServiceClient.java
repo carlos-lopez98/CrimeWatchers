@@ -1,6 +1,7 @@
 package com.kenzie.capstone.service.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kenzie.capstone.service.model.CrimeDataResponse;
 import com.kenzie.capstone.service.model.ExampleData;
 
 
@@ -15,9 +16,10 @@ public class LambdaServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public ExampleData getExampleData(String id) {
+    public CrimeDataResponse getClosedCase(String id) {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint(GET_EXAMPLE_ENDPOINT.replace("{id}", id));
+
         ExampleData exampleData;
         try {
             exampleData = mapper.readValue(response, ExampleData.class);
@@ -27,7 +29,7 @@ public class LambdaServiceClient {
         return exampleData;
     }
 
-    public ExampleData setExampleData(String data) {
+    public CrimeDataResponse addClosedCase(String data) {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.postEndpoint(SET_EXAMPLE_ENDPOINT, data);
         ExampleData exampleData;
