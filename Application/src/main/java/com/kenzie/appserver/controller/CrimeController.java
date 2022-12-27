@@ -1,7 +1,7 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.ExampleCreateRequest;
-import com.kenzie.appserver.controller.model.ExampleResponse;
+import com.kenzie.appserver.controller.model.CreateCrimeRequest;
+import com.kenzie.appserver.controller.model.CrimeResponse;
 import com.kenzie.appserver.service.CrimeService;
 
 
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.UUID.randomUUID;
@@ -40,39 +41,62 @@ public class CrimeController {
     }
 
     @PostMapping
-    public ResponseEntity<ExampleResponse> addCrime(@RequestBody ExampleCreateRequest exampleCreateRequest) {
-        Crime crime = crimeService.addNewActiveCrime(exampleCreateRequest.getName());
+    public ResponseEntity<CrimeResponse> addCrime(@RequestBody CreateCrimeRequest createCrimeRequest) {
+        Crime crime = crimeService.addNewActiveCrime(requestToCrime(createCrimeRequest));
 
-        ExampleResponse exampleResponse = new ExampleResponse();
-        exampleResponse.setId(crime.getCaseId());
-        exampleResponse.setName(crime.getCrimeType());
+        CrimeResponse crimeResponse = new CrimeResponse();
+        crimeResponse.setCaseId(crime.getCaseId());
+        crimeResponse.setBorough(crime.getBorough());
+        crimeResponse.setState(crime.getState());
 
-        return ResponseEntity.ok(exampleResponse);
+        return ResponseEntity.ok(crimeResponse);
     }
 
     @GetMapping("/active/{crimeType}")
-    public ResponseEntity<ExampleResponse> getCrimeByType(@PathVariable("crimeType") String crimeType){
-        Crime crime = crimeService.findByCrimeType(crimeType);
-        if (crime == null) {
+    public ResponseEntity<List<CrimeResponse>> getCrimeByType(@PathVariable("crimeType") String crimeType){
+        //TODO return all crimes of crimeType
+        List<Crime> crimes = crimeService.findByCrimeType(crimeType);
+        if (crimes == null) {
             return ResponseEntity.notFound().build();
         }
 
-        ExampleResponse exampleResponse = new ExampleResponse();
-        exampleResponse.setId(crime.getCaseId());
-        exampleResponse.setName(crime.getCrimeType());
-        return ResponseEntity.ok(exampleResponse);
+        List<CrimeResponse> crimeResponses = getCrimeResponseList(crimes);
+
+
+        return ResponseEntity.ok(crimeResponses);
     }
 
     @GetMapping("/active/{borough}")
-    public ResponseEntity<ExampleResponse> getCrimeByBorough(@PathVariable("borough") String borough){
-        Crime crime = crimeService.findCrimeByBorough(borough);
-        if (crime == null) {
+    public ResponseEntity<List<CrimeResponse>> getCrimeByBorough(@PathVariable("borough") String borough){
+        //TODO return all borough crimes
+        List<Crime> crimes = crimeService.findCrimeByBorough(borough);
+        if (crimes == null) {
             return ResponseEntity.notFound().build();
         }
 
-        ExampleResponse exampleResponse = new ExampleResponse();
-        exampleResponse.setId(crime.getCaseId());
-        exampleResponse.setName(crime.getCrimeType());
-        return ResponseEntity.ok(exampleResponse);
+        List<CrimeResponse> crimeResponses = getCrimeResponseList(crimes);
+
+        return ResponseEntity.ok(crimeResponses);
+    }
+
+    private Crime requestToCrime (CreateCrimeRequest request){
+        return new Crime(request.getCaseId(), request.getBorough(), request.getState()
+                , request.getCrimeType(), request.getDescription(), request.getZonedDateTime());
+    }
+
+    private List<CrimeResponse> getCrimeResponseList(List<Crime> crimes){
+        List<CrimeResponse> responseList = new ArrayList<>();
+
+        for(Crime crime : crimes){
+            CrimeResponse crimeResponse = new CrimeResponse();
+            crimeResponse.setCaseId(crime.getCaseId());
+            crimeResponse.setBorough(crime.getBorough());
+            crimeResponse.setState(crime.getState());
+            crimeResponse.setCrimeType(crime.getCrimeType());
+            crimeResponse.setDescription(crime.getDescription());
+            responseList.add(crimeResponse);
+        }
+
+        return responseList;
     }
 }

@@ -1,10 +1,10 @@
-package com.kenzie.capstone.service.model;
+package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CrimeDataResponse {
+public class CrimeResponse {
 
     @JsonProperty("caseId")
     private String caseId;

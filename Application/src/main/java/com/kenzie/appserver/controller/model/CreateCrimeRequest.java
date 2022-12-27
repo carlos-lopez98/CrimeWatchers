@@ -1,20 +1,24 @@
-package com.kenzie.capstone.service.model;
+package com.kenzie.appserver.controller.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class CrimeDataResponse {
+import javax.validation.constraints.NotEmpty;
 
+public class CreateCrimeRequest {
+
+    @NotEmpty
     @JsonProperty("caseId")
     private String caseId;
 
+    @NotEmpty
     @JsonProperty("borough")
     private String borough;
 
+    @NotEmpty
     @JsonProperty("state")
     private String state;
 
+    @NotEmpty
     @JsonProperty("crimeType")
     private String crimeType;
 
@@ -71,4 +75,5 @@ public class CrimeDataResponse {
     public void setZonedDateTime(String zonedDateTime) {
         this.zonedDateTime = zonedDateTime;
     }
+
 }

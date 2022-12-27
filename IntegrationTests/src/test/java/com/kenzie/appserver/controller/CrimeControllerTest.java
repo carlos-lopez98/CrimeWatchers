@@ -35,15 +35,20 @@ class CrimeControllerTest {
     @Test
     public void getById_Exists() throws Exception {
 
-        String name = mockNeat.strings().valStr();
+        String crimeType = mockNeat.strings().valStr();
+        String description = mockNeat.strings().valStr();
+        Crime crime = new Crime("12345", "That Borough", "NewState"
+                , crimeType,description, "2022/12/25");
 
-        Crime persistedCrime = crimeService.addNewCrime(name);
+        Crime persistedCrime = crimeService.addNewActiveCrime(crime);
         mvc.perform(get("/crimes/{caseId}", persistedCrime.getCaseId())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("caseId")
                         .isString())
                 .andExpect(jsonPath("crimeType")
-                        .value(is(name)))
+                        .value(is(crimeType)))
+                .andExpect(jsonPath("description")
+                        .value(is(description)))
                 .andExpect(status().is2xxSuccessful());
     }
 
