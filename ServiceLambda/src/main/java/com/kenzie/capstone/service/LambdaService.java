@@ -20,6 +20,8 @@ public class LambdaService {
 
     public ExampleData getExampleData(String id) {
         List<ExampleRecord> records = exampleDao.getExampleData(id);
+
+
         if (records.size() > 0) {
             return new ExampleData(records.get(0).getId(), records.get(0).getData());
         }
