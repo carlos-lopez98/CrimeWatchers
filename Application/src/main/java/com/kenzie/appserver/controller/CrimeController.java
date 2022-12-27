@@ -2,11 +2,13 @@ package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.CreateCrimeRequest;
 import com.kenzie.appserver.controller.model.CrimeResponse;
+import com.kenzie.appserver.converter.ZonedDateTimeConverter;
 import com.kenzie.appserver.service.CrimeService;
 
 
 import com.kenzie.appserver.service.model.Crime;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.CrimeData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,8 +63,6 @@ public class CrimeController {
         }
 
         List<CrimeResponse> crimeResponses = getCrimeResponseList(crimes);
-
-
         return ResponseEntity.ok(crimeResponses);
     }
 
@@ -98,5 +98,40 @@ public class CrimeController {
         }
 
         return responseList;
+    }
+
+
+    @GetMapping("/closed/{id}")
+    public ResponseEntity<CrimeResponse> getClosedCaseById(@PathVariable("id") String id){
+
+        CrimeData closedCase = lambdaServiceClient.getClosedCase(id);
+
+        CrimeResponse response = new CrimeResponse();
+        response.setBorough(closedCase.getBorough());
+        response.setCaseId(closedCase.getId());
+        response.setCrimeType(closedCase.getCrimeType());
+        response.setDescription(closedCase.getDescription());
+        response.setState(closedCase.getState());
+
+        response.setZonedDateTime(new ZonedDateTimeConverter().convert(closedCase.getTime()));
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/closed")
+    public ResponseEntity<CrimeResponse> addClosedCrime(@RequestBody CreateCrimeRequest createCrimeRequest) {
+        CrimeData crimeData = lambdaServiceClient.addClosedCase(requestToCrimeData(createCrimeRequest));
+
+        CrimeResponse crimeResponse = new CrimeResponse();
+        crimeResponse.setCaseId(crimeData.getId());
+        crimeResponse.setBorough(crimeData.getBorough());
+        crimeResponse.setState(crimeData.getState());
+
+        return ResponseEntity.ok(crimeResponse);
+    }
+
+    private CrimeData requestToCrimeData(CreateCrimeRequest request){
+        return new CrimeData(request.getCaseId(), request.getBorough(), request.getState(), request.getCrimeType(), request.getDescription(),
+                new ZonedDateTimeConverter().unconvert(request.getZonedDateTime()));
     }
 }

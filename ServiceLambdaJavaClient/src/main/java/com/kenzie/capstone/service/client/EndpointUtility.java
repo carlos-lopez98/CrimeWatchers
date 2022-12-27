@@ -5,6 +5,7 @@ import com.amazonaws.services.apigateway.AmazonApiGatewayClientBuilder;
 import com.amazonaws.services.apigateway.model.GetRestApisRequest;
 import com.amazonaws.services.apigateway.model.GetRestApisResult;
 import com.amazonaws.services.apigateway.model.RestApi;
+import com.kenzie.capstone.service.model.CrimeData;
 
 import java.io.IOException;
 import java.net.URI;
@@ -60,7 +61,7 @@ public class EndpointUtility {
         return "https://" + endpointId + ".execute-api." + region + ".amazonaws.com/Prod/";
     }
 
-    public String postEndpoint(String endpoint, String data) {
+    public String postEndpoint(String endpoint, CrimeData data) {
         String api = getApiEndpint();
         String url = api + endpoint;
 
@@ -69,7 +70,7 @@ public class EndpointUtility {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .header("Accept", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(data))
+                .POST(HttpRequest.BodyPublishers.ofString(String.valueOf(data)))
                 .build();
         try {
             HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());

@@ -8,8 +8,8 @@ import com.kenzie.capstone.service.model.ExampleData;
 
 public class LambdaServiceClient {
 
-    private static final String GET_EXAMPLE_ENDPOINT = "crimes/{id}";
-    private static final String SET_EXAMPLE_ENDPOINT = "crimes";
+    private static final String GET_CLOSED_CASE = "crimes/closed/{id}";
+    private static final String SET_CLOSED_CASE = "crimes/closed";
 
     private ObjectMapper mapper;
 
@@ -19,7 +19,8 @@ public class LambdaServiceClient {
 
     public CrimeData getClosedCase(String caseId) {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(GET_EXAMPLE_ENDPOINT.replace("{caseId}", caseId));
+
+        String response = endpointUtility.getEndpoint(GET_CLOSED_CASE.replace("{caseId}", caseId));
 
         CrimeData crimeData;
         try {
@@ -39,12 +40,15 @@ public class LambdaServiceClient {
         return crimeData;
     }
 
-    public CrimeData addClosedCase(String caseData) {
+    public CrimeData addClosedCase(CrimeData crimeData) {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.postEndpoint(SET_EXAMPLE_ENDPOINT, caseData);
-        CrimeData crimeData;
+        String response = endpointUtility.postEndpoint(SET_CLOSED_CASE, crimeData);
+
+        CrimeData newData;
+
+
         try {
-            crimeData = mapper.readValue(response, CrimeData.class);
+            newData = mapper.readValue(response, CrimeData.class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
@@ -57,6 +61,6 @@ public class LambdaServiceClient {
 //        crimeDataResponse.setDescription(crimeData.getDescription());
 //        crimeDataResponse.setZonedDateTime(crimeData.getTime().toString());
 
-        return crimeData;
+        return newData;
     }
 }

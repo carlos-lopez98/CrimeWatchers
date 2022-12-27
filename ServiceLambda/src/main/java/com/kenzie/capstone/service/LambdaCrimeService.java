@@ -22,21 +22,25 @@ public class LambdaCrimeService {
         this.crimeDao = crimeDao;
     }
 
+    //Calls CrimeDao to get a closed case
     public CrimeData getClosedCase(String id) {
         List<CrimeDataRecord> records = crimeDao.getClosedCase(id);
 
         if (records.size() > 0) {
-            return new CrimeData(records.get(0).getId(), records.get(0).getData());
+            return new CrimeData(records.get(0).getId(), records.get(0).getBorough(), records.get(0).getState(), records.get(0).getCrimeType(),
+                    records.get(0).getDescription(), records.get(0).getTime());
         }
+
         return null;
     }
 
+    //Calls CrimeDao to add a closed case
     public CrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
 
         String id = UUID.randomUUID().toString();
 
-        CrimeDataRecord record = crimeDao.setExampleData(id, data);
+        CrimeDataRecord record = crimeDao.addClosedCase(crimeDataRecord);
 
-        return new CrimeData(id, data);
+        return new CrimeData(id, record.getBorough(), record.getState(), record.getCrimeType(), record.getDescription(), record.getTime());
     }
 }
