@@ -1,10 +1,9 @@
 package com.kenzie.appserver.service;
 
-import com.kenzie.appserver.repositories.ExampleRepository;
+
+import com.kenzie.appserver.repositories.CrimeRepository;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
-import com.kenzie.appserver.repositories.model.ExampleRecord;
 import com.kenzie.appserver.service.model.Crime;
-import com.kenzie.appserver.service.model.Example;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,22 +16,22 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ExampleServiceTest {
-    private ExampleRepository exampleRepository;
+    private CrimeRepository crimeRepository;
     private CrimeService crimeService;
     private LambdaServiceClient lambdaServiceClient;
 
     @BeforeEach
     void setup() {
-        exampleRepository = mock(ExampleRepository.class);
+        crimeRepository = mock(CrimeRepository.class);
         lambdaServiceClient = mock(LambdaServiceClient.class);
-        crimeService = new CrimeService(exampleRepository, lambdaServiceClient);
+        crimeService = new CrimeService(crimeRepository, lambdaServiceClient);
     }
     /** ------------------------------------------------------------------------
      *  exampleService.findById
      *  ------------------------------------------------------------------------ **/
 
     @Test
-    void findById() {
+    void findByCaseId() {
         // GIVEN
         String id = randomUUID().toString();
 
@@ -41,8 +40,8 @@ public class ExampleServiceTest {
         record.setCrimeType("Theft");
 
         // WHEN
-        when(exampleRepository.findById(id)).thenReturn(Optional.of(record));
-        Crime crime = crimeService.findByCaseId(id);
+        when(crimeRepository.findById(id)).thenReturn(Optional.of(record));
+        Crime crime = crimeService.findByCaseIdActive(id);
 
         // THEN
         Assertions.assertNotNull(crime, "The object is returned");
@@ -51,14 +50,14 @@ public class ExampleServiceTest {
     }
 
     @Test
-    void findByConcertId_invalid() {
+    void findByCaseId_invalid() {
         // GIVEN
         String id = randomUUID().toString();
 
-        when(exampleRepository.findById(id)).thenReturn(Optional.empty());
+        when(crimeRepository.findById(id)).thenReturn(Optional.empty());
 
         // WHEN
-        Crime crime = crimeService.findByCaseId(id);
+        Crime crime = crimeService.findByCaseIdActive(id);
 
         // THEN
         Assertions.assertNull(crime, "The example is null when not found");

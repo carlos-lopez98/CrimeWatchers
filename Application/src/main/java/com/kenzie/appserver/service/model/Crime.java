@@ -6,7 +6,7 @@ public class Crime {
     private final String state;
     private final String crimeType;
     private final String description;
-    private final String zonedDateTime;;
+    private final String zonedDateTime;
 
     public Crime(String caseId, String borough, String state, String crimeType, String description, String zonedDateTime) {
         this.caseId = caseId;

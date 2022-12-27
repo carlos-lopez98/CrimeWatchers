@@ -1,20 +1,15 @@
 package com.kenzie.capstone.service.dao;
 
 import com.kenzie.capstone.service.model.CrimeDataRecord;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.ExampleRecord;
-
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
-
-import javax.inject.Inject;
 import java.util.List;
 
-public class CrimeDao {
+public class CrimeDao{
 
     private DynamoDBMapper mapper;
 
@@ -49,6 +44,7 @@ public class CrimeDao {
 
         return crimeDataRecord;
     }
+
 
 
 
