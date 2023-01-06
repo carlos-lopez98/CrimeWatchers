@@ -134,13 +134,76 @@ transform: translateX(-50%);
     border-bottom: none;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    column-gap: 20px;
     align-items: center;
 }
 
 .card .trending {
     font-size: 40px;
     margin-top: 25px;
+}
+
+.card .leftBar{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    color: black;
+    width: 320px;
+    border-radius: 1%;
+    max-height: 320px;
+}
+
+.card .leftBar .leftBar__form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin: 20px;
+    height: 75%;
+}
+
+.leftBar__form__p {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.validated-field{
+    margin: 0px 0px;
+}
+
+.border__resources{
+
+position: relative;
+
+}
+
+.border__resources::after{
+content: "";
+width: 200px;
+height: 1px;
+margin: 0px 0px;
+position: absolute;
+background-color: #999;
+left: 50%;
+top: -10px;
+transform: translateX(-50%);
+}
+
+.resource-icons{
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+}
+
+.resource-icon{
+margin: 0px 0px;
+height: 75px;
+width: 75px;
+background-color: white;
+border-radius: 5%;
 }
 
 .button, button {
@@ -155,13 +218,22 @@ transform: translateX(-50%);
 .button:hover, button:hover {
     background: #9cc3e4;
 }
+
 .card-content {
-    max-width: 80%;
+    max-width: 100%;
     text-align: center;
-    margin-left: 20px;
-}
+    margin: 5%;
+    }
 
 .card-content .form-field {
     display: flex;
     flex-direction: column;
+}
+.clickable__icon{
+display: inline-block;
+position: relative;
+z-index: 1;
+padding: 10px;
+margin: -10em;
+
 }
