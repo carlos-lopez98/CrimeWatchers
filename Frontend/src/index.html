@@ -35,27 +35,45 @@
     <div class="containerForInput">
 
         <div class="card">
-            <div class="card-overlay">
                 <h2>Post activity </br> in your area</h2>
-                <form class="card-content" id="create-form">
-                    <p class="form-field">
-                        <label>Name</label>
-                        <input type="text" required class="validated-field" id="create-name-field">
-                        <label>CrimeType</label>
-                        <input type="text" required class="validated-field" id="create-type-field">
-                        <label>Description</label>
-                        <input type="text" required class="validated-field" id="create-description-field">
-                    </p>
-                    <button type="submit">Create</button>
-                </form>
-            </div>
+                <div class="leftBar">
+                    <form class="leftBar__form" id="create-form">
+
+                        <p class="leftBar__form__p">
+                            <label>Name</label>
+                            <input type="text" required class="validated-field" id="create-name-field">
+                            <label>CrimeType</label>
+                            <input type="text" required class="validated-field" id="create-type-field">
+                            <label>Description</label>
+                            <input type="text" required class="validated-field" id="create-description-field">
+                            <label>Any Additional Info (files - images)</label>
+                            <input type="text" required class="validated-field" id="add-file-field">
+                        </p>
+
+                        <button type="submit">Create</button>
+                    </form>
+                </div>
+
+                <div class="resources__left">
+                    <div class="border__resources">
+                        <h3>Useful Resources</h3>
+                        <div class="resource-icons">
+                            <p1>Learn Basic Self Defense</p1>
+                            <a class="clickable__icon" href="defense.html"><img class="resource-icon" src="./css/images/burglar.jpg" alt="Learn Basic Self Defense"></a>
+                            <p1>Learn How to defend your home from invasion</p1>
+                            <a class="clickable__icon" href="security.html"><img class="resource-icon" src="./css/images/securityCamera.png" alt="Best Security measures for you and your home"></a>
+                            <p1>Basic CPR Trainig for Beginners</p1>
+                            <a class="clickable__icon" href="cpr.html"><img class="resource-icon"src="./css/images/cpr.png" alt="CPR training for beginners"></a>
+                        </div>
+                    </div>
+                </div>
 
         </div>
 
         <div class="card">
             <div class="trending">
                 <div class="card-overlay">
-                    <h>Trending </br> in your area</h></h2>
+                    <h>Trending </br> in your area</h>
                     <form class="card-content" id="get-by-id-form">
                         <p class="form-field">
                         </p>
