@@ -1,3 +1,11 @@
+@font-face{
+    font-family: myFont;
+    src:url(./fonts/BebasNeue-Regular.ttf);
+}
+@font-face{
+    font-family: slogan;
+    src: url(./fonts/BreeSerif-Regular.ttf);
+}
 :root {
     /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
     --primary-color: #131921;
@@ -9,7 +17,7 @@
 }
 
 .background {
-    background-color: #000000;
+    background-color: rgba(0,0,0);
     margin: 0;
     counter-reset: section;
 }
@@ -44,37 +52,95 @@ background: radial-gradient(circle at center, rgba(84,97,97, .5), rgba(0,0,0, .5
     align-items: center;
 }
 
+.border1{
+position: relative;
+top: 10px;
+}
+
+.border1::after{
+content: "";
+position: absolute;
+background-color: #999;
+width: 100%;
+height: 3px;
+}
+
+.border2{
+
+position: relative;
+
+}
+
+.border2::after{
+
+content: "";
+position: absolute;
+background-color: #999;
+width: 75%;
+height: 3px;
+bottom: 0;
+top: 73px;
+left: 50%;
+transform: translateX(-50%);
+
+}
+
 .header_home {
     font-size: 75px;
     line-height: 50px;
-    height: 100px;
+    height: 70px;
     text-decoration: none;
     color: rgba(254,254,254, .80);
     display: flex;
     flex-direction: column;
     align-items: center;
+    border: white;
+    font-family: myFont;
 }
 
 .slogan{
-   font-size: 45px;
+   font-size: 40px;
     line-height: 50px;
     height: 100px;
     text-decoration: none;
     color: rgba(254,254,254, .80);
     text-align: center;
+    padding: 25px;
+    font-family: slogan;
 }
 
 .containerForInput {
+    margin: 0px;
+    margin-top: 10px;
+    margin-bottom: 0px;
     position: relative;
     display: flex;
     flex-direction: row;
-    border: 7.5px solid #214761;
-    justify-content: space-around;
+    text-align: center;
+    justify-content: center;
+    background-color: rgba(0,0,0);
+    font-family: slogan;
+    font-size: 25px;
 }
 
+.card {
+    width: 33%;
+    height: 100vh;
+    color: rgba(254,254,254, .80);
+    background-color: black;
+    position: relative;
+    border: .1px solid #999;
+    border-top: none;
+    border-bottom: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
 
-.about {
-    margin-left: 20px;
+.card .trending {
+    font-size: 40px;
+    margin-top: 25px;
 }
 
 .button, button {
@@ -86,42 +152,16 @@ background: radial-gradient(circle at center, rgba(84,97,97, .5), rgba(0,0,0, .5
     border: 1px solid black;
     cursor: pointer;
 }
-
 .button:hover, button:hover {
     background: #9cc3e4;
 }
-
-.card {
-    color: var(--primary-color);
-    background-color: var(--secondary-color);
-    margin: 20px;
-    padding: 10px 20px;
-}
-
-.validated-field:invalid {
-    outline: 2px solid var(--error-color);
-}
-.validated-field:focus:invalid {
-    color: var(--error-color);
-}
-
 .card-content {
-    max-width: 500px;
+    max-width: 80%;
+    text-align: center;
+    margin-left: 20px;
 }
 
 .card-content .form-field {
     display: flex;
     flex-direction: column;
-}
-
-#concert-list li {
-    margin-bottom: 1rem;
-}
-
-.state {
-    display: none;
-}
-
-.state.active {
-    display: block;
 }
