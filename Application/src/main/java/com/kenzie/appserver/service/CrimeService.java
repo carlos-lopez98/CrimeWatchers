@@ -26,7 +26,7 @@ public class CrimeService {
 
 
     //Find all Active Crimes
-    public List<Crime> findAllCrimes(){
+    public List<Crime> findAllActiveCrimes(){
 
         // Example getting data from the local repository
         List<CrimeRecord> dataFromDynamo = (List<CrimeRecord>) crimeRepository.findAll();
