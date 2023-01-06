@@ -3,37 +3,75 @@
     --primary-color: #131921;
     --secondary-color: #fff;
     --error-color: rgba(194, 0, 0, 0.71);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 .background {
-    background-color: #eaeded;
+    background-color: #000000;
     margin: 0;
     counter-reset: section;
+}
+
+.hero {
+    width: 100%;
+    height: 100vh;
+    background-image: url(./images/snazzy-image.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+}
+
+.gradient{
+position: absolute;
+width: 100%;
+height: 100vh;
+background: radial-gradient(circle at center, rgba(84,97,97, .5), rgba(0,0,0, .5));
+
 }
 
 .header {
     /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
     padding: 0 20px;
+    margin-top: 35vh;
+    align-items: center;
 }
 
 .header_home {
-    font-size: 36px;
-    line-height: 40px;
+    font-size: 75px;
+    line-height: 50px;
     height: 100px;
     text-decoration: none;
-    color: var(--secondary-color);
+    color: rgba(254,254,254, .80);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.header_nav_link {
-    margin-left: 20px;
-    vertical-align: top;
-    line-height: 40px;
+.slogan{
+   font-size: 45px;
+    line-height: 50px;
+    height: 100px;
+    text-decoration: none;
+    color: rgba(254,254,254, .80);
+    text-align: center;
 }
+
+.containerForInput {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    border: 7.5px solid #214761;
+    justify-content: space-around;
+}
+
 
 .about {
     margin-left: 20px;
