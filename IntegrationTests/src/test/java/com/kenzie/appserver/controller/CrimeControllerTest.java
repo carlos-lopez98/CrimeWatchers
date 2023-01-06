@@ -71,4 +71,52 @@ class CrimeControllerTest {
                         .value(is(name)))
                 .andExpect(status().is2xxSuccessful());
     }
+
+    @Test
+    public void updateCase_success() {
+        //GIVEN
+
+        //WHEN
+
+        //THEN
+    }
+
+    @Test
+    public void updateCase_invalidCase(){
+
+        //GIVEN
+
+        //WHEN
+
+        //THEN
+    }
+
+    @Test
+    public void getAllCases_success(){
+        //GIVEN
+
+        //WHEN
+
+        //THEN
+    }
+
+    @Test
+    public void getCaseById_success(){
+
+        //GIVEN
+
+        //WHEN
+
+        //THEN
+    }
+
+    @Test
+    public void deleteCase_success(){
+
+        //GIVEN
+
+        //WHEN
+
+        //THEN
+    }
 }

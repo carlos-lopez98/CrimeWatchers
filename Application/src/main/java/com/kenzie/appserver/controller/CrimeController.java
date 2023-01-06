@@ -33,7 +33,7 @@ public class CrimeController {
    @GetMapping
     public ResponseEntity<List<Crime>> getAllCrimes() {
 
-        List<Crime> allCrimes = crimeService.findAllCrimes();
+        List<Crime> allCrimes = crimeService.findAllActiveCrimes();
 
         if (allCrimes == null) {
             return ResponseEntity.notFound().build();
