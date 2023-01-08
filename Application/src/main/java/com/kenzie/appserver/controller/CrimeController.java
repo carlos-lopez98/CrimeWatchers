@@ -30,7 +30,7 @@ public class CrimeController {
         this.lambdaServiceClient = lambdaServiceClient;
     }
 
-   @GetMapping
+   @GetMapping("/all")
     public ResponseEntity<List<Crime>> getAllCrimes() {
 
         List<Crime> allCrimes = crimeService.findAllActiveCrimes();
