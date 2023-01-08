@@ -67,7 +67,7 @@ public class CrimeController {
     }
 
     @GetMapping("/active/{borough}")
-    public ResponseEntity<List<CrimeResponse>> getCrimeByBorough(@PathVariable("borough") String borough){
+    public ResponseEntity<List<CrimeResponse>> getCrimeByBorough(@PathVariable("borough") String borough) {
         //TODO return all borough crimes
         List<Crime> crimes = crimeService.findCrimeByBorough(borough);
         if (crimes == null) {

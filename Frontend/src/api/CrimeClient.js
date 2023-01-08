@@ -40,6 +40,26 @@ export default class CrimeClient extends BaseClass {
         }
     }
 
+    /**
+     * Gets the crime by the given borough.
+     * @param borough
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns crime by borough
+     */
+    async getCrimeByBorough(borough, errorCallback) {
+        try {
+            const response = await this.client.get(`/crimes/active/${borough}`);
+            return response.data;
+        } catch (error) {
+            this.handleError("getCrimeByBorough", error, errorCallback)
+        }
+    }
+
+    /**
+     * Gets all crimes.
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns all crimes
+     */
     async getAllCrimes(errorCallback) {
         try {
             const response = await this.client.get(`/crimes/all`);
@@ -48,6 +68,15 @@ export default class CrimeClient extends BaseClass {
             this.handleError("getAllCrimes", error, errorCallback)
         }
     }
+
+    /**
+     * Creates a new crime given the caseId, borough, and state
+     * @param caseId
+     * @param borough
+     * @param state
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns a new crime
+     */
     async addCrime(caseId, borough, state, errorCallback) {
         try {
             const response = await this.client.post(`/crimes`, {
@@ -61,30 +90,39 @@ export default class CrimeClient extends BaseClass {
         }
     }
 
-    /*     async updateItem(productName, errorCallback) {
-                try {
-                    const response = await this.client.post(`/groceryitem/${name}`){
-                        department: department,
-                        price: price,
-                        expirationDate: expirationDate,
-                        type: type,
-                        inStock: inStock,
-                        quantity: quantity,
-                        discount: discount,
-                        id: id
-                    });
-                    return response.data;
-                } catch (error) {
-                    this.handleError("updateItem", error, errorCallback);
-                }
-            }*/
-
-    async deleteGroceryItem(name, errorCallback) {
+    /**
+     * Gets the closed case by Id
+     * @param id
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns crime by Id
+     */
+    async getClosedCaseById(id, errorCallback) {
         try {
-            const response = await this.client.delete(`/grocery-item/${name}`);
+            const response = await this.client.get(`/crimes/closed/${id}`);
             return response.data;
         } catch (error) {
-            this.handleError("deleteGroceryItem", error, errorCallback)
+            this.handleError("getClosedCaseById", error, errorCallback)
+        }
+    }
+
+    /**
+     * Creates a closed crime given the caseId, borough, and state
+     * @param caseId
+     * @param borough
+     * @param state
+     * @param errorCallback (Optional) A function to execute if the call fails.
+     * @returns a closed crime
+     */
+    async addClosedCrime(caseId, borough, state, errorCallback) {
+        try {
+            const response = await this.client.post(`/crimes/closed`, {
+                caseId: caseId,
+                borough: borough,
+                state: state,
+            });
+            return response.data;
+        } catch (error) {
+            this.handleError("addClosedCrime", error, errorCallback);
         }
     }
 
