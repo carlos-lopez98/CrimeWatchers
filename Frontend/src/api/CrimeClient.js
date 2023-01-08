@@ -26,43 +26,38 @@ export default class CrimeClient extends BaseClass {
     }
 
     /**
-     * Gets the grocery item for the given product name.
-     * @param name
+     * Gets the crime by the given crime type.
+     * @param crimeType
      * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns The concert
+     * @returns crime by type
      */
-    async getGroceryItem(name, errorCallback) {
+    async getCrimeByType(crimeType, errorCallback) {
         try {
-            const response = await this.client.get(`/grocery-item/${name}`);
+            const response = await this.client.get(`/crimes/active/${crimeType}`);
             return response.data;
         } catch (error) {
-            this.handleError("getGroceryItem", error, errorCallback)
+            this.handleError("getCrimeByType", error, errorCallback)
         }
     }
 
-    async getAllGroceryItems(errorCallback) {
+    async getAllCrimes(errorCallback) {
         try {
-            const response = await this.client.get(`/grocery-item/all`);
+            const response = await this.client.get(`/crimes/all`);
             return response.data;
         } catch (error) {
-            this.handleError("getAllGroceryItems", error, errorCallback)
+            this.handleError("getAllCrimes", error, errorCallback)
         }
     }
-    async createGroceryItem(productName, department, price, expirationDate, type, inStock, quantity, discount, errorCallback) {
+    async addCrime(caseId, borough, state, errorCallback) {
         try {
-            const response = await this.client.post(`/grocery-item`, {
-                groceryProductName: productName,
-                groceryProductDepartment: department,
-                groceryProductPrice: price,
-                groceryExpirationDate: expirationDate,
-                groceryType: type,
-                inStock: inStock,
-                quantityAvailable : quantity,
-                discount: discount
+            const response = await this.client.post(`/crimes`, {
+                caseId: caseId,
+                borough: borough,
+                state: state,
             });
             return response.data;
         } catch (error) {
-            this.handleError("createGroceryItem", error, errorCallback);
+            this.handleError("addCrime", error, errorCallback);
         }
     }
 
