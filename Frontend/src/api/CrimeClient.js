@@ -8,7 +8,7 @@ export default class CrimeClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getGroceryItem', 'createGroceryItem','getAllGroceryItems'];
+        const methodsToBind = ['clientLoaded', 'addCrime', 'getCrimeByType','getCrimeByBorough', 'getClosedCaseById', 'addClosedCrime', 'getAllCrimes'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
