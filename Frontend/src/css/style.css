@@ -276,3 +276,17 @@ margin-right: 50px;
 background-color: black;
 border-radius: 4%;
 }
+
+.resultArea{
+margin: 4% auto;
+background-color: black;
+
+height: 60%;
+width: 90%;
+
+border-radius: 5%;
+
+font-family: slogan;
+color: white;
+
+}
