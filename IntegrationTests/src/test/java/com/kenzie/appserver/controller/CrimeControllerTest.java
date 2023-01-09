@@ -1,6 +1,7 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.IntegrationTest;
+import com.kenzie.appserver.controller.model.CreateCrimeRequest;
 import com.kenzie.appserver.controller.model.ExampleCreateRequest;
 import com.kenzie.appserver.service.CrimeService;
 import com.kenzie.appserver.service.model.Crime;
@@ -92,9 +93,10 @@ class CrimeControllerTest {
     }
 
     @Test
-    public void getAllCases_success(){
+    public void getAllCases_success() throws Exception {
         //GIVEN
-
+        CreateCrimeRequest crimeRequest = new CreateCrimeRequest();
+        crimeRequest.setCaseId(mockNeat.names().);
         //WHEN
 
         //THEN
@@ -102,16 +104,6 @@ class CrimeControllerTest {
 
     @Test
     public void getCaseById_success(){
-
-        //GIVEN
-
-        //WHEN
-
-        //THEN
-    }
-
-    @Test
-    public void deleteCase_success(){
 
         //GIVEN
 

@@ -41,22 +41,6 @@ public class CrimeService {
         return crimesList;
     }
 
-    //Closed caseIds are stored in the lambdaTable
-    public Crime findByCaseIdClosed(String caseId) {
-
-        // Example getting data from the lambda
-        CrimeData dataFromLambda = lambdaServiceClient.getClosedCase(caseId);
-
-        // Example getting data from the local repository
-        Crime dataFromDynamo = crimeRepository
-                .findById(caseId)
-                .map(crime -> new Crime(crime.getCaseId(), crime.getBorough(),
-                        crime.getState(), crime.getCrimeType(), crime.getDescription(), crime.getZonedDateTime()))
-                .orElse(null);
-
-        return dataFromDynamo;
-    }
-
     //Returns active case from local repository
     public Crime findByCaseIdActive(String caseId) {
 
