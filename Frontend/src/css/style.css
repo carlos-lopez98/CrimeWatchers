@@ -124,18 +124,19 @@ transform: translateX(-50%);
 }
 
 .card {
+
     width: 33%;
     height: 100vh;
     color: rgba(254,254,254, .80);
     background-color: black;
-    position: relative;
+        position: relative;
     border: .1px solid #999;
     border-top: none;
     border-bottom: none;
     display: flex;
     flex-direction: column;
-    column-gap: 20px;
     align-items: center;
+    margin-top: 10px;
 }
 
 .card .trending {
@@ -233,7 +234,45 @@ border-radius: 5%;
 display: inline-block;
 position: relative;
 z-index: 1;
-padding: 10px;
-margin: -10em;
 
+}
+
+.searchArea {
+height: 100vh;
+margin-top: 20px;
+background-color: white;
+font-family: myFont;
+margin-top: ;
+}
+
+.text__Area{
+margin-top: 50px;
+display: flex;
+justify-content: space-between;
+}
+
+.text__Search {
+ font-size: 4rem;
+ border-bottom: solid 1px black;
+ margin: 0px 20px;
+}
+.giveId{
+font-family: slogan;
+font-size: 2rem;
+font-color: black;
+}
+
+.inputBox {
+height: 40px;
+margin-left: 50px;
+width: 400px;
+margin-top: 0px;
+}
+
+.filter{
+height: 40px;
+width: 40px;
+margin-right: 50px;
+background-color: black;
+border-radius: 4%;
 }
