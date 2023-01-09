@@ -8,7 +8,7 @@ export default class CrimeClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'addCrime', 'getCrimeByType','getCrimeByBorough', 'getClosedCaseById', 'addClosedCrime', 'getAllCrimes'];
+        const methodsToBind = ['clientLoaded', 'addCrime', 'getCrimeByType','getCrimeByBorough', 'addClosedCrime', 'getAllCrimes'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -87,21 +87,6 @@ export default class CrimeClient extends BaseClass {
             return response.data;
         } catch (error) {
             this.handleError("addCrime", error, errorCallback);
-        }
-    }
-
-    /**
-     * Gets the closed case by Id
-     * @param id
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns crime by Id
-     */
-    async getClosedCaseById(id, errorCallback) {
-        try {
-            const response = await this.client.get(`/crimes/closed/${id}`);
-            return response.data;
-        } catch (error) {
-            this.handleError("getClosedCaseById", error, errorCallback)
         }
     }
 
