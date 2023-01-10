@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
@@ -35,7 +34,6 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
 
         log.info(gson.toJson(input));
 
-        //Added a new ServiceComponentCrime
         /**
          * CrimeServiceComponent is a spring/ Dagger dependency controller in a sense
          * Our dependency folder is instantiating and packaging up a component, from which

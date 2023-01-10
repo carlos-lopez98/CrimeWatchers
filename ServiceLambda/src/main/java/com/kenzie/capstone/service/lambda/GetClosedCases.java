@@ -2,7 +2,6 @@ package com.kenzie.capstone.service.lambda;
 
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
