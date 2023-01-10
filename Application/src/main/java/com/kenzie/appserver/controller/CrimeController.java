@@ -3,6 +3,7 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.controller.model.CreateCrimeRequest;
 import com.kenzie.appserver.controller.model.CrimeResponse;
 import com.kenzie.appserver.converter.ZonedDateTimeConverter;
+import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.service.CrimeService;
 
 
@@ -50,19 +51,38 @@ public class CrimeController {
         return ResponseEntity.ok(crimeResponse);
     }
 
-    @GetMapping("/active/{crimeType}")
-    public ResponseEntity<List<CrimeResponse>> getCrimeByType(@PathVariable("crimeType") String crimeType){
-        //TODO return all crimes of crimeType
-        List<Crime> crimes = crimeService.findByCrimeType(crimeType);
-        if (crimes == null) {
+//    @GetMapping("/active/{crimeType}")
+//    public ResponseEntity<List<CrimeResponse>> getCrimeByType(@PathVariable("crimeType") String crimeType){
+//        //TODO return all crimes of crimeType
+//        List<Crime> crimes = crimeService.findByCrimeType(crimeType);
+//        if (crimes == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        List<CrimeResponse> crimeResponses = getCrimeResponseList(crimes);
+//        return ResponseEntity.ok(crimeResponses);
+//    }
+
+    @GetMapping("/active/{id}/{borough}")
+    public ResponseEntity<CrimeResponse> getCrimeById(@PathVariable("id") String id, @PathVariable("borough") String borough) {
+        //TODO return all borough crimes
+
+        CrimeId crimeId = new CrimeId();
+        crimeId.setBorough(borough);
+        crimeId.setId(id);
+
+        Crime crime = crimeService.findByCaseIdActive(crimeId);
+
+        if (crime == null) {
             return ResponseEntity.notFound().build();
         }
 
-        List<CrimeResponse> crimeResponses = getCrimeResponseList(crimes);
-        return ResponseEntity.ok(crimeResponses);
+        CrimeResponse response = crimeToResponse(crime);
+
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/active/{borough}")
+    @GetMapping("/active/borough/{borough}")
     public ResponseEntity<List<CrimeResponse>> getCrimeByBorough(@PathVariable("borough") String borough) {
         //TODO return all borough crimes
         List<Crime> crimes = crimeService.findCrimeByBorough(borough);
@@ -135,5 +155,16 @@ public class CrimeController {
     private Crime requestToCrime (CreateCrimeRequest request){
         return new Crime(request.getCaseId(), request.getBorough(), request.getState()
                 , request.getCrimeType(), request.getDescription(), request.getZonedDateTime());
+    }
+
+    private CrimeResponse crimeToResponse(Crime crime){
+        CrimeResponse newResponse = new CrimeResponse();
+        newResponse.setCaseId(crime.getCaseId());
+        newResponse.setCrimeType(crime.getCrimeType());
+        newResponse.setBorough(crime.getBorough());
+        newResponse.setState(crime.getState());
+        newResponse.setDescription(crime.getDescription());
+        newResponse.setZonedDateTime(crime.getDateAndTime());
+     return newResponse;
     }
 }

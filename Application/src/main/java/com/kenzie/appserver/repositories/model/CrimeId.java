@@ -12,12 +12,12 @@ public class CrimeId implements Serializable {
     private String id;
     private String borough;
 
-    @DynamoDBHashKey
+    @DynamoDBRangeKey
     public String getId(){
         return this.id;
     }
 
-    @DynamoDBRangeKey
+    @DynamoDBHashKey
     public String getBorough(){
         return this.borough;
     }
