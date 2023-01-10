@@ -1,5 +1,7 @@
 package com.kenzie.capstone.service.lambda;
 
+import com.kenzie.capstone.service.LambdaService;
+import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
@@ -42,8 +44,8 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
          * in every class the we need them (they're dependencies for other classes)
          */
 
-        ServiceComponentCrime serviceComponent = DaggerServiceComponent.create();
-        LambdaCrimeService lambdaCrimeService = serviceComponent.provideLambdaCrimeService();
+        ServiceComponent serviceComponent = DaggerServiceComponent.create();
+        LambdaService lambdaCrimeService = serviceComponent.provideLambdaService();
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
@@ -60,7 +62,7 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
 
         try {
             //Changed to CrimeService & CrimeExampleData
-            CrimeData crimeData = lambdaCrimeService.setExampleData(data);
+            CrimeData crimeData = lambdaCrimeService.addClosedCase(data);
             String output = gson.toJson(crimeData);
 
             return response
