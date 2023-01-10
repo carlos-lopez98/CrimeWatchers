@@ -7,6 +7,7 @@ import com.kenzie.appserver.service.model.Crime;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.ExampleData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class CrimeService {
     private CrimeRepository crimeRepository;
     private LambdaServiceClient lambdaServiceClient;
 
+    @Autowired
     public CrimeService(CrimeRepository crimeRepository, LambdaServiceClient lambdaServiceClient) {
         this.crimeRepository = crimeRepository;
         this.lambdaServiceClient = lambdaServiceClient;
@@ -105,16 +107,34 @@ public class CrimeService {
         List<Crime> crimesList = new ArrayList<>();
 
         //Returns a list of crimes from the ActiveCrimeRepository
-        for(CrimeRecord record : dataFromDynamo){
-            if(record.getCrimeType().equals(borough)) {
+        for (CrimeRecord record : dataFromDynamo) {
+            if (record.getCrimeType().equals(borough)) {
                 crimesList.add(new Crime(record.getCaseId(), record.getBorough(),
                         record.getState(), record.getCrimeType(), record.getDescription(), record.getZonedDateTime()));
             }
         }
 
         return crimesList;
+    }
 
-        //TODO implement findCrimeByBorough through CrudRepository
+    public List<CrimeData>  getClosedCases(String borough) {
+
+        List<CrimeData> crimeDataList = lambdaServiceClient.getClosedCases(borough);
+
+        if(crimeDataList.isEmpty()){
+            throw new RuntimeException("LambdaServiceClient is not finding any cases for that borough");
+        }
+
+        return crimeDataList;
+    }
+
+    public CrimeData addClosedCase(CrimeData crimeData) {
+        CrimeData addedCrime = lambdaServiceClient.addClosedCase(crimeData);
+        return addedCrime;
+    }
+
+
+    //TODO implement findCrimeByBorough through CrudRepository
         // Example getting data from the lambda
         //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(borough);
 
@@ -126,5 +146,5 @@ public class CrimeService {
 //                .orElse(null);
 //
 //        return dataFromDynamo;
-    }
+
 }
