@@ -45,7 +45,7 @@ public class CrimeServiceTest {
         record.setCrimeType("Theft");
 
         // WHEN
-        when(crimeRepository.findById(crimeId)).thenReturn(Optional.of(record));
+        when(crimeRepository.findById(crimeId)).thenReturn(record);
         Crime crime = crimeService.findByCaseIdActive(crimeId);
 
         // THEN
@@ -64,7 +64,7 @@ public class CrimeServiceTest {
         crimeId.setId(id);
         crimeId.setBorough("Long Beach");
 
-        when(crimeRepository.findById(crimeId)).thenReturn(Optional.empty());
+        when(crimeRepository.findById(crimeId)).thenReturn(null);
 
         // WHEN
         Crime crime = crimeService.findByCaseIdActive(crimeId);

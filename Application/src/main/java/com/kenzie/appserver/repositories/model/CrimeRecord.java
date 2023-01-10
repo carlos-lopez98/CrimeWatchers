@@ -20,12 +20,12 @@ public class CrimeRecord {
     private String description;
     private String zonedDateTime;
 
-    @DynamoDBHashKey(attributeName = "id")
+    @DynamoDBRangeKey(attributeName = "id")
     public String getId() {
         return crimeId != null ? crimeId.getId() : null;
     }
 
-    @DynamoDBRangeKey(attributeName = "borough")
+    @DynamoDBHashKey(attributeName = "borough")
     public String getBorough() {
         return crimeId != null ? crimeId.getBorough() : null;
     }
