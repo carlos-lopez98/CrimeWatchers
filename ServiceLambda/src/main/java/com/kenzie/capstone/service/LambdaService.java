@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class LambdaService {
 
@@ -38,12 +39,11 @@ public class LambdaService {
 //    }
 
     //Calls CrimeDao to get a closed case
-    public CrimeData getClosedCase(String id) {
-        List<CrimeDataRecord> records = crimeDao.getClosedCase(id);
+    public List<CrimeData> getClosedCases(String borough) {
+        List<CrimeDataRecord> records = crimeDao.getClosedCases(borough);
 
-        if (records.size() > 0) {
-            return new CrimeData(records.get(0).getId(), records.get(0).getBorough(), records.get(0).getState(), records.get(0).getCrimeType(),
-                    records.get(0).getDescription(), records.get(0).getTime());
+        if(!records.isEmpty()){
+            return records.stream().map(this::recordToData).collect(Collectors.toList());
         }
 
         return null;
@@ -59,5 +59,13 @@ public class LambdaService {
         return new CrimeData(id, record.getBorough(), record.getState(), record.getCrimeType(), record.getDescription(), record.getTime());
     }
 
+
+
+    private CrimeData recordToData(CrimeDataRecord record) {
+        CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(), record.getCrimeType(),
+                record.getDescription(), record.getTime());
+
+        return data;
+    }
 
 }
