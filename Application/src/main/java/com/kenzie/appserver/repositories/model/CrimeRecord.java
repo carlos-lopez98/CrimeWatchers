@@ -10,16 +10,16 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "CrimeTable")
 public class CrimeRecord {
 
-    private String caseId;
+    private String id;
     private String borough;
     private String state;
     private String crimeType;
     private String description;
     private String zonedDateTime;
 
-    @DynamoDBRangeKey(attributeName = "caseId")
+    @DynamoDBRangeKey(attributeName = "id")
     public String getCaseId() {
-        return caseId;
+        return id;
     }
 
     @DynamoDBHashKey(attributeName = "borough")
@@ -48,7 +48,7 @@ public class CrimeRecord {
     }
 
     public void setCaseId(String caseId) {
-        this.caseId = caseId;
+        this.id = caseId;
     }
 
     public void setBorough(String borough) {
@@ -80,11 +80,11 @@ public class CrimeRecord {
             return false;
         }
         CrimeRecord crimeRecord = (CrimeRecord) o;
-        return Objects.equals(caseId, crimeRecord.getCaseId());
+        return Objects.equals(id, crimeRecord.getCaseId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(caseId);
+        return Objects.hash(id);
     }
 }

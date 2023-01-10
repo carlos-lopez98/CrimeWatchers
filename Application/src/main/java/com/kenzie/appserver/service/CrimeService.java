@@ -85,20 +85,6 @@ public class CrimeService {
         }
 
         return crimesList;
-
-
-        //TODO implement findCrimeByBorough through CrudRepository
-        // Example getting data from the lambda
-        //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(crimeType);
-
-        // Example getting data from the local repository
-//        Crime dataFromDynamo = crimeRepository
-//                .findById(crimeType)
-//                .map(crime -> new Crime(crime.getCaseId(), crime.getBorough(),
-//                        crime.getState(), crime.getCrimeType(), crime.getDescription(), crime.getZonedDateTime()))
-//                .orElse(null);
-
-       // return dataFromDynamo;
     }
 
     public List<Crime> findCrimeByBorough(String borough) {
@@ -133,18 +119,17 @@ public class CrimeService {
         return addedCrime;
     }
 
-
     //TODO implement findCrimeByBorough through CrudRepository
-        // Example getting data from the lambda
-        //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(borough);
+    // Example getting data from the lambda
+    //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(crimeType);
 
-        // Example getting data from the local repository
+    // Example getting data from the local repository
 //        Crime dataFromDynamo = crimeRepository
-//                .findById(borough)
+//                .findById(crimeType)
 //                .map(crime -> new Crime(crime.getCaseId(), crime.getBorough(),
 //                        crime.getState(), crime.getCrimeType(), crime.getDescription(), crime.getZonedDateTime()))
 //                .orElse(null);
-//
-//        return dataFromDynamo;
+
+    // return dataFromDynamo;
 
 }
