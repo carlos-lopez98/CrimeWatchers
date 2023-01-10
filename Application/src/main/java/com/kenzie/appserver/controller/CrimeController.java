@@ -7,19 +7,14 @@ import com.kenzie.appserver.service.CrimeService;
 
 
 import com.kenzie.appserver.service.model.Crime;
-import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.CrimeData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.UUID.randomUUID;
 
 @RestController
 @RequestMapping("/crimes")
@@ -81,28 +76,6 @@ public class CrimeController {
         return ResponseEntity.ok(crimeResponses);
     }
 
-    private Crime requestToCrime (CreateCrimeRequest request){
-        return new Crime(request.getCaseId(), request.getBorough(), request.getState()
-                , request.getCrimeType(), request.getDescription(), request.getZonedDateTime());
-    }
-
-    private List<CrimeResponse> getCrimeResponseList(List<Crime> crimes){
-        List<CrimeResponse> responseList = new ArrayList<>();
-
-        for(Crime crime : crimes){
-            CrimeResponse crimeResponse = new CrimeResponse();
-            crimeResponse.setCaseId(crime.getCaseId());
-            crimeResponse.setBorough(crime.getBorough());
-            crimeResponse.setState(crime.getState());
-            crimeResponse.setCrimeType(crime.getCrimeType());
-            crimeResponse.setDescription(crime.getDescription());
-            responseList.add(crimeResponse);
-        }
-
-        return responseList;
-    }
-
-
     @GetMapping("/closed/{borough}")
     public ResponseEntity<List<CrimeResponse>> getClosedCaseByBorough(@PathVariable("borough") String borough){
 
@@ -142,5 +115,26 @@ public class CrimeController {
         response.setCaseId(data.getId());
 
         return response;
+    }
+
+    private List<CrimeResponse> getCrimeResponseList(List<Crime> crimes){
+        List<CrimeResponse> responseList = new ArrayList<>();
+
+        for(Crime crime : crimes){
+            CrimeResponse crimeResponse = new CrimeResponse();
+            crimeResponse.setCaseId(crime.getCaseId());
+            crimeResponse.setBorough(crime.getBorough());
+            crimeResponse.setState(crime.getState());
+            crimeResponse.setCrimeType(crime.getCrimeType());
+            crimeResponse.setDescription(crime.getDescription());
+            responseList.add(crimeResponse);
+        }
+
+        return responseList;
+    }
+
+    private Crime requestToCrime (CreateCrimeRequest request){
+        return new Crime(request.getCaseId(), request.getBorough(), request.getState()
+                , request.getCrimeType(), request.getDescription(), request.getZonedDateTime());
     }
 }
