@@ -41,8 +41,9 @@ class LambdaServiceTest {
 
     @Test
     void addClosedCaseTest() {
-//        ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
-//        ArgumentCaptor<String> dataCaptor = ArgumentCaptor.forClass(String.class);
+        //Keeping around for reference
+        //ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
+        //ArgumentCaptor<String> dataCaptor = ArgumentCaptor.forClass(String.class);
 
         ArgumentCaptor<CrimeDataRecord> recordArgumentCaptor = ArgumentCaptor.forClass(CrimeDataRecord.class);
         // GIVEN

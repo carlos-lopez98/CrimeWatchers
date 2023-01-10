@@ -101,10 +101,10 @@ public class CrimeController {
     }
 
 
-    @GetMapping("/closed/{id}")
-    public ResponseEntity<CrimeResponse> getClosedCaseById(@PathVariable("id") String id){
+    @GetMapping("/closed/{borough}")
+    public ResponseEntity<CrimeResponse> getClosedCaseById(@PathVariable("borough") String borough){
 
-        CrimeData closedCase = lambdaServiceClient.getClosedCase(id);
+        CrimeData closedCase = lambdaServiceClient.getClosedCases(borough);
 
         CrimeResponse response = new CrimeResponse();
         response.setBorough(closedCase.getBorough());
