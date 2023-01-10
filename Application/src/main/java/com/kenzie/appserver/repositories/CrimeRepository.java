@@ -1,5 +1,6 @@
 package com.kenzie.appserver.repositories;
 
+import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
 
 import com.kenzie.appserver.service.model.Crime;
@@ -11,5 +12,5 @@ import java.util.List;
 
 @EnableScan
 @Repository
-public interface CrimeRepository extends CrudRepository<CrimeRecord, String> {
+public interface CrimeRepository extends CrudRepository<CrimeRecord, CrimeId> {
 }
