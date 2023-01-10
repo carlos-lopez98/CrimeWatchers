@@ -1,12 +1,14 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.CrimeRepository;
+import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
 import com.kenzie.appserver.service.model.Crime;
 
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.ExampleData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ public class CrimeService {
     private CrimeRepository crimeRepository;
     private LambdaServiceClient lambdaServiceClient;
 
+    @Autowired
     public CrimeService(CrimeRepository crimeRepository, LambdaServiceClient lambdaServiceClient) {
         this.crimeRepository = crimeRepository;
         this.lambdaServiceClient = lambdaServiceClient;
@@ -34,7 +37,7 @@ public class CrimeService {
 
         //Returns a list of crimes from the ActiveCrimeRepository
         for(CrimeRecord record : dataFromDynamo){
-            crimesList.add(new Crime(record.getCaseId(), record.getBorough(),
+            crimesList.add(new Crime(record.getId(), record.getBorough(),
                     record.getState(), record.getCrimeType(), record.getDescription(), record.getZonedDateTime()));
         }
 
@@ -42,11 +45,11 @@ public class CrimeService {
     }
 
     //Returns active case from local repository
-    public Crime findByCaseIdActive(String caseId) {
+    public Crime findByCaseIdActive(CrimeId crimeId) {
 
         Crime dataFromDynamo = crimeRepository
-                .findById(caseId)
-                .map(crime -> new Crime(crime.getCaseId(), crime.getBorough(),
+                .findById(crimeId)
+                .map(crime -> new Crime(crime.getId(), crime.getBorough(),
                         crime.getState(), crime.getCrimeType(), crime.getDescription(), crime.getZonedDateTime()))
                 .orElse(null);
 
@@ -57,7 +60,7 @@ public class CrimeService {
 
         // Example sending data to the local repository
         CrimeRecord crimeRecord = new CrimeRecord();
-        crimeRecord.setCaseId(crime.getCaseId());
+        crimeRecord.setId(crime.getCaseId());
         crimeRecord.setBorough(crime.getBorough());
         crimeRecord.setState(crime.getState());
         crimeRecord.setDescription(crime.getDescription());
@@ -77,26 +80,12 @@ public class CrimeService {
         //Returns a list of crimes from the ActiveCrimeRepository
         for(CrimeRecord record : dataFromDynamo){
             if(record.getCrimeType().equals(crimeType)) {
-                crimesList.add(new Crime(record.getCaseId(), record.getBorough(),
+                crimesList.add(new Crime(record.getId(), record.getBorough(),
                         record.getState(), record.getCrimeType(), record.getDescription(), record.getZonedDateTime()));
             }
         }
 
         return crimesList;
-
-
-        //TODO implement findCrimeByBorough through CrudRepository
-        // Example getting data from the lambda
-        //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(crimeType);
-
-        // Example getting data from the local repository
-//        Crime dataFromDynamo = crimeRepository
-//                .findById(crimeType)
-//                .map(crime -> new Crime(crime.getCaseId(), crime.getBorough(),
-//                        crime.getState(), crime.getCrimeType(), crime.getDescription(), crime.getZonedDateTime()))
-//                .orElse(null);
-
-       // return dataFromDynamo;
     }
 
     public List<Crime> findCrimeByBorough(String borough) {
@@ -105,26 +94,43 @@ public class CrimeService {
         List<Crime> crimesList = new ArrayList<>();
 
         //Returns a list of crimes from the ActiveCrimeRepository
-        for(CrimeRecord record : dataFromDynamo){
-            if(record.getCrimeType().equals(borough)) {
-                crimesList.add(new Crime(record.getCaseId(), record.getBorough(),
+        for (CrimeRecord record : dataFromDynamo) {
+            if (record.getCrimeType().equals(borough)) {
+                crimesList.add(new Crime(record.getId(), record.getBorough(),
                         record.getState(), record.getCrimeType(), record.getDescription(), record.getZonedDateTime()));
             }
         }
 
         return crimesList;
+    }
 
-        //TODO implement findCrimeByBorough through CrudRepository
-        // Example getting data from the lambda
-        //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(borough);
+    public List<CrimeData>  getClosedCases(String borough) {
 
-        // Example getting data from the local repository
+        List<CrimeData> crimeDataList = lambdaServiceClient.getClosedCases(borough);
+
+        if(crimeDataList.isEmpty()){
+            throw new RuntimeException("LambdaServiceClient is not finding any cases for that borough");
+        }
+
+        return crimeDataList;
+    }
+
+    public CrimeData addClosedCase(CrimeData crimeData) {
+        CrimeData addedCrime = lambdaServiceClient.addClosedCase(crimeData);
+        return addedCrime;
+    }
+
+    //TODO implement findCrimeByBorough through CrudRepository
+    // Example getting data from the lambda
+    //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(crimeType);
+
+    // Example getting data from the local repository
 //        Crime dataFromDynamo = crimeRepository
-//                .findById(borough)
+//                .findById(crimeType)
 //                .map(crime -> new Crime(crime.getCaseId(), crime.getBorough(),
 //                        crime.getState(), crime.getCrimeType(), crime.getDescription(), crime.getZonedDateTime()))
 //                .orElse(null);
-//
-//        return dataFromDynamo;
-    }
+
+    // return dataFromDynamo;
+
 }

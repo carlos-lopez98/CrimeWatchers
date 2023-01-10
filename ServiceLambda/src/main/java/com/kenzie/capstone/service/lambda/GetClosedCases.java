@@ -2,7 +2,6 @@ package com.kenzie.capstone.service.lambda;
 
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
@@ -16,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -41,9 +41,9 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        String id = input.getPathParameters().get("id"); //The Id will be borough
+        String borough = input.getPathParameters().get("borough"); //The Id will be borough
 
-        if (id == null || id.length() == 0) {
+        if (borough == null || borough.length() == 0) {
             return response
                     .withStatusCode(400)
                     .withBody("Id is invalid");
@@ -51,7 +51,9 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
 
         try {
             //Changed CrimeService & CrimeExampleData
-            CrimeData crimeData = lambdaCrimeService.getClosedCase(id);
+            //Returns a list of crimes per particular area
+            List<CrimeData> crimeData = lambdaCrimeService.getClosedCases(borough);
+
             String output = gson.toJson(crimeData);
 
             return response
