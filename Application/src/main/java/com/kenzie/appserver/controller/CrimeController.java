@@ -22,7 +22,6 @@ public class CrimeController {
 
     private CrimeService crimeService;
 
-    @Autowired
     CrimeController(CrimeService crimeService) {
         this.crimeService = crimeService;
     }
