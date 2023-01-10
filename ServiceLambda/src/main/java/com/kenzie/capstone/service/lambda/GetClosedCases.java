@@ -40,7 +40,7 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        String id = input.getPathParameters().get("id"); //The Id will be borough
+        String id = input.getPathParameters().get("borough"); //The Id will be borough
 
         if (id == null || id.length() == 0) {
             return response

@@ -1,6 +1,5 @@
 package com.kenzie.capstone.service.lambda;
 
-import com.google.gson.JsonObject;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
@@ -14,9 +13,6 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.model.CrimeDataRecord;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

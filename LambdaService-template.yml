@@ -6,54 +6,6 @@ Parameters:
     Type: String
     Default: dev
 Resources:
-  GetExampleDataFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.GetExampleData
-      Runtime: java11
-      Description: Get Example Data for given id
-      MemorySize: 512
-      Timeout: 240
-      # Function's execution role
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambda_ReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-        - AmazonS3FullAccess
-        - AmazonDynamoDBFullAccess
-      Tracing: Active
-      Events:
-        UpdateResource:
-          Type: Api
-          Properties:
-            Path: /example/{id}
-            Method: get
-  SetExampleDataFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.SetExampleData
-      Runtime: java11
-      Description: Set Example Data
-      MemorySize: 512
-      Timeout: 240
-      # Function's execution role
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AWSLambda_ReadOnlyAccess
-        - AWSXrayWriteOnlyAccess
-        - AWSLambdaVPCAccessExecutionRole
-        - AmazonS3FullAccess
-        - AmazonDynamoDBFullAccess
-      Tracing: Active
-      Events:
-        UpdateResource:
-          Type: Api
-          Properties:
-            Path: /example/
-            Method: post
   GetClosedCasesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -100,5 +52,5 @@ Resources:
         UpdateResource:
           Type: Api
           Properties:
-            Path: /crime/{borough}
+            Path: /crime/{id}
             Method: post
