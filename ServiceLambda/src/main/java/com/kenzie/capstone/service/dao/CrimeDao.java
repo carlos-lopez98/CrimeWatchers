@@ -17,8 +17,8 @@ public class CrimeDao{
         this.mapper = mapper;
     }
 
-    //Gets Closed Case by ID from Lambda Table
-    public List<CrimeDataRecord> getClosedCase(String id) {
+    //Gets Closed Cases by borough from Lambda Table
+    public List<CrimeDataRecord> getClosedCases(String id) {
         CrimeDataRecord crimeDataRecord = new CrimeDataRecord();
         crimeDataRecord.setId(id);
 

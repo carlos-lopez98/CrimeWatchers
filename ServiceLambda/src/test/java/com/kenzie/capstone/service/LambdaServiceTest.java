@@ -1,6 +1,9 @@
 package com.kenzie.capstone.service;
 
+import com.kenzie.capstone.service.dao.CrimeDao;
 import com.kenzie.capstone.service.dao.ExampleDao;
+import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.CrimeDataRecord;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.ExampleRecord;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,7 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.ArgumentCaptor;
 
+import java.time.ZonedDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -24,64 +30,78 @@ class LambdaServiceTest {
      *  expenseService.getExpenseById
      *  ------------------------------------------------------------------------ **/
 
-    private ExampleDao exampleDao;
+    private CrimeDao crimeDao;
     private LambdaService lambdaService;
 
     @BeforeAll
     void setup() {
-        this.exampleDao = mock(ExampleDao.class);
-        this.lambdaService = new LambdaService(exampleDao);
+        this.crimeDao = mock(CrimeDao.class);
+        this.lambdaService = new LambdaService(crimeDao);
     }
 
     @Test
-    void setDataTest() {
-        ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> dataCaptor = ArgumentCaptor.forClass(String.class);
+    void addClosedCaseTest() {
+//        ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
+//        ArgumentCaptor<String> dataCaptor = ArgumentCaptor.forClass(String.class);
 
+        ArgumentCaptor<CrimeDataRecord> recordArgumentCaptor = ArgumentCaptor.forClass(CrimeDataRecord.class);
         // GIVEN
         String data = "somedata";
 
+        CrimeDataRecord crimeDataRecord = new CrimeDataRecord();
+        crimeDataRecord.setId(String.valueOf(UUID.randomUUID()));
+        crimeDataRecord.setCrimeType("Murder");
+        crimeDataRecord.setBorough("New York");
+        crimeDataRecord.setDescription("Killer killed someone");
+        crimeDataRecord.setState("New York");
+        crimeDataRecord.setTime(ZonedDateTime.now());
+
         // WHEN
-        ExampleData response = this.lambdaService.setExampleData(data);
+        CrimeData response = this.lambdaService.addClosedCase(crimeDataRecord);
 
         // THEN
-        verify(exampleDao, times(1)).setExampleData(idCaptor.capture(), dataCaptor.capture());
+        verify(crimeDao, times(1)).addClosedCase(recordArgumentCaptor.capture());
 
-        assertNotNull(idCaptor.getValue(), "An ID is generated");
-        assertEquals(data, dataCaptor.getValue(), "The data is saved");
+        assertNotNull(recordArgumentCaptor.getValue().getId(), "An ID is generated");
+        assertEquals("Killer killed someone", recordArgumentCaptor.getValue().getDescription(), "The data is saved");
 
         assertNotNull(response, "A response is returned");
-        assertEquals(idCaptor.getValue(), response.getCaseId(), "The response id should match");
-        assertEquals(data, response.getBorough(), "The response data should match");
+        assertEquals(recordArgumentCaptor.getValue().getId(), response.getId(), "The response id should match");
+        assertEquals("Killer killed someone", response.getDescription(), "The response description should match");
     }
 
     @Test
-    void getDataTest() {
-        ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
+    void getClosedCasesByBoroughTest() {
+        ArgumentCaptor<String> boroughCaptor = ArgumentCaptor.forClass(String.class);
 
         // GIVEN
-        String id = "fakeid";
-        String data = "somedata";
-        ExampleRecord record = new ExampleRecord();
-        record.setId(id);
-        record.setData(data);
+        String borough = "New York";
+        CrimeDataRecord record = new CrimeDataRecord();
+        String randomId = String.valueOf(UUID.randomUUID());
+        record.setBorough(borough);
+        record.setId(randomId);
+        record.setDescription("Killer Killed Someone");
 
-
-        when(exampleDao.getExampleData(id)).thenReturn(Arrays.asList(record));
+        when(crimeDao.getClosedCases(borough)).thenReturn(Arrays.asList(record));
 
         // WHEN
-        ExampleData response = this.lambdaService.getExampleData(id);
+        List<CrimeData> crimeDataList = this.lambdaService.getClosedCases(borough);
 
         // THEN
-        verify(exampleDao, times(1)).getExampleData(idCaptor.capture());
+        verify(crimeDao, times(1)).getClosedCases(boroughCaptor.capture());
 
-        assertEquals(id, idCaptor.getValue(), "The correct id is used");
+        assertEquals(borough, boroughCaptor.getValue(), "The correct borough is used");
 
-        assertNotNull(response, "A response is returned");
-        assertEquals(id, response.getCaseId(), "The response id should match");
-        assertEquals(data, response.getBorough(), "The response data should match");
+        //Just asserts that we get a list of crimes back
+        assertNotNull(crimeDataList, "A response is returned");
+
+        /**
+         * Keeping this around for reference
+         */
+
+        // assertEquals(borough, crimeDataList.get(0).getBorough(), "Borough should be ");
+        // assertEquals(data, response.getBorough(), "The response data should match");
     }
 
     // Write additional tests here
-
 }
