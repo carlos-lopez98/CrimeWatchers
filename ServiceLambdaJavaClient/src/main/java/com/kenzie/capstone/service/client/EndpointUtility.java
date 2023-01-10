@@ -29,7 +29,9 @@ public class EndpointUtility {
             deploymentName = System.getenv("STACK_NAME");
         }
         if (deploymentName == null) {
-            throw new IllegalArgumentException("Could not find the deployment name in environment variables.  Make sure that you have set up your environment variables using the setupEnvironment.sh script.");
+            throw new IllegalArgumentException("" +
+                    "Could not find the deployment name in environment variables.  " +
+                    "Make sure that you have set up your environment variables using the setupEnvironment.sh script.");
         }
         return deploymentName;
     }
@@ -55,7 +57,8 @@ public class EndpointUtility {
             }
         }
         if (endpointId == null) {
-            throw new IllegalArgumentException("Could not locate the API Gateway endpoint.  Make sure that your API is deployed and that your AWS credentials are valid.");
+            throw new IllegalArgumentException("Could not locate the API Gateway endpoint.  " +
+                    "Make sure that your API is deployed and that your AWS credentials are valid.");
         }
 
         return "https://" + endpointId + ".execute-api." + region + ".amazonaws.com/Prod/";
