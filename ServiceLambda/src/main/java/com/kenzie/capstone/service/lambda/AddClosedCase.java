@@ -2,6 +2,7 @@ package com.kenzie.capstone.service.lambda;
 
 import com.google.gson.JsonObject;
 import com.kenzie.capstone.service.LambdaService;
+import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
 import com.kenzie.capstone.service.model.CrimeData;
@@ -13,6 +14,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kenzie.capstone.service.model.CrimeDataRecord;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
@@ -32,22 +34,6 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
         Gson gson = builder.create();
 
         log.info(gson.toJson(input));
-        JSONParser parser = new JSONParser();
-        JSONObject object = new JSONObject();
-        try {
-             object = (JSONObject) parser.parse(input.getBody());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        CrimeData data;
-
-        if(object != null){
-           if(object.get("borough") != null){
-
-           }
-        }
-
 
         //Added a new ServiceComponentCrime
         /**
@@ -72,17 +58,24 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-
-
-        if (data == null || data.length() == 0) {
+        if (input.getBody() == null || input.getBody().length() == 0) {
             return response
                     .withStatusCode(400)
                     .withBody("data is invalid");
         }
 
+        CrimeDataRecord data = new CrimeDataRecord();
+        data.setTime(new ZonedDateTimeConverter().unconvert(input.getPathParameters().get("time")));
+        data.setId(input.getPathParameters().get("id"));
+        data.setState(input.getPathParameters().get("state"));
+        data.setDescription(input.getPathParameters().get("description"));
+        data.setBorough(input.getPathParameters().get("borough"));
+        data.setCrimeType(input.getPathParameters().get("crimeType"));
+
+
         try {
-            //Changed to CrimeService & CrimeExampleData
-            CrimeData crimeData = lambdaCrimeService.addClosedCase(input.get);
+
+            CrimeData crimeData = lambdaCrimeService.addClosedCase(data);
             String output = gson.toJson(crimeData);
 
             return response
