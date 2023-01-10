@@ -1,7 +1,6 @@
 package com.kenzie.capstone.service.dependency;
 
 import com.kenzie.capstone.service.LambdaCrimeService;
-import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dao.CrimeDao;
 import com.kenzie.capstone.service.dao.ExampleDao;
 

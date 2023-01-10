@@ -3,10 +3,6 @@ package com.kenzie.capstone.service;
 import com.kenzie.capstone.service.dao.CrimeDao;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.CrimeDataRecord;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.dao.ExampleDao;
-import com.kenzie.capstone.service.model.ExampleRecord;
-
 import javax.inject.Inject;
 
 import java.util.List;
@@ -24,6 +20,9 @@ public class LambdaCrimeService {
 
     //Calls CrimeDao to get a closed case
     public CrimeData getClosedCase(String id) {
+        if(id.isEmpty()){
+            throw new IllegalArgumentException("id cannot be empty");
+        }
         List<CrimeDataRecord> records = crimeDao.getClosedCase(id);
 
         if (records.size() > 0) {
@@ -36,7 +35,9 @@ public class LambdaCrimeService {
 
     //Calls CrimeDao to add a closed case
     public CrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
-
+        if(crimeDataRecord == null){
+            throw new NullPointerException("crimeDataRecord is empty");
+        }
         String id = UUID.randomUUID().toString();
 
         CrimeDataRecord record = crimeDao.addClosedCase(crimeDataRecord);

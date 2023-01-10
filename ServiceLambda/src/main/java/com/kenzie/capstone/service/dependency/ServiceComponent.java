@@ -1,7 +1,5 @@
 package com.kenzie.capstone.service.dependency;
 
-import com.kenzie.capstone.service.LambdaService;
-
 import dagger.Component;
 
 import javax.inject.Singleton;
