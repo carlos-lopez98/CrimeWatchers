@@ -1,10 +1,12 @@
 package com.kenzie.capstone.service.client;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.CrimeDataResponse;
 import com.kenzie.capstone.service.model.ExampleData;
 
+import java.util.List;
 
 public class LambdaServiceClient {
 
@@ -17,14 +19,17 @@ public class LambdaServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public CrimeData getClosedCases(String borough) {
+    public List<CrimeData> getClosedCases(String borough) {
         EndpointUtility endpointUtility = new EndpointUtility();
 
         String response = endpointUtility.getEndpoint(GET_CLOSED_CASE.replace("{borough}", borough));
 
-        CrimeData crimeData;
+        List<CrimeData> crimeDataList;
+
         try {
-            crimeData = mapper.readValue(response, CrimeData.class);
+
+            crimeDataList = mapper.readValue(response, new TypeReference<List<CrimeData>>() {});
+
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
@@ -37,7 +42,7 @@ public class LambdaServiceClient {
 //        crimeDataResponse.setDescription(crimeData.getDescription());
 //        crimeDataResponse.setZonedDateTime(crimeData.getTime().toString());
 
-        return crimeData;
+        return crimeDataList;
     }
 
     public CrimeData addClosedCase(CrimeData crimeData) {

@@ -9,12 +9,15 @@ import com.kenzie.appserver.service.CrimeService;
 import com.kenzie.appserver.service.model.Crime;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.CrimeData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.UUID.randomUUID;
 
@@ -22,12 +25,11 @@ import static java.util.UUID.randomUUID;
 @RequestMapping("/crimes")
 public class CrimeController {
 
-    private LambdaServiceClient lambdaServiceClient;
     private CrimeService crimeService;
 
-    CrimeController(CrimeService crimeService, LambdaServiceClient lambdaServiceClient) {
+    @Autowired
+    CrimeController(CrimeService crimeService) {
         this.crimeService = crimeService;
-        this.lambdaServiceClient = lambdaServiceClient;
     }
 
    @GetMapping("/all")
@@ -102,25 +104,20 @@ public class CrimeController {
 
 
     @GetMapping("/closed/{borough}")
-    public ResponseEntity<CrimeResponse> getClosedCaseById(@PathVariable("borough") String borough){
+    public ResponseEntity<List<CrimeResponse>> getClosedCaseByBorough(@PathVariable("borough") String borough){
 
-        CrimeData closedCase = lambdaServiceClient.getClosedCases(borough);
+        List<CrimeData> closedCases = crimeService.getClosedCases(borough);
 
-        CrimeResponse response = new CrimeResponse();
-        response.setBorough(closedCase.getBorough());
-        response.setCaseId(closedCase.getId());
-        response.setCrimeType(closedCase.getCrimeType());
-        response.setDescription(closedCase.getDescription());
-        response.setState(closedCase.getState());
 
-        response.setZonedDateTime(new ZonedDateTimeConverter().convert(closedCase.getTime()));
 
-        return ResponseEntity.ok(response);
+        List<CrimeResponse> crimeResponseList = closedCases.stream().map(data -> crimeDatatoResponse(data)).collect(Collectors.toList());
+
+        return ResponseEntity.ok(crimeResponseList);
     }
 
     @PostMapping("/closed")
     public ResponseEntity<CrimeResponse> addClosedCrime(@RequestBody CreateCrimeRequest createCrimeRequest) {
-        CrimeData crimeData = lambdaServiceClient.addClosedCase(requestToCrimeData(createCrimeRequest));
+        CrimeData crimeData = crimeService.addClosedCase(requestToCrimeData(createCrimeRequest));
 
         CrimeResponse crimeResponse = new CrimeResponse();
         crimeResponse.setCaseId(crimeData.getId());
@@ -133,5 +130,17 @@ public class CrimeController {
     private CrimeData requestToCrimeData(CreateCrimeRequest request){
         return new CrimeData(request.getCaseId(), request.getBorough(), request.getState(), request.getCrimeType(), request.getDescription(),
                 new ZonedDateTimeConverter().unconvert(request.getZonedDateTime()));
+    }
+
+    private CrimeResponse crimeDatatoResponse(CrimeData data){
+        CrimeResponse response = new CrimeResponse();
+        response.setZonedDateTime(new ZonedDateTimeConverter().convert(data.getTime()));
+        response.setState(data.getState());
+        response.setDescription(data.getDescription());
+        response.setCrimeType(data.getCrimeType());
+        response.setBorough(data.getBorough());
+        response.setCaseId(data.getId());
+
+        return response;
     }
 }
