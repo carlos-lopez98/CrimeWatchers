@@ -8,8 +8,8 @@ import com.kenzie.capstone.service.model.ExampleData;
 
 public class LambdaServiceClient {
 
-    private static final String GET_CLOSED_CASE = "crimes/closed/{id}";
-    private static final String SET_CLOSED_CASE = "crimes/closed";
+    private static final String GET_CLOSED_CASE = "crimeByBorough/{borough}";
+    private static final String SET_CLOSED_CASE = "crimeById/{id}";
 
     private ObjectMapper mapper;
 
@@ -17,10 +17,10 @@ public class LambdaServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public CrimeData getClosedCase(String caseId) {
+    public CrimeData getClosedCases(String borough) {
         EndpointUtility endpointUtility = new EndpointUtility();
 
-        String response = endpointUtility.getEndpoint(GET_CLOSED_CASE.replace("{caseId}", caseId));
+        String response = endpointUtility.getEndpoint(GET_CLOSED_CASE.replace("{borough}", borough));
 
         CrimeData crimeData;
         try {
