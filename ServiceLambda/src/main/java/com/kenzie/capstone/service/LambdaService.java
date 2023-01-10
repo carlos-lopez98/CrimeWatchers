@@ -40,6 +40,10 @@ public class LambdaService {
 
     //Calls CrimeDao to get a closed case
     public List<CrimeData> getClosedCases(String borough) {
+        if(borough.isEmpty()){
+            throw new IllegalArgumentException("When getting closed case, borough cannot be empty");
+        }
+
         List<CrimeDataRecord> records = crimeDao.getClosedCases(borough);
 
         if(!records.isEmpty()){
@@ -51,7 +55,9 @@ public class LambdaService {
 
     //Calls CrimeDao to add a closed case
     public CrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
-
+        if(crimeDataRecord == null){
+            throw new NullPointerException("Cant retrieve null record.");
+        }
         String id = UUID.randomUUID().toString();
 
         CrimeDataRecord record = crimeDao.addClosedCase(crimeDataRecord);
