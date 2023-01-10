@@ -242,13 +242,13 @@ height: 100vh;
 margin-top: 20px;
 background-color: white;
 font-family: myFont;
-margin-top: ;
 }
 
 .text__Area{
-margin-top: 50px;
+margin-top: 0px;
 display: flex;
 justify-content: space-between;
+padding: 50px;
 }
 
 .text__Search {
@@ -256,6 +256,7 @@ justify-content: space-between;
  border-bottom: solid 1px black;
  margin: 0px 20px;
 }
+
 .giveId{
 font-family: slogan;
 font-size: 2rem;
@@ -277,16 +278,47 @@ background-color: black;
 border-radius: 4%;
 }
 
-.resultArea{
-margin: 4% auto;
+.resultArea__bg{
 background-color: black;
+height: 79vh;
+width: 100%;
+display: flex;
+justify-content: space-around;
+}
 
-height: 60%;
-width: 90%;
-
-border-radius: 5%;
-
+.resultArea{
+display: flex;
+flex-direction: column;
 font-family: slogan;
 color: white;
+margin: 30px 5px;
+height: 90%;
+width: 100%;
+}
 
+.resultArea__innerText{
+height: 10%;
+width: .99;
+margin: 10px;
+text-align: left;
+font-size: 1rem;
+}
+
+.innerText{
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+justify-content: space-around;
+}
+
+.description__Area {
+background-color: white;
+height: 85%;
+width: .99;
+margin: 5px;
+color: black;
+font-family: slogan;
+
+}
+.description_Area__text{
+margin-left: 10px;
 }
