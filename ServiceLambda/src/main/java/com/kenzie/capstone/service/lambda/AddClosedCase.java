@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service.lambda;
 
+import com.google.gson.JsonObject;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponentCrime;
@@ -12,6 +13,9 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,6 +32,22 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
         Gson gson = builder.create();
 
         log.info(gson.toJson(input));
+        JSONParser parser = new JSONParser();
+        JSONObject object = new JSONObject();
+        try {
+             object = (JSONObject) parser.parse(input.getBody());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        CrimeData data;
+
+        if(object != null){
+           if(object.get("borough") != null){
+
+           }
+        }
+
 
         //Added a new ServiceComponentCrime
         /**
@@ -52,7 +72,7 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        String data = input.getBody();
+
 
         if (data == null || data.length() == 0) {
             return response
@@ -62,7 +82,7 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
 
         try {
             //Changed to CrimeService & CrimeExampleData
-            CrimeData crimeData = lambdaCrimeService.addClosedCase(data);
+            CrimeData crimeData = lambdaCrimeService.addClosedCase(input.get);
             String output = gson.toJson(crimeData);
 
             return response
