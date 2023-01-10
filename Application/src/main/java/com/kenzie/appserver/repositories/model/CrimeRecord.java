@@ -4,27 +4,46 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.kenzie.appserver.service.model.Crime;
+import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "CrimeTable")
 public class CrimeRecord {
 
-    private String id;
-    private String borough;
+    @Id
+    private CrimeId crimeId;
+
     private String state;
     private String crimeType;
     private String description;
     private String zonedDateTime;
 
-    @DynamoDBRangeKey(attributeName = "id")
-    public String getCaseId() {
-        return id;
+    @DynamoDBHashKey(attributeName = "id")
+    public String getId() {
+        return crimeId != null ? crimeId.getId() : null;
     }
 
-    @DynamoDBHashKey(attributeName = "borough")
+    @DynamoDBRangeKey(attributeName = "borough")
     public String getBorough() {
-        return borough;
+        return crimeId != null ? crimeId.getBorough() : null;
+    }
+
+    public void setId(String caseId) {
+        if(crimeId == null){
+            crimeId = new CrimeId();
+        }
+
+        crimeId.setId(caseId);
+    }
+
+    public void setBorough(String borough) {
+        if(crimeId == null){
+            crimeId = new CrimeId();
+        }
+
+        crimeId.setBorough(borough);
     }
 
     @DynamoDBAttribute(attributeName = "state")
@@ -47,13 +66,7 @@ public class CrimeRecord {
         return zonedDateTime;
     }
 
-    public void setCaseId(String caseId) {
-        this.id = caseId;
-    }
 
-    public void setBorough(String borough) {
-        this.borough = borough;
-    }
 
     public void setState(String state) {
         this.state = state;
@@ -80,11 +93,11 @@ public class CrimeRecord {
             return false;
         }
         CrimeRecord crimeRecord = (CrimeRecord) o;
-        return Objects.equals(id, crimeRecord.getCaseId());
+        return Objects.equals(crimeId, crimeRecord.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(crimeId);
     }
 }
