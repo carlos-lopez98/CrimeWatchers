@@ -1,5 +1,4 @@
 package com.kenzie.capstone.service.dependency;
-import com.kenzie.capstone.service.LambdaCrimeService;
 
 import dagger.Component;
 
