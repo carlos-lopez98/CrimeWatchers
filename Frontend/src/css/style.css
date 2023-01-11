@@ -158,13 +158,66 @@
 
 .card_trending .trending_header {
     font-size: 40px;
-    margin-top: 25px;
+}
+
+.card-overlay {
+    margin: 30px 0px;
 }
 
 .card_trending .trending_content {
-    font-size: 40px;
-    color: white;
+    color: gray;
     overflow-y: scroll;
+}
+
+.trending_content__container {
+    display: flex;
+    flex-direction: column;
+    border-top: solid white 1px;
+}
+
+.trending_content__container_header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    font-size: 9px;
+    color: white;
+}
+
+.h1_text {
+    margin-left: 20px;
+}
+
+.trending_content__container_header .h2_text {
+    margin-left: 60px;
+}
+
+.trending_content__container_header .h3_text {
+    margin-left: 32%;
+}
+
+.provideInfo_link {
+    color: skyblue;
+}
+
+.provideInfo_link:hover {
+    color: blueviolet;
+}
+
+.trending_content__container_description {
+    display: flex;
+    flex-direction: column;
+    font-size: 8px;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.description_title {
+    color: white;
+}
+
+.description_text {
+    font-size: 12px;
 }
 
 .card .leftBar {
