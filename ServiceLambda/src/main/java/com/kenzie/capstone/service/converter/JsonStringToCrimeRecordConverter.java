@@ -4,15 +4,16 @@ import com.kenzie.capstone.service.model.CrimeData;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kenzie.capstone.service.model.CrimeDataRequest;
 
 
 public class JsonStringToCrimeRecordConverter {
 
-    public CrimeData convert(String body) {
+    public CrimeDataRequest convert(String body) {
         try {
             GsonBuilder builder = new GsonBuilder();
             Gson gson = builder.create();
-            CrimeData crimeDataFromJson = gson.fromJson(body, CrimeData.class);
+            CrimeDataRequest crimeDataFromJson = gson.fromJson(body, CrimeDataRequest.class);
             return crimeDataFromJson;
         } catch (Exception e) {
             throw new IllegalArgumentException("Referral could not be deserialized");

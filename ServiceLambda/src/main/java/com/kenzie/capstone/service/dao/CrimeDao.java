@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service.dao;
 
+import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.CrimeDataRecord;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -33,23 +34,22 @@ public class CrimeDao{
     }
 
     //Will add a closed case to our Lambda Table -- Case must be closed
-    public CrimeData addClosedCase(CrimeData crimeDataRecord) {
+    public CrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
 
-
-        CrimeDataRecord record = dataToRecord(crimeDataRecord);
-
+//        new DynamoDBSaveExpression()
+//                .withExpected(ImmutableMap.of(
+//                        "borough",
+//                        new ExpectedAttributeValue().withExists(false)
+//                ))
 
         try {
-            mapper.save(record, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "id",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
+            mapper.save(crimeDataRecord);
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("id already exists");
         }
 
-        return crimeDataRecord;
+
+        return recordToData(crimeDataRecord);
     }
 
 
@@ -57,13 +57,18 @@ public class CrimeDao{
     CrimeDataRecord record = new CrimeDataRecord();
     record.setDescription(data.getDescription());
     record.setBorough(data.getBorough());
-    record.setTime(ZonedDateTime.now());
+    record.setTime(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
     record.setCrimeType(data.getCrimeType());
     record.setState(data.getState());
     record.setId(data.getId());
     return record;
 }
 
+private CrimeData recordToData(CrimeDataRecord record){
+        CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(),
+                record.getCrimeType(), record.getDescription(), new ZonedDateTimeConverter().unconvert(record.getTime()));
+        return data;
+}
     //Don't need this
     /*    public ExampleData storeExampleData(ExampleData exampleData) {
 

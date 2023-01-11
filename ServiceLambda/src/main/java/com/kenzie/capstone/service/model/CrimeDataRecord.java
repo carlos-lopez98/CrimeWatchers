@@ -1,7 +1,6 @@
 package com.kenzie.capstone.service.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -14,7 +13,7 @@ public class CrimeDataRecord {
     String state;
     String crimeType;
     String description;
-    ZonedDateTime time;
+    String time;
 
 
     @DynamoDBRangeKey(attributeName = "id")
@@ -37,9 +36,8 @@ public class CrimeDataRecord {
     public String getDescription() {
         return description;
     }
-    @DynamoDBAttribute(attributeName = "description")
-    @DynamoDBTypeConverted(converter = ZonedDateTimeConverter.class)
-    public ZonedDateTime getTime() {
+    @DynamoDBAttribute(attributeName = "time")
+    public String getTime() {
         return time;
     }
 
@@ -62,7 +60,7 @@ public class CrimeDataRecord {
         this.description = description;
     }
 
-    public void setTime(ZonedDateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

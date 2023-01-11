@@ -1,7 +1,7 @@
 package com.kenzie.capstone.service;
 
+import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import com.kenzie.capstone.service.dao.CrimeDao;
-import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -41,21 +41,27 @@ class LambdaServiceTest {
         //ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
         //ArgumentCaptor<String> dataCaptor = ArgumentCaptor.forClass(String.class);
 
-        ArgumentCaptor<CrimeData> recordArgumentCaptor = ArgumentCaptor.forClass(CrimeData.class);
+        ArgumentCaptor<CrimeDataRecord> recordArgumentCaptor = ArgumentCaptor.forClass(CrimeDataRecord.class);
         // GIVEN
         String data = "somedata";
 
-        CrimeData crimeDataRecord = null;
+        CrimeDataRecord crimeDataRecord = new CrimeDataRecord();
         crimeDataRecord.setId(String.valueOf(UUID.randomUUID()));
         crimeDataRecord.setCrimeType("Murder");
         crimeDataRecord.setBorough("New York");
         crimeDataRecord.setDescription("Killer killed someone");
         crimeDataRecord.setState("New York");
-        crimeDataRecord.setTime(ZonedDateTime.now());
+        crimeDataRecord.setTime(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
 
-        when(crimeDao.addClosedCase(crimeDataRecord)).thenReturn(crimeDataRecord);
+        CrimeData crimeData = new CrimeData(crimeDataRecord.getId(), crimeDataRecord.getBorough(),
+                crimeDataRecord.getState(), crimeDataRecord.getCrimeType(), crimeDataRecord.getDescription(),
+                new ZonedDateTimeConverter().unconvert(crimeDataRecord.getTime()));
+
+        when(crimeDao.addClosedCase(crimeDataRecord)).thenReturn(crimeData);
+
         // WHEN
-        CrimeDataResponse response = this.lambdaService.addClosedCase(crimeDataRecord);
+        CrimeDataResponse response = this.lambdaService.addClosedCase(new CrimeDataRequest(crimeDataRecord.getId(),
+                crimeDataRecord.getBorough(), crimeDataRecord.getState(), crimeDataRecord.getCrimeType(), crimeDataRecord.getDescription()));
 
         // THEN
         verify(crimeDao, times(1)).addClosedCase(recordArgumentCaptor.capture());

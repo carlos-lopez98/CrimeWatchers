@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.GetCrimeHistory
+      Handler: com.kenzie.capstone.service.lambda.GetClosedCases
       Runtime: java11
       Description: Get All Crime History Reports by borough
       MemorySize: 512
