@@ -7,6 +7,7 @@ import com.kenzie.capstone.service.dao.ExampleDao;
 
 import javax.inject.Inject;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -53,15 +54,16 @@ public class LambdaService {
     }
 
     //Calls CrimeDao to add a closed case
-    public CrimeDataResponse addClosedCase(CrimeData crimeDataRecord) {
+    public CrimeDataResponse addClosedCase(CrimeDataRequest crimeDataRecord) {
 
         if(crimeDataRecord == null){
             throw new NullPointerException("Cant retrieve null record.");
         }
 
+
         //String id = UUID.randomUUID().toString();
         String id = crimeDataRecord.getId();
-        CrimeData record = crimeDao.addClosedCase(crimeDataRecord);
+        CrimeData record = crimeDao.addClosedCase(requestToRecord(crimeDataRecord));
 
 
         return dataToResponse(record);
@@ -71,7 +73,7 @@ public class LambdaService {
 
     private CrimeData recordToData(CrimeDataRecord record) {
         CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(), record.getCrimeType(),
-                record.getDescription(), record.getTime());
+                record.getDescription(), new ZonedDateTimeConverter().unconvert(record.getTime()) );
 
         return data;
     }
@@ -86,5 +88,17 @@ public class LambdaService {
         response.setZonedDateTime(new ZonedDateTimeConverter().convert(record.getTime()));
 
         return response;
+    }
+
+    private CrimeDataRecord requestToRecord(CrimeDataRequest request){
+        CrimeDataRecord record = new CrimeDataRecord();
+        record.setId(request.getId());
+        record.setTime(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
+        record.setState(request.getState());
+        record.setDescription(request.getDescription());
+        record.setBorough(request.getBorough());
+        record.setCrimeType(request.getCrimeType());
+
+        return record;
     }
 }

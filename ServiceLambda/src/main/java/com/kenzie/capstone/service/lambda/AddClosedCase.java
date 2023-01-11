@@ -12,6 +12,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.kenzie.capstone.service.model.CrimeDataRequest;
 import com.kenzie.capstone.service.model.CrimeDataResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,7 +63,7 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
 
 
         try {
-            CrimeData crimeData = jsonStringToCrimeRecordConverter.convert(input.getBody());
+            CrimeDataRequest crimeData = jsonStringToCrimeRecordConverter.convert(input.getBody());
 
             CrimeDataResponse responseCrimeAdded = lambdaCrimeService.addClosedCase(crimeData);
 

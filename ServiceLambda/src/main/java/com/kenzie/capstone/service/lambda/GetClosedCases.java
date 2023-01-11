@@ -50,8 +50,6 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
         }
 
         try {
-            //Changed CrimeService & CrimeExampleData
-            //Returns a list of crimes per particular area
             List<CrimeData> crimeData = lambdaCrimeService.getClosedCases(borough);
 
             String output = gson.toJson(crimeData);
