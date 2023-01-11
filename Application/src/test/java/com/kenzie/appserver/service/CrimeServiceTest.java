@@ -2,7 +2,7 @@ package com.kenzie.appserver.service;
 
 
 import com.kenzie.appserver.repositories.CrimeRepository;
-import com.kenzie.appserver.repositories.model.CrimeId;
+//import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
 import com.kenzie.appserver.service.model.Crime;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
@@ -25,7 +25,7 @@ public class CrimeServiceTest {
     void setup() {
         crimeRepository = mock(CrimeRepository.class);
         lambdaServiceClient = mock(LambdaServiceClient.class);
-        crimeService = new CrimeService(crimeRepository, lambdaServiceClient);
+        crimeService = mock(CrimeService.class);
     }
     /** ------------------------------------------------------------------------
      *  crimeService.findByCaseIdActive
@@ -36,17 +36,17 @@ public class CrimeServiceTest {
         // GIVEN
         String id = randomUUID().toString();
 
-        CrimeId crimeId = new CrimeId();
-        crimeId.setId(id);
-        crimeId.setBorough("Anywhere");
+//        CrimeId crimeId = new CrimeId();
+//        crimeId.setId(id);
+//        crimeId.setBorough("Anywhere");
 
         CrimeRecord record = new CrimeRecord();
         record.setId(id);
         record.setCrimeType("Theft");
 
         // WHEN
-        when(crimeRepository.findById(crimeId)).thenReturn(record);
-        Crime crime = crimeService.findByCaseIdActive(crimeId);
+        when(crimeRepository.findById(id)).thenReturn(record);
+        Crime crime = crimeService.findByCaseIdActive(id);
 
         // THEN
         Assertions.assertNotNull(crime, "The object is returned");
@@ -59,15 +59,15 @@ public class CrimeServiceTest {
     @Test
     void findByCaseIdActive_invalid() {
         // GIVEN
-        CrimeId crimeId = new CrimeId();
+//        CrimeId crimeId = new CrimeId();
         String id = randomUUID().toString();
-        crimeId.setId(id);
-        crimeId.setBorough("Long Beach");
+//        crimeId.setId(id);
+//        crimeId.setBorough("Long Beach");
 
-        when(crimeRepository.findById(crimeId)).thenReturn(null);
+        when(crimeRepository.findById(id)).thenReturn(null);
 
         // WHEN
-        Crime crime = crimeService.findByCaseIdActive(crimeId);
+        Crime crime = crimeService.findByCaseIdActive(id);
 
         // THEN
         Assertions.assertNull(crime, "The example is null when not found");

@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service.model;
 
 public class Crime {
+
     private final String caseId;
     private final String borough;
     private final String state;

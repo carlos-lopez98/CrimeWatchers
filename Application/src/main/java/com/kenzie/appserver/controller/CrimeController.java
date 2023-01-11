@@ -3,7 +3,7 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.controller.model.CreateCrimeRequest;
 import com.kenzie.appserver.controller.model.CrimeResponse;
 import com.kenzie.appserver.converter.ZonedDateTimeConverter;
-import com.kenzie.appserver.repositories.model.CrimeId;
+//import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.service.CrimeService;
 
 
@@ -21,13 +21,10 @@ import java.util.stream.Collectors;
 @RequestMapping("/crimes")
 public class CrimeController {
 
+    @Autowired
     private CrimeService crimeService;
 
-    CrimeController(CrimeService crimeService) {
-        this.crimeService = crimeService;
-    }
-
-   @GetMapping("/all")
+    @GetMapping("/all")
     public ResponseEntity<List<Crime>> getAllCrimes() {
 
         List<Crime> allCrimes = crimeService.findAllActiveCrimes();
@@ -67,11 +64,11 @@ public class CrimeController {
     public ResponseEntity<CrimeResponse> getCrimeById(@PathVariable("id") String id, @PathVariable("borough") String borough) {
         //TODO return all borough crimes
 
-        CrimeId crimeId = new CrimeId();
-        crimeId.setBorough(borough);
-        crimeId.setId(id);
+//        CrimeId crimeId = new CrimeId();
+//        crimeId.setBorough(borough);
+//        crimeId.setId(id);
 
-        Crime crime = crimeService.findByCaseIdActive(crimeId);
+        Crime crime = crimeService.findByCaseIdActive(id);
 
         if (crime == null) {
             return ResponseEntity.notFound().build();
@@ -86,6 +83,7 @@ public class CrimeController {
     public ResponseEntity<List<CrimeResponse>> getCrimeByBorough(@PathVariable("borough") String borough) {
         //TODO return all borough crimes
         List<Crime> crimes = crimeService.findCrimeByBorough(borough);
+
         if (crimes == null) {
             return ResponseEntity.notFound().build();
         }
