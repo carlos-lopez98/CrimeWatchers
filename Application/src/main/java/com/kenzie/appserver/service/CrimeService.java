@@ -1,12 +1,14 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.repositories.CrimeRepository;
-import com.kenzie.appserver.repositories.model.CrimeId;
+//import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
 import com.kenzie.appserver.service.model.Crime;
 
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.CrimeData;
+import com.sun.jdi.event.ExceptionEvent;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +19,10 @@ import java.util.stream.Collectors;
 @Service
 public class CrimeService {
 
-    private CrimeRepository crimeRepository;
-    private LambdaServiceClient lambdaServiceClient;
-
     @Autowired
-    public CrimeService(CrimeRepository crimeRepository, LambdaServiceClient lambdaServiceClient) {
-        this.crimeRepository = crimeRepository;
-        this.lambdaServiceClient = lambdaServiceClient;
-    }
+    private CrimeRepository crimeRepository;
+    @Autowired
+    private LambdaServiceClient lambdaServiceClient;
 
 
     //Find all Active Crimes
@@ -44,10 +42,10 @@ public class CrimeService {
     }
 
     //Returns active case from local repository
-    public Crime findByCaseIdActive(CrimeId crimeId) {
+    public Crime findByCaseIdActive(String id) {
 
         CrimeRecord dataFromDynamo = crimeRepository
-                .findById(crimeId);
+                .findById(id);
 
         return crimeRecordToCrime(dataFromDynamo);
     }
@@ -85,9 +83,8 @@ public class CrimeService {
 //    }
 
     public List<Crime> findCrimeByBorough(String borough) {
-        //Using CrimeRepository for now
 
-        //Returns a list of crimes from the ActiveCrimeRepository
+        //Using CrimeRepository for now
         List<CrimeRecord> records = crimeRepository.findByBorough(borough);
 
         return records.stream().map(this::crimeRecordToCrime).collect(Collectors.toList());

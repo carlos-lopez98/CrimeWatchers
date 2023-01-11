@@ -12,38 +12,33 @@ import java.util.Objects;
 @DynamoDBTable(tableName = "CrimeTable")
 public class CrimeRecord {
 
-    @Id
-    private CrimeId crimeId;
-
+    private String id;
+    private String borough;
     private String state;
     private String crimeType;
     private String description;
     private String zonedDateTime;
 
-    @DynamoDBRangeKey(attributeName = "id")
-    public String getId() {
-        return crimeId != null ? crimeId.getId() : null;
-    }
-
     @DynamoDBHashKey(attributeName = "borough")
     public String getBorough() {
-        return crimeId != null ? crimeId.getBorough() : null;
+        return this.borough;
+    }
+
+    @DynamoDBRangeKey(attributeName = "id")
+    public String getId() {
+        return this.id;
     }
 
     public void setId(String caseId) {
-        if(crimeId == null){
-            crimeId = new CrimeId();
-        }
 
-        crimeId.setId(caseId);
+        this.id=caseId;
     }
 
     public void setBorough(String borough) {
-        if(crimeId == null){
-            crimeId = new CrimeId();
-        }
-
-        crimeId.setBorough(borough);
+//        if(crimeId == null){
+//            crimeId = new CrimeId();
+//        }
+       this.borough = borough;
     }
 
     @DynamoDBAttribute(attributeName = "state")
@@ -93,11 +88,11 @@ public class CrimeRecord {
             return false;
         }
         CrimeRecord crimeRecord = (CrimeRecord) o;
-        return Objects.equals(crimeId, crimeRecord.getId());
+        return Objects.equals(id, crimeRecord.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(crimeId);
+        return Objects.hash(id);
     }
 }
