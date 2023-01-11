@@ -6,7 +6,7 @@ import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-@DynamoDBTable(tableName = "CrimeDataTable")
+@DynamoDBTable(tableName = "LambdaTable")
 public class CrimeDataRecord {
 
     String id;
@@ -17,11 +17,11 @@ public class CrimeDataRecord {
     ZonedDateTime time;
 
 
-    @DynamoDBHashKey(attributeName = "id")
+    @DynamoDBRangeKey(attributeName = "id")
     public String getId() {
         return id;
     }
-    @DynamoDBRangeKey(attributeName = "borough")
+    @DynamoDBHashKey(attributeName = "borough")
     public String getBorough() {
         return borough;
     }
