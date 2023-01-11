@@ -1,7 +1,7 @@
 package com.kenzie.capstone.service.lambda;
 
 import com.kenzie.capstone.service.LambdaService;
-import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
+import com.kenzie.capstone.service.converter.JsonStringToCrimeRecordConverter;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
@@ -12,7 +12,7 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kenzie.capstone.service.model.CrimeDataRecord;
+import com.kenzie.capstone.service.model.CrimeDataResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +29,8 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
         Gson gson = builder.create();
 
         log.info(gson.toJson(input));
+
+        JsonStringToCrimeRecordConverter jsonStringToCrimeRecordConverter = new JsonStringToCrimeRecordConverter();
 
         /**
          * CrimeServiceComponent is a spring/ Dagger dependency controller in a sense
@@ -58,23 +60,15 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
                     .withBody("data is invalid");
         }
 
-        CrimeDataRecord data = new CrimeDataRecord();
-        data.setTime(new ZonedDateTimeConverter().unconvert(input.getPathParameters().get("time")));
-        data.setId(input.getPathParameters().get("id"));
-        data.setState(input.getPathParameters().get("state"));
-        data.setDescription(input.getPathParameters().get("description"));
-        data.setBorough(input.getPathParameters().get("borough"));
-        data.setCrimeType(input.getPathParameters().get("crimeType"));
-
 
         try {
+            CrimeData crimeData = jsonStringToCrimeRecordConverter.convert(input.getBody());
 
-            CrimeData crimeData = lambdaCrimeService.addClosedCase(data);
-            String output = gson.toJson(crimeData);
+            CrimeDataResponse responseCrimeAdded = lambdaCrimeService.addClosedCase(crimeData);
 
             return response
                     .withStatusCode(200)
-                    .withBody(output);
+                    .withBody(gson.toJson(responseCrimeAdded));
 
         } catch (Exception e) {
             return response
@@ -82,4 +76,5 @@ public class AddClosedCase implements RequestHandler<APIGatewayProxyRequestEvent
                     .withBody(gson.toJson(e.getMessage()));
         }
     }
+
 }

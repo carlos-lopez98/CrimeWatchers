@@ -2,10 +2,7 @@ package com.kenzie.capstone.service;
 
 import com.kenzie.capstone.service.dao.CrimeDao;
 import com.kenzie.capstone.service.dao.ExampleDao;
-import com.kenzie.capstone.service.model.CrimeData;
-import com.kenzie.capstone.service.model.CrimeDataRecord;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.ExampleRecord;
+import com.kenzie.capstone.service.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -44,11 +41,11 @@ class LambdaServiceTest {
         //ArgumentCaptor<String> idCaptor = ArgumentCaptor.forClass(String.class);
         //ArgumentCaptor<String> dataCaptor = ArgumentCaptor.forClass(String.class);
 
-        ArgumentCaptor<CrimeDataRecord> recordArgumentCaptor = ArgumentCaptor.forClass(CrimeDataRecord.class);
+        ArgumentCaptor<CrimeData> recordArgumentCaptor = ArgumentCaptor.forClass(CrimeData.class);
         // GIVEN
         String data = "somedata";
 
-        CrimeDataRecord crimeDataRecord = new CrimeDataRecord();
+        CrimeData crimeDataRecord = null;
         crimeDataRecord.setId(String.valueOf(UUID.randomUUID()));
         crimeDataRecord.setCrimeType("Murder");
         crimeDataRecord.setBorough("New York");
@@ -58,7 +55,7 @@ class LambdaServiceTest {
 
         when(crimeDao.addClosedCase(crimeDataRecord)).thenReturn(crimeDataRecord);
         // WHEN
-        CrimeData response = this.lambdaService.addClosedCase(crimeDataRecord);
+        CrimeDataResponse response = this.lambdaService.addClosedCase(crimeDataRecord);
 
         // THEN
         verify(crimeDao, times(1)).addClosedCase(recordArgumentCaptor.capture());
@@ -67,7 +64,7 @@ class LambdaServiceTest {
         assertEquals("Killer killed someone", recordArgumentCaptor.getValue().getDescription(), "The data is saved");
 
         assertNotNull(response, "A response is returned");
-        assertEquals(recordArgumentCaptor.getValue().getId(), response.getId(), "The response id should match");
+        assertEquals(recordArgumentCaptor.getValue().getId(), response.getCaseId(), "The response id should match");
         assertEquals("Killer killed someone", response.getDescription(), "The response description should match");
     }
 

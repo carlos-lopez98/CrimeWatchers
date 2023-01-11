@@ -1,16 +1,30 @@
-package com.kenzie.capstone.service.model;
+package com.kenzie.appserver.controller.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kenzie.capstone.service.model.CrimeData;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
-public class CrimeDataRequest {
+public class CreateCrimeRequestClosed {
 
+    @NotEmpty
+    @JsonProperty("id")
     String id;
+    @NotEmpty
+    @JsonProperty("borough")
     String borough;
+    @NotEmpty
+    @JsonProperty("state")
     String state;
+    @NotEmpty
+    @JsonProperty("crimeType")
     String crimeType;
+    @NotEmpty
+    @JsonProperty("description")
     String description;
 
-    public CrimeDataRequest(String id, String borough, String state, String crimeType, String description ) {
+    public CreateCrimeRequestClosed(String id, String borough, String state, String crimeType, String description ) {
         this.id = id;
         this.borough = borough;
         this.state = state;

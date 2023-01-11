@@ -1,11 +1,9 @@
 package com.kenzie.capstone.service;
 
+import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import com.kenzie.capstone.service.dao.CrimeDao;
-import com.kenzie.capstone.service.model.CrimeData;
-import com.kenzie.capstone.service.model.CrimeDataRecord;
-import com.kenzie.capstone.service.model.ExampleData;
+import com.kenzie.capstone.service.model.*;
 import com.kenzie.capstone.service.dao.ExampleDao;
-import com.kenzie.capstone.service.model.ExampleRecord;
 
 import javax.inject.Inject;
 
@@ -55,7 +53,7 @@ public class LambdaService {
     }
 
     //Calls CrimeDao to add a closed case
-    public CrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
+    public CrimeDataResponse addClosedCase(CrimeData crimeDataRecord) {
 
         if(crimeDataRecord == null){
             throw new NullPointerException("Cant retrieve null record.");
@@ -63,9 +61,10 @@ public class LambdaService {
 
         //String id = UUID.randomUUID().toString();
         String id = crimeDataRecord.getId();
-        CrimeDataRecord record = crimeDao.addClosedCase(crimeDataRecord);
+        CrimeData record = crimeDao.addClosedCase(crimeDataRecord);
 
-        return new CrimeData(id, record.getBorough(), record.getState(), record.getCrimeType(), record.getDescription(), record.getTime());
+
+        return dataToResponse(record);
     }
 
 
@@ -77,4 +76,15 @@ public class LambdaService {
         return data;
     }
 
+    private CrimeDataResponse dataToResponse(CrimeData record) {
+        CrimeDataResponse response = new CrimeDataResponse();
+        response.setBorough(record.getBorough());
+        response.setState(record.getState());
+        response.setDescription(record.getDescription());
+        response.setCrimeType(record.getCrimeType());
+        response.setCaseId(record.getId());
+        response.setZonedDateTime(new ZonedDateTimeConverter().convert(record.getTime()));
+
+        return response;
+    }
 }

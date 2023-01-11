@@ -64,7 +64,7 @@ public class EndpointUtility {
         return "https://" + endpointId + ".execute-api." + region + ".amazonaws.com/Prod/";
     }
 
-    public String postEndpoint(String endpoint, CrimeData data) {
+    public String postEndpoint(String endpoint, String data) {
         String api = getApiEndpint();
         String url = api + endpoint;
 
@@ -82,7 +82,7 @@ public class EndpointUtility {
             if (statusCode == 200) {
                 return httpResponse.body();
             } else {
-                throw new ApiGatewayException("GET request failed: " + statusCode + " status code received");
+                throw new ApiGatewayException("Post request failed: " + statusCode + " status code received");
             }
         } catch (IOException | InterruptedException e) {
             return e.getMessage();
