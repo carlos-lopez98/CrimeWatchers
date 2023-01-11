@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
-import com.kenzie.appserver.repositories.model.CrimeId;
+//import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
 
 import com.kenzie.appserver.service.model.Crime;
@@ -26,20 +26,19 @@ public class CrimeRepository {
     @Autowired
     private DynamoDBMapper dynamoDBMapper;
 
-    public CrimeRecord findById(CrimeId id){
+    public CrimeRecord findById(String id){
         return dynamoDBMapper.load(CrimeRecord.class, id);
     }
 
     public List<CrimeRecord> findByBorough(String borough){
-        CrimeRecord record = new CrimeRecord();
-        record.setBorough(borough);
 
-        DynamoDBQueryExpression<CrimeRecord> queryExpression = new DynamoDBQueryExpression<CrimeRecord>()
-                .withHashKeyValues(record);
+        CrimeRecord hashKey = new CrimeRecord();
+        hashKey.setBorough(borough);
 
-        PaginatedQueryList<CrimeRecord> crimeRecordsList = dynamoDBMapper.query(CrimeRecord.class, queryExpression);
+        DynamoDBQueryExpression<CrimeRecord> queryExpression = new DynamoDBQueryExpression<CrimeRecord>();
+        queryExpression.setHashKeyValues(hashKey);
 
-        return crimeRecordsList;
+        return dynamoDBMapper.query(CrimeRecord.class, queryExpression);
     }
 
     public void save(CrimeRecord record){
