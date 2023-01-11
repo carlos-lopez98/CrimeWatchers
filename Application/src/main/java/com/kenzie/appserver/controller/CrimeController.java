@@ -44,6 +44,9 @@ public class CrimeController {
         crimeResponse.setCaseId(crime.getCaseId());
         crimeResponse.setBorough(crime.getBorough());
         crimeResponse.setState(crime.getState());
+        crimeResponse.setCrimeType(crime.getCrimeType());
+        crimeResponse.setZonedDateTime(crime.getDateAndTime());
+        crimeResponse.setDescription(crime.getDescription());
 
         return ResponseEntity.ok(crimeResponse);
     }
@@ -97,8 +100,6 @@ public class CrimeController {
     public ResponseEntity<List<CrimeResponse>> getClosedCaseByBorough(@PathVariable("borough") String borough){
 
         List<CrimeData> closedCases = crimeService.getClosedCases(borough);
-
-
 
         List<CrimeResponse> crimeResponseList = closedCases.stream().map(data -> crimeDatatoResponse(data)).collect(Collectors.toList());
 
