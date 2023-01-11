@@ -56,6 +56,7 @@ class LambdaServiceTest {
         crimeDataRecord.setState("New York");
         crimeDataRecord.setTime(ZonedDateTime.now());
 
+        when(crimeDao.addClosedCase(crimeDataRecord)).thenReturn(crimeDataRecord);
         // WHEN
         CrimeData response = this.lambdaService.addClosedCase(crimeDataRecord);
 
@@ -105,6 +106,7 @@ class LambdaServiceTest {
 
     // Write additional tests here
 
+
     @Test
     void addClosedCaseTest_throws_NullPointerException() {
         // GIVEN
@@ -137,4 +139,5 @@ class LambdaServiceTest {
         // assertEquals(borough, crimeDataList.get(0).getBorough(), "Borough should be ");
         // assertEquals(data, response.getBorough(), "The response data should match");
     }
+
 }
