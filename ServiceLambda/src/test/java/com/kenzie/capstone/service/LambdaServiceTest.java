@@ -16,8 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -57,6 +56,7 @@ class LambdaServiceTest {
         crimeDataRecord.setState("New York");
         crimeDataRecord.setTime(ZonedDateTime.now());
 
+        when(crimeDao.addClosedCase(crimeDataRecord)).thenReturn(crimeDataRecord);
         // WHEN
         CrimeData response = this.lambdaService.addClosedCase(crimeDataRecord);
 
@@ -105,4 +105,39 @@ class LambdaServiceTest {
     }
 
     // Write additional tests here
+
+
+    @Test
+    void addClosedCaseTest_throws_NullPointerException() {
+        // GIVEN
+        // WHEN
+        // THEN
+        assertThrows(NullPointerException.class,()->this.lambdaService.addClosedCase(null));
+    }
+
+    @Test
+    void getClosedCasesByBoroughTest_throws_IllegalArgumentException() {
+        ArgumentCaptor<String> boroughCaptor = ArgumentCaptor.forClass(String.class);
+
+        // GIVEN
+        String borough = "";
+
+        CrimeDataRecord record = new CrimeDataRecord();
+        record.setBorough(borough);
+
+
+        // WHEN
+        // THEN
+        assertThrows(IllegalArgumentException.class,()->this.lambdaService.getClosedCases(record.getBorough()));
+        verify(crimeDao, times(0)).getClosedCases(boroughCaptor.capture());
+
+
+        /**
+         * Keeping this around for reference
+         */
+
+        // assertEquals(borough, crimeDataList.get(0).getBorough(), "Borough should be ");
+        // assertEquals(data, response.getBorough(), "The response data should match");
+    }
+
 }
