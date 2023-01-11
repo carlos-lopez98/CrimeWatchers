@@ -1,11 +1,13 @@
-@font-face{
+@font-face {
     font-family: myFont;
-    src:url(./fonts/BebasNeue-Regular.ttf);
+    src: url(./fonts/BebasNeue-Regular.ttf);
 }
-@font-face{
+
+@font-face {
     font-family: slogan;
     src: url(./fonts/BreeSerif-Regular.ttf);
 }
+
 :root {
     /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
     --primary-color: #131921;
@@ -17,7 +19,7 @@
 }
 
 .background {
-    background-color: rgba(0,0,0);
+    background-color: rgba(0, 0, 0);
     margin: 0;
     counter-reset: section;
 }
@@ -33,11 +35,11 @@
     background-position: center center;
 }
 
-.gradient{
-position: absolute;
-width: 100%;
-height: 100vh;
-background: radial-gradient(circle at center, rgba(84,97,97, .5), rgba(0,0,0, .5));
+.gradient {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    background: radial-gradient(circle at center, rgba(84, 97, 97, .5), rgba(0, 0, 0, .5));
 
 }
 
@@ -52,36 +54,36 @@ background: radial-gradient(circle at center, rgba(84,97,97, .5), rgba(0,0,0, .5
     align-items: center;
 }
 
-.border1{
-position: relative;
-top: 10px;
+.border1 {
+    position: relative;
+    top: 10px;
 }
 
-.border1::after{
-content: "";
-position: absolute;
-background-color: #999;
-width: 100%;
-height: 3px;
+.border1::after {
+    content: "";
+    position: absolute;
+    background-color: #999;
+    width: 100%;
+    height: 3px;
 }
 
-.border2{
+.border2 {
 
-position: relative;
+    position: relative;
 
 }
 
-.border2::after{
+.border2::after {
 
-content: "";
-position: absolute;
-background-color: #999;
-width: 75%;
-height: 3px;
-bottom: 0;
-top: 73px;
-left: 50%;
-transform: translateX(-50%);
+    content: "";
+    position: absolute;
+    background-color: #999;
+    width: 75%;
+    height: 3px;
+    bottom: 0;
+    top: 73px;
+    left: 50%;
+    transform: translateX(-50%);
 
 }
 
@@ -90,7 +92,7 @@ transform: translateX(-50%);
     line-height: 50px;
     height: 70px;
     text-decoration: none;
-    color: rgba(254,254,254, .80);
+    color: rgba(254, 254, 254, .80);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,12 +100,12 @@ transform: translateX(-50%);
     font-family: myFont;
 }
 
-.slogan{
-   font-size: 40px;
+.slogan {
+    font-size: 40px;
     line-height: 50px;
     height: 100px;
     text-decoration: none;
-    color: rgba(254,254,254, .80);
+    color: rgba(254, 254, 254, .80);
     text-align: center;
     padding: 25px;
     font-family: slogan;
@@ -118,7 +120,7 @@ transform: translateX(-50%);
     flex-direction: row;
     text-align: center;
     justify-content: center;
-    background-color: rgba(0,0,0);
+    background-color: rgba(0, 0, 0);
     font-family: slogan;
     font-size: 25px;
 }
@@ -127,9 +129,9 @@ transform: translateX(-50%);
 
     width: 33%;
     height: 100vh;
-    color: rgba(254,254,254, .80);
+    color: rgba(254, 254, 254, .80);
     background-color: black;
-        position: relative;
+    position: relative;
     border: .1px solid #999;
     border-top: none;
     border-bottom: none;
@@ -139,12 +141,33 @@ transform: translateX(-50%);
     margin-top: 10px;
 }
 
-.card .trending {
+.card_trending {
+    width: 33%;
+    height: 100vh;
+    color: rgba(254, 254, 254, .80);
+    background-color: black;
+    position: relative;
+    border: .1px solid #999;
+    border-top: none;
+    border-bottom: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.card_trending .trending_header {
     font-size: 40px;
     margin-top: 25px;
 }
 
-.card .leftBar{
+.card_trending .trending_content {
+    font-size: 40px;
+    color: white;
+    overflow-y: scroll;
+}
+
+.card .leftBar {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -154,7 +177,7 @@ transform: translateX(-50%);
     max-height: 320px;
 }
 
-.card .leftBar .leftBar__form{
+.card .leftBar .leftBar__form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -171,43 +194,44 @@ transform: translateX(-50%);
     justify-content: space-around;
 }
 
-.validated-field{
+.validated-field {
     margin: 0px 0px;
 }
 
-.border__resources{
+.border__resources {
 
-position: relative;
+    position: relative;
 
 }
 
-.border__resources::after{
-content: "";
-width: 200px;
-height: 1px;
-margin: 0px 0px;
-position: absolute;
-background-color: #999;
-left: 50%;
-top: -10px;
-transform: translateX(-50%);
+.border__resources::after {
+    content: "";
+    width: 200px;
+    height: 1px;
+    margin: 0px 0px;
+    position: absolute;
+    background-color: #999;
+    left: 50%;
+    top: -10px;
+    transform: translateX(-50%);
 }
 
-.resource-icons{
+.resource-icons {
     display: flex;
     flex-direction: column;
     font-size: 20px;
 }
 
-.resource-icon{
-margin: 0px 0px;
-height: 75px;
-width: 75px;
-background-color: white;
-border-radius: 5%;
+.resource-icon {
+    margin: 0px 0px;
+    height: 75px;
+    width: 75px;
+    background-color: white;
+    border-radius: 5%;
 }
 
-.button, button {
+.button,
+button {
     background: #aed9ff;
     padding: 3px;
     border-radius: 3px;
@@ -216,7 +240,9 @@ border-radius: 5%;
     border: 1px solid black;
     cursor: pointer;
 }
-.button:hover, button:hover {
+
+.button:hover,
+button:hover {
     background: #9cc3e4;
 }
 
@@ -224,101 +250,117 @@ border-radius: 5%;
     max-width: 100%;
     text-align: center;
     margin: 5%;
-    }
+}
 
 .card-content .form-field {
     display: flex;
     flex-direction: column;
 }
-.clickable__icon{
-display: inline-block;
-position: relative;
-z-index: 1;
+
+.clickable__icon {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
 
 }
 
 .searchArea {
-height: 100vh;
-margin-top: 20px;
-background-color: white;
-font-family: myFont;
+    height: 100vh;
+    margin-top: 20px;
+    background-color: white;
+    font-family: myFont;
 }
 
-.text__Area{
-margin-top: 0px;
-display: flex;
-justify-content: space-between;
-padding: 50px;
+.searchArea_head__header {
+    display: flex;
+    flex-direction: row;
+}
+
+.searchArea_head__header___prompt {
+    justify-content: right;
+}
+
+.text__Area {
+    margin-top: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 75px;
 }
 
 .text__Search {
- font-size: 4rem;
- border-bottom: solid 1px black;
- margin: 0px 20px;
+    font-size: 4rem;
+    border-bottom: solid 1px black;
+    margin: 0px 20px;
 }
 
-.giveId{
-font-family: slogan;
-font-size: 2rem;
-font-color: black;
+.giveId {
+    font-family: slogan;
+    font-size: 2rem;
+    font-color: black;
 }
 
 .inputBox {
-height: 40px;
-margin-left: 50px;
-width: 400px;
-margin-top: 0px;
+    height: 40px;
+    margin-left: 0px;
+    width: 400px;
+    margin-top: 0px;
 }
 
-.filter{
-height: 40px;
-width: 40px;
-margin-right: 50px;
-background-color: black;
-border-radius: 4%;
+.filter {
+    height: 40px;
+    width: 40px;
+    margin-right: 50px;
+    background-color: black;
+    border-radius: 4%;
 }
 
-.resultArea__bg{
-background-color: black;
-height: 79vh;
-width: 100%;
-display: flex;
-justify-content: space-around;
+.resultArea__bg {
+    background-color: black;
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
-.resultArea{
-display: flex;
-flex-direction: column;
-font-family: slogan;
-color: white;
-margin: 30px 5px;
-height: 90%;
-width: 100%;
+.resultArea {
+    display: flex;
+    flex-direction: column;
+    font-family: slogan;
+    background-color: white;
+    color: black;
+    margin-top: 25px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 0px;
+    height: 90%;
+    width: 100%;
 }
 
-.resultArea__innerText{
-height: 10%;
-width: .99;
-margin: 10px;
-text-align: left;
-font-size: 1rem;
+.resultArea__innerText {
+    height: 10%;
+    width: .99;
+    margin: 10px;
+    text-align: left;
+    font-size: 1rem;
 }
 
-.innerText{
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-justify-content: space-around;
+.innerText {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-around;
 }
 
 .description__Area {
-background-color: white;
-height: 85%;
-width: .99;
-margin: 5px;
-color: black;
-font-family: slogan;
+    background-color: white;
+    height: 85%;
+    width: .99;
+    margin: 20px;
+    color: black;
+    font-family: slogan;
 
 }
-.description_Area__text{
-margin-left: 10px;
+
+.description_Area__text {
+    margin-left: 10px;
 }
