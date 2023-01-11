@@ -22,13 +22,12 @@ public class CrimeDao{
     }
 
     //Gets Closed Cases by borough from Lambda Table
-    public List<CrimeDataRecord> getClosedCases(String id) {
+    public List<CrimeDataRecord> getClosedCases(String borough) {
         CrimeDataRecord crimeDataRecord = new CrimeDataRecord();
-        crimeDataRecord.setId(id);
+        crimeDataRecord.setBorough(borough);
 
         DynamoDBQueryExpression<CrimeDataRecord> queryExpression = new DynamoDBQueryExpression<CrimeDataRecord>()
-                .withHashKeyValues(crimeDataRecord)
-                .withConsistentRead(false);
+                .withHashKeyValues(crimeDataRecord);
 
         return mapper.query(CrimeDataRecord.class, queryExpression);
     }

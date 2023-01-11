@@ -103,7 +103,8 @@ public class CrimeController {
 
         List<CrimeData> closedCases = crimeService.getClosedCases(borough);
 
-        List<CrimeResponse> crimeResponseList = closedCases.stream().map(data -> crimeDatatoResponse(data)).collect(Collectors.toList());
+        List<CrimeResponse> crimeResponseList = closedCases.stream().map(this::crimeDatatoResponse)
+                .collect(Collectors.toList());
 
         return ResponseEntity.ok(crimeResponseList);
     }
