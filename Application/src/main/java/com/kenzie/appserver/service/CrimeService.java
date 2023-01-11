@@ -1,5 +1,6 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.converter.ZonedDateTimeConverter;
 import com.kenzie.appserver.repositories.CrimeRepository;
 //import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
@@ -7,6 +8,8 @@ import com.kenzie.appserver.service.model.Crime;
 
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.CrimeDataRequest;
+import com.kenzie.capstone.service.model.CrimeDataResponse;
 import com.sun.jdi.event.ExceptionEvent;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,8 +105,10 @@ public class CrimeService {
     }
 
     public CrimeData addClosedCase(CrimeData crimeData) {
-        CrimeData addedCrime = lambdaServiceClient.addClosedCase(crimeData);
-        return addedCrime;
+        CrimeDataResponse addedCrime = lambdaServiceClient.addClosedCase(dataToRequest(crimeData));
+
+        CrimeData data = crimeResponseToData(addedCrime);
+        return data;
     }
 
     private Crime crimeRecordToCrime(CrimeRecord record){
@@ -112,6 +117,21 @@ public class CrimeService {
                 record.getDescription(), record.getZonedDateTime());
 
         return crime;
+    }
+
+    private CrimeData crimeResponseToData(CrimeDataResponse response){
+        CrimeData data = new CrimeData(response.getCaseId(), response.getBorough(), response.getState(),
+                response.getCrimeType(), response.getDescription(), new ZonedDateTimeConverter().unconvert(response.getZonedDateTime()));
+        return data;
+    }
+
+    private CrimeDataRequest dataToRequest(CrimeData data){
+
+        CrimeDataRequest request = new CrimeDataRequest(data.getId(), data.getBorough(),
+                data.getState(), data.getCrimeType(), data.getDescription());
+
+
+        return request;
     }
     //TODO implement findCrimeByBorough through CrudRepository
     // Example getting data from the lambda

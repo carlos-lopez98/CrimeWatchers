@@ -1,6 +1,7 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.CreateCrimeRequest;
+import com.kenzie.appserver.controller.model.CreateCrimeRequestClosed;
 import com.kenzie.appserver.controller.model.CrimeResponse;
 import com.kenzie.appserver.converter.ZonedDateTimeConverter;
 //import com.kenzie.appserver.repositories.model.CrimeId;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,8 +109,8 @@ public class CrimeController {
     }
 
     @PostMapping("/closed")
-    public ResponseEntity<CrimeResponse> addClosedCrime(@RequestBody CreateCrimeRequest createCrimeRequest) {
-        CrimeData crimeData = crimeService.addClosedCase(requestToCrimeData(createCrimeRequest));
+    public ResponseEntity<CrimeResponse> addClosedCrime(@RequestBody CreateCrimeRequestClosed createCrimeRequest) {
+        CrimeData crimeData = crimeService.addClosedCase(createClosedRequestToCrimeData(createCrimeRequest));
 
         CrimeResponse crimeResponse = new CrimeResponse();
         crimeResponse.setCaseId(crimeData.getId());
@@ -165,5 +167,11 @@ public class CrimeController {
         newResponse.setDescription(crime.getDescription());
         newResponse.setZonedDateTime(crime.getDateAndTime());
      return newResponse;
+    }
+
+    private CrimeData createClosedRequestToCrimeData(CreateCrimeRequestClosed closedRequest){
+        CrimeData data = new CrimeData(closedRequest.getId(), closedRequest.getBorough(), closedRequest.getState(),
+                closedRequest.getCrimeType(), closedRequest.getDescription(), ZonedDateTime.now());
+        return data;
     }
 }

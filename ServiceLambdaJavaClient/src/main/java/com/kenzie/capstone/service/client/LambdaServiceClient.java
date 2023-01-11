@@ -1,8 +1,10 @@
 package com.kenzie.capstone.service.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.CrimeDataRequest;
 import com.kenzie.capstone.service.model.CrimeDataResponse;
 import com.kenzie.capstone.service.model.ExampleData;
 
@@ -11,7 +13,7 @@ import java.util.List;
 public class LambdaServiceClient {
 
     private static final String GET_CLOSED_CASE = "crimeByBorough/{borough}";
-    private static final String SET_CLOSED_CASE = "crimeById/{id}";
+    private static final String SET_CLOSED_CASE = "crimeById/add";
 
     private ObjectMapper mapper;
 
@@ -45,15 +47,23 @@ public class LambdaServiceClient {
         return crimeDataList;
     }
 
-    public CrimeData addClosedCase(CrimeData crimeData) {
+    public CrimeDataResponse addClosedCase(CrimeDataRequest request) {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.postEndpoint(SET_CLOSED_CASE, crimeData);
 
-        CrimeData newData;
 
+        String newData;
 
         try {
-            newData = mapper.readValue(response, CrimeData.class);
+            newData = mapper.writeValueAsString(request);
+        } catch(JsonProcessingException e) {
+            throw new ApiGatewayException("Unable to serialize request: " + e);
+        }
+
+        String response = endpointUtility.postEndpoint(SET_CLOSED_CASE,newData);
+        CrimeDataResponse crimeDataResponse;
+
+        try {
+            crimeDataResponse = mapper.readValue(response, CrimeDataResponse.class);
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
@@ -66,6 +76,6 @@ public class LambdaServiceClient {
 //        crimeDataResponse.setDescription(crimeData.getDescription());
 //        crimeDataResponse.setZonedDateTime(crimeData.getTime().toString());
 
-        return newData;
+        return crimeDataResponse;
     }
 }

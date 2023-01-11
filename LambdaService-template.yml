@@ -52,5 +52,5 @@ Resources:
         UpdateResource:
           Type: Api
           Properties:
-            Path: /crimeById/{id}
+            Path: /crimeById/add
             Method: post
