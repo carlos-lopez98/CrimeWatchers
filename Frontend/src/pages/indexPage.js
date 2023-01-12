@@ -10,7 +10,7 @@ class IndexPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetByBorough', 'onCreate', 'renderExample'], this);
+        this.bindClassMethods(['onGetByBorough', 'onCreate', 'renderExample', 'renderTrendingSection', 'onGetAll'], this);
         this.dataStore = new DataStore();
     }
 
@@ -23,9 +23,12 @@ class IndexPage extends BaseClass {
 
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
 
+        window.addEventListener("load", this.onGetAll);
+
         this.client = new CrimeClient();
 
         this.dataStore.addChangeListener(this.renderExample)
+        this.dataStore.addChangeListener(this.renderTrendingSection)
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
@@ -79,7 +82,73 @@ class IndexPage extends BaseClass {
 
     }
 
+
+    async renderTrendingSection() {
+
+        let resultArea = document.getElementById("trending_container_section");
+
+        const trendingCrimes = this.dataStore.get("trendingCrimes");
+
+        let myHtml = "";
+
+        if (trendingCrimes) {
+
+            for (let crime of trendingCrimes) {
+                myHtml += `
+                
+                <div class="trending_content__container">
+                    <div class="trending_content__container_header">
+                        <div class="h1_text">
+                            <h1>CaseId: ${crime.id}</h1>
+                        </div>
+
+                        <div class="h2_text">
+                            <h1>Date and Time: ${crime.zonedDateTime}</h1>
+                        </div>
+
+                        <div class="h3_text">
+                            <a href="" class="provideInfo_link">
+                                <h1>Provide Info</h1>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="trending_content__container_description">
+                        <h1 class="description_title">Description</h1>
+                        <p class="description_text">${crime.description}</p>
+                    </div>
+                </div>
+                
+                
+                `
+            }
+            myHtml += "";
+            resultArea.innerHTML += myHtml;
+        } else {
+            resultArea.innerHTML = "Error loading from Database";
+        }
+
+    }
+
     // Event Handlers --------------------------------------------------------------------------------------------------
+
+    async onGetAll(event) {
+
+        event.preventDefault();
+
+        let result = await this.client.getAllCrimes(this.errorHandler);
+
+        this.dataStore.set("trendingCrimes", result);
+
+        if (result) {
+            this.showMessage(`Checkout our New Trending Crime Section`)
+        } else {
+            this.errorHandler("Error doing GET!  Try again...");
+        }
+
+    }
+
+
 
     async onGetByBorough(event) {
         // Prevent the page from refreshing on form submit
