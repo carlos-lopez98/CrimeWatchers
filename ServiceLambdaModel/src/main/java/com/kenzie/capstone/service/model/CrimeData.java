@@ -1,5 +1,7 @@
 package com.kenzie.capstone.service.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -10,15 +12,19 @@ public class CrimeData {
     String state;
     String crimeType;
     String description;
-    ZonedDateTime time;
+    String time;
 
-    public CrimeData(String id, String borough, String state, String crimeType, String description, ZonedDateTime time) {
+    public CrimeData(String id, String borough, String state, String crimeType, String description, String time) {
         this.id = id;
         this.borough = borough;
         this.state = state;
         this.crimeType = crimeType;
         this.description = description;
         this.time = time;
+    }
+
+    public CrimeData(){
+
     }
 
     public String getId() {
@@ -41,7 +47,7 @@ public class CrimeData {
         return description;
     }
 
-    public ZonedDateTime getTime() {
+    public String getTime() {
         return time;
     }
 
@@ -65,7 +71,7 @@ public class CrimeData {
         this.description = description;
     }
 
-    public void setTime(ZonedDateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

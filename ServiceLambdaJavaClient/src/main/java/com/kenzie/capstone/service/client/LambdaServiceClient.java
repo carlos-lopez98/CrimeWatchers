@@ -30,7 +30,7 @@ public class LambdaServiceClient {
 
         try {
 
-            crimeDataList = mapper.readValue(response, new TypeReference<List<CrimeData>>() {});
+            crimeDataList = mapper.readValue(response, new TypeReference<>(){});
 
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);

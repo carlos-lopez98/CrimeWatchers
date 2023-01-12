@@ -73,7 +73,7 @@ public class LambdaService {
 
     private CrimeData recordToData(CrimeDataRecord record) {
         CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(), record.getCrimeType(),
-                record.getDescription(), new ZonedDateTimeConverter().unconvert(record.getTime()) );
+                record.getDescription(), record.getTime());
 
         return data;
     }
@@ -85,7 +85,7 @@ public class LambdaService {
         response.setDescription(record.getDescription());
         response.setCrimeType(record.getCrimeType());
         response.setCaseId(record.getId());
-        response.setZonedDateTime(new ZonedDateTimeConverter().convert(record.getTime()));
+        response.setZonedDateTime(record.getTime());
 
         return response;
     }

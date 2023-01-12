@@ -27,7 +27,8 @@ public class CrimeDao{
         crimeDataRecord.setBorough(borough);
 
         DynamoDBQueryExpression<CrimeDataRecord> queryExpression = new DynamoDBQueryExpression<CrimeDataRecord>()
-                .withHashKeyValues(crimeDataRecord);
+                .withHashKeyValues(crimeDataRecord)
+                .withConsistentRead(false);
 
         return mapper.query(CrimeDataRecord.class, queryExpression);
     }
@@ -65,7 +66,7 @@ public class CrimeDao{
 
 private CrimeData recordToData(CrimeDataRecord record){
         CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(),
-                record.getCrimeType(), record.getDescription(), new ZonedDateTimeConverter().unconvert(record.getTime()));
+                record.getCrimeType(), record.getDescription(),record.getTime());
         return data;
 }
     //Don't need this
