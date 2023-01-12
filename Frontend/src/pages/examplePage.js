@@ -48,10 +48,15 @@ class ExamplePage extends BaseClass {
         event.preventDefault();
 
         let id = document.getElementById("id-field").value;
+
+        //This is the data being stored in our current state
         this.dataStore.set("example", null);
 
         let result = await this.client.getExample(id, this.errorHandler);
+
         this.dataStore.set("example", result);
+
+
         if (result) {
             this.showMessage(`Got ${result.name}!`)
         } else {
