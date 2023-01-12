@@ -27,15 +27,16 @@ public class CrimeController {
     private CrimeService crimeService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Crime>> getAllCrimes() {
+    public ResponseEntity<List<CrimeResponse>> getAllCrimes() {
 
         List<Crime> allCrimes = crimeService.findAllActiveCrimes();
 
+        List<CrimeResponse> allCrimeResponses = allCrimes.stream().map(this::crimeToResponse).collect(Collectors.toList());
         if (allCrimes == null) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(allCrimes);
+        return ResponseEntity.ok(allCrimeResponses);
     }
 
     @PostMapping

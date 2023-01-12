@@ -210,15 +210,15 @@
 
 
 .h1_text {
-    margin-left: 20px;
+margin-left: 10px;
 }
 
 .trending_content__container_header .h2_text {
-    margin-left: 60px;
+margin-left: 20px;
 }
 
 .trending_content__container_header .h3_text {
-    margin-left: 32%;
+margin-left: 20px;
 }
 
 .provideInfo_link {
@@ -239,6 +239,15 @@
 
 .description_title {
     color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+p.description_text {
+padding: 0px;
+margin-bottom: 10px;
+color: rgba(191, 191, 191);
+font-size: 15px;
 }
 
 .card_recentlyClosed {
@@ -273,6 +282,8 @@
 
 .description_text {
     font-size: 12px;
+    color: rgba(135, 135, 135);
+    padding: 0px;
 }
 
 .card .leftBar {
