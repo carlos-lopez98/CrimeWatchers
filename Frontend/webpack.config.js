@@ -9,6 +9,7 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'indexPage.js'),
+    examplePage: path.resolve(__dirname, 'src', 'pages', 'archivePage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -27,13 +28,18 @@ module.exports = {
     proxy: [
       {
         context: [
-          '/example',
+          '/crimes',
         ],
         target: 'http://localhost:5001'
       }
     ]
   },
   plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/archivePage.html',
+      filename: 'archivePage.html',
+      inject: false
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
