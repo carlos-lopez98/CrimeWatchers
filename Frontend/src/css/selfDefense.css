@@ -1,0 +1,94 @@
+:root {
+    /* css variables: https://developer.mozilla.org/en-US/docs/Web/CSS/var */
+    --primary-color: #125555;
+    --secondary-color: #fff;
+    --error-color: rgba(194, 0, 0, 0.71);
+    --third-color: #66CDAA;
+}
+
+#screenBackground {
+    background-image: url("selfDefense.jpg");
+    background-color: black;
+}
+.hero {
+    width: 100%;
+    height: 100vh;
+    background-image: url(./images/selfdefense.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+}
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+
+.site-title {
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.header {
+    /* Flexbox: https://css-tricks.com/snippets/css/a-guide-to-flexbox/ */
+    display: flex;
+    background-color: black;
+    align-items: left;
+    color: #F7F9F9;
+    height: 75px;
+}
+
+.header_home {
+    font-size: 65px;
+    line-height: 25px;
+    height: 50px;
+    text-decoration: none;
+    color: #F7F9F9;
+    font-family: myFont;
+            src: url(./fonts/BebasNeue-Regular.ttf);
+
+    }
+}
+
+
+
+
+
+.form-field {
+    text-align: center;
+    align-items: center;
+}
+
+.font {
+    font-size: 20px;
+    font-family: "Bradley Hand", cursive
+}
+
+.validated-field:invalid {
+    outline: 2px solid var(--error-color);
+    width: 50%;
+}
+
+#result{
+background-color: rgba(255, 255, 255,.9);
+margin-top: 32px;
+width: 75%;
+margin-bottom: 35px;
+align-items: center;
+}
+
+ #result-info{
+ display: flex;
+ text-align: center;
+justify-content: space-around;
+ justify-content: space-between;
+ }
+
+
+
+
+
