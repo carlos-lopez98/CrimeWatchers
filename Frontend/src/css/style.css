@@ -392,8 +392,16 @@ button:hover {
     margin-top: 0px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     padding: 75px;
+}
+
+.search_form{
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
+width: 100%;
 }
 
 .text__Search {
@@ -402,17 +410,24 @@ button:hover {
     margin: 0px 20px;
 }
 
-.giveId {
-    font-family: slogan;
-    font-size: 2rem;
-    font-color: black;
+.inputBox{
+height: 35px;
+width: 300px;
+font-family: slogan;
 }
 
-.inputBox {
-    height: 40px;
-    margin-left: 0px;
-    width: 400px;
-    margin-top: 0px;
+.submit_button{
+background-color: black;
+height: 35px;
+width: 60px;
+border-radius: 10%;
+color: white;
+}
+
+.submit_button:Hover{
+background: gray;
+color: white;
+cursor: pointer;
 }
 
 .filter {

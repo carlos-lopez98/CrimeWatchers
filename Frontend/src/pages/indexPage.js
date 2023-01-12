@@ -10,16 +10,19 @@ class IndexPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onCreate', 'renderExample'], this);
+        this.bindClassMethods(['onGetByBorough', 'onCreate', 'renderExample'], this);
         this.dataStore = new DataStore();
     }
+
 
     /**
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
+        document.getElementById('search_form').addEventListener('submit', this.onGetByBorough);
+
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
+
         this.client = new CrimeClient();
 
         this.dataStore.addChangeListener(this.renderExample)
@@ -28,38 +31,72 @@ class IndexPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderExample() {
-        let resultArea = document.getElementById("result-info");
 
-        const example = this.dataStore.get("example");
+        let resultArea = document.getElementById("result_Area");
 
-        if (example) {
-            resultArea.innerHTML = `
-                <div>ID: ${example.id}</div>
-                <div>Name: ${example.name}</div>
+        const crimes = this.dataStore.get("borough_crime_list");
+
+        if (crimes) {
+            let myHtml = "";
+            for (let crime of crimes) {
+                myHtml += `
+                <div class="resultArea__innerText" >
+                    <div class="innerText">
+
+                        <div class="caseId_label">
+                            <h1>Case Id: ${crime.id}</h1>
+                        </div>
+
+                        <h1>Location: ${crime.borough}</h1>
+
+                        <h1>Time Commited: ${crime.zonedDateTime}</h1>
+
+                    </div>
+
+                </div>
+
+                 <div class="description__Area">
+
+                    <div class="description_Area__text">
+                        <h1>Description</h1>
+                    </div>
+
+                    <div class="description__Area___render" id="description_area_render">
+                        <p>${crime.description}</p>
+                    </div>
+                 </div>
             `
+            }
+            myHtml += ""
+            resultArea.innerHTML = myHtml;
+
         } else {
             resultArea.innerHTML = "No Item";
         }
+
+
+
+
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
 
-    async onGet(event) {
+    async onGetByBorough(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
 
-        let id = document.getElementById("id-field").value;
+        let borough = document.getElementById("borough_input").value;
 
         //This is the data being stored in our current state
-        this.dataStore.set("example", null);
+        this.dataStore.set("borough_crime_list", null);
 
-        let result = await this.client.getExample(id, this.errorHandler);
+        let result = await this.client.getCrimeByBorough(borough, this.errorHandler);
 
-        this.dataStore.set("example", result);
+        this.dataStore.set("borough_crime_list", result);
 
 
         if (result) {
-            this.showMessage(`Got ${result.name}!`)
+            this.showMessage(`Got ${result}!`)
         } else {
             this.errorHandler("Error doing GET!  Try again...");
         }
