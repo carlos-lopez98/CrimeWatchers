@@ -27,12 +27,16 @@ public class CrimeService {
     @Autowired
     private LambdaServiceClient lambdaServiceClient;
 
-
+    // May have to delete
+    public CrimeService(CrimeRepository crimeRepository, LambdaServiceClient lambdaServiceClient){
+        this.crimeRepository = crimeRepository;
+        this.lambdaServiceClient = lambdaServiceClient;
+    }
     //Find all Active Crimes
     public List<Crime> findAllActiveCrimes(){
 
         // Example getting data from the local repository
-        List<CrimeRecord> dataFromDynamo = (List<CrimeRecord>) crimeRepository.findAll();
+        List<CrimeRecord> dataFromDynamo = crimeRepository.findAll();
         List<Crime> crimesList = new ArrayList<>();
 
         //Returns a list of crimes from the ActiveCrimeRepository
@@ -112,7 +116,9 @@ public class CrimeService {
     }
 
     private Crime crimeRecordToCrime(CrimeRecord record){
-
+        if(record== null){
+            return null;
+        }
         Crime crime = new Crime(record.getId(), record.getBorough(), record.getState(), record.getCrimeType(),
                 record.getDescription(), record.getZonedDateTime());
 
