@@ -148,6 +148,7 @@ public class CrimeController {
             crimeResponse.setState(crime.getState());
             crimeResponse.setCrimeType(crime.getCrimeType());
             crimeResponse.setDescription(crime.getDescription());
+            crimeResponse.setZonedDateTime(crime.getDateAndTime());
             responseList.add(crimeResponse);
         }
 

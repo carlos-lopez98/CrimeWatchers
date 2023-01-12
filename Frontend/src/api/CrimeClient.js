@@ -2,13 +2,13 @@ import BaseClass from "../util/baseClass";
 import axios from 'axios'
 
 /**
- * Client to call the CrimeService.
+ * Client to call the CrimeController APIs
  */
 export default class CrimeClient extends BaseClass {
 
-    constructor(props = {}){
+    constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'addCrime', 'getCrimeByType','getCrimeByBorough', 'addClosedCrime', 'getAllCrimes'];
+        const methodsToBind = ['clientLoaded', 'addCrime', 'getCrimeByBorough', 'addClosedCrime', 'getAllCrimes'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -20,25 +20,25 @@ export default class CrimeClient extends BaseClass {
      */
     clientLoaded(client) {
         this.client = client;
-        if (this.props.hasOwnProperty("onReady")){
+        if (this.props.hasOwnProperty("onReady")) {
             this.props.onReady();
         }
     }
 
-    /**
-     * Gets the crime by the given crime type.
-     * @param crimeType
-     * @param errorCallback (Optional) A function to execute if the call fails.
-     * @returns crime by type
-     */
-    async getCrimeByType(crimeType, errorCallback) {
-        try {
-            const response = await this.client.get(`/crimes/active/${crimeType}`);
-            return response.data;
-        } catch (error) {
-            this.handleError("getCrimeByType", error, errorCallback)
-        }
-    }
+    // /**
+    //  * Gets the crime by the given crime type.
+    //  * @param crimeType
+    //  * @param errorCallback (Optional) A function to execute if the call fails.
+    //  * @returns crime by type
+    //  */
+    // async getCrimeByType(crimeType, errorCallback) {
+    //     try {
+    //         const response = await this.client.get(`/crimes/active/${crimeType}`);
+    //         return response.data;
+    //     } catch (error) {
+    //         this.handleError("getCrimeByType", error, errorCallback)
+    //     }
+    // }
 
     /**
      * Gets the crime by the given borough.
@@ -48,7 +48,7 @@ export default class CrimeClient extends BaseClass {
      */
     async getCrimeByBorough(borough, errorCallback) {
         try {
-            const response = await this.client.get(`/crimes/active/${borough}`);
+            const response = await this.client.get(`/crimes/active/borough/${borough}`);
             return response.data;
         } catch (error) {
             this.handleError("getCrimeByBorough", error, errorCallback)

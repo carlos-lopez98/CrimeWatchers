@@ -9,8 +9,6 @@
 
 <body class="background">
 
-
-
     <div class="hero">
         <div class="gradient">
             <header class="header" id="header">
@@ -487,34 +485,40 @@
         </div>
 
         <div class="text__Area">
-            <div class="giveId">
-                <input class="inputBox" type="text" placeholder="Enter case ID" />
-            </div>
-            <div class="giveId">
-                <input class="inputBox" type="text" placeholder="Enter Location" />
-            </div>
+            <form id="search_form">
+                    <input class="inputBox" type="text" placeholder="Enter case ID" id="crime_id" />
+                    <input class="inputBox" type="text" placeholder="Enter Location" id="borough_input" required/>
+                    <input type="submit" value="submit" class="submit_button"/>
+            </form>
+
             <!-- <div>
                 <img class="filter" src="./css/images/filter.png" />
             </div> -->
         </div>
         <div class="resultArea__bg">
-            <div class="resultArea">
+            <div class="resultArea" id="result_Area">
 
-                <div class="resultArea__innerText">
-                    <div class="innerText">
-                        <div class="caseId_label">
-                            <h1>Case Id: </h1>
-                        </div>
-                        <h1>Location: </h1>
-                        <h1>Time Commited: </h1>
-                    </div>
-                </div>
+<!--                <div class="resultArea__innerText">-->
+<!--                    <div class="innerText">-->
+<!--                        <div class="caseId_label">-->
+<!--                            <h1>Case Id: </h1>-->
+<!--                        </div>-->
+<!--                        <h1>Location: </h1>-->
+<!--                        <h1>Time Commited: </h1>-->
+<!--                    </div>-->
+<!--                </div>-->
 
-                <div class="description__Area">
-                    <div class="description_Area__text">
-                        <h1>Description: </h1>
-                    </div>
-                </div>
+<!--                <div class="description__Area">-->
+<!--                    <div class="description_Area__text" id="">-->
+<!--                        <h1>Description: </h1>-->
+<!--                    </div>-->
+<!--                    <div class="description__Area___render" id="description_area_render">-->
+<!--                        <p>lsjldfkjsl;djfsldkj;asdkfja;kds alsdjflkajsd;lfkj a;sldkjfal;ksdj</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+
+
             </div>
         </div>
     </div>
