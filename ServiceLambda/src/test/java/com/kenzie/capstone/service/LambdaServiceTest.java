@@ -55,7 +55,7 @@ class LambdaServiceTest {
 
         CrimeData crimeData = new CrimeData(crimeDataRecord.getId(), crimeDataRecord.getBorough(),
                 crimeDataRecord.getState(), crimeDataRecord.getCrimeType(), crimeDataRecord.getDescription(),
-                new ZonedDateTimeConverter().unconvert(crimeDataRecord.getTime()));
+                crimeDataRecord.getTime());
 
         when(crimeDao.addClosedCase(crimeDataRecord)).thenReturn(crimeData);
 

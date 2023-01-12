@@ -123,12 +123,12 @@ public class CrimeController {
 
     private CrimeData requestToCrimeData(CreateCrimeRequest request){
         return new CrimeData(request.getCaseId(), request.getBorough(), request.getState(), request.getCrimeType(), request.getDescription(),
-                new ZonedDateTimeConverter().unconvert(request.getZonedDateTime()));
+                request.getZonedDateTime());
     }
 
     private CrimeResponse crimeDatatoResponse(CrimeData data){
         CrimeResponse response = new CrimeResponse();
-        response.setZonedDateTime(new ZonedDateTimeConverter().convert(data.getTime()));
+        response.setZonedDateTime(data.getTime());
         response.setState(data.getState());
         response.setDescription(data.getDescription());
         response.setCrimeType(data.getCrimeType());
@@ -172,7 +172,7 @@ public class CrimeController {
 
     private CrimeData createClosedRequestToCrimeData(CreateCrimeRequestClosed closedRequest){
         CrimeData data = new CrimeData(closedRequest.getId(), closedRequest.getBorough(), closedRequest.getState(),
-                closedRequest.getCrimeType(), closedRequest.getDescription(), ZonedDateTime.now());
+                closedRequest.getCrimeType(), closedRequest.getDescription(), new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
         return data;
     }
 }

@@ -121,7 +121,7 @@ public class CrimeService {
 
     private CrimeData crimeResponseToData(CrimeDataResponse response){
         CrimeData data = new CrimeData(response.getCaseId(), response.getBorough(), response.getState(),
-                response.getCrimeType(), response.getDescription(), new ZonedDateTimeConverter().unconvert(response.getZonedDateTime()));
+                response.getCrimeType(), response.getDescription(), response.getZonedDateTime());
         return data;
     }
 
