@@ -28,6 +28,7 @@ class IndexPage extends BaseClass {
         this.client = new CrimeClient();
 
         this.dataStore.addChangeListener(this.renderExample)
+
         this.dataStore.addChangeListener(this.renderTrendingSection)
     }
 
@@ -99,11 +100,11 @@ class IndexPage extends BaseClass {
                 <div class="trending_content__container">
                     <div class="trending_content__container_header">
                         <div class="h1_text">
-                            <h1>CaseId: ${crime.id}</h1>
+                            <h1>CaseId:&nbsp;&nbsp; ${crime.id}</h1>
                         </div>
 
                         <div class="h2_text">
-                            <h1>Date and Time: ${crime.zonedDateTime}</h1>
+                            <h1>Date and Time:&nbsp;&nbsp; ${crime.zonedDateTime}</h1>
                         </div>
 
                         <div class="h3_text">
@@ -114,7 +115,8 @@ class IndexPage extends BaseClass {
                     </div>
 
                     <div class="trending_content__container_description">
-                        <h1 class="description_title">Description</h1>
+                        <h1 class="description_title">Wanted For:&nbsp;&nbsp; ${crime.crimeType}</h1>
+                        <h1>Description</h1>
                         <p class="description_text">${crime.description}</p>
                     </div>
                 </div>
