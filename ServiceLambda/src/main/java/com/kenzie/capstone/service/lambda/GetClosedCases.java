@@ -51,13 +51,10 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
 
         try {
             List<CrimeData> crimeData = lambdaCrimeService.getClosedCases(borough);
-
             String output = gson.toJson(crimeData);
-
             return response
                     .withStatusCode(200)
                     .withBody(output);
-
         } catch (Exception e) {
             return response
                     .withStatusCode(400)
