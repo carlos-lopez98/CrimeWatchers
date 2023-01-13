@@ -38,18 +38,16 @@
             <h2>Post New Activity</h2>
             <div class="leftBar">
                 <form class="leftBar__form" id="create-form">
-
                     <p class="leftBar__form__p">
-                        <label>Name</label>
-                        <input type="text" required class="validated-field" id="create-name-field">
+                        <label>Borough</label>
+                        <input type="text" required class="validated-field" id="create-borough-field">
                         <label>CrimeType</label>
                         <input type="text" required class="validated-field" id="create-type-field">
                         <label>Description</label>
                         <input type="text" required class="validated-field" id="create-description-field">
                         <label>Add Files or Images</label>
-                        <input type="text" required class="validated-field" id="add-file-field">
+                        <input type="text" class="validated-field" id="add-file-field">
                     </p>
-
                     <button type="submit">Create</button>
                 </form>
             </div>
@@ -309,14 +307,13 @@
             <div class="searchArea_head__header">
                 <h1 class="text__Search">Search Ongoing Cases in Your Neighborhood</h1>
                 <div class="searchArea_head__header___prompt">
-                    <p>*Case Id and Location Required*</p>
+                    <p>*Location Required* <span class="forNow">For Now</span></p>
                 </div>
             </div>
         </div>
 
         <div class="text__Area">
             <form id="search_form">
-                <input class="inputBox" type="text" placeholder="Enter case ID" id="crime_id" />
                 <input class="inputBox" type="text" placeholder="Enter Location" id="borough_input" required />
                 <input type="submit" value="submit" class="submit_button" />
             </form>
@@ -328,24 +325,48 @@
         <div class="resultArea__bg">
             <div class="resultArea" id="result_Area">
 
-                <!--                <div class="resultArea__innerText">-->
-                <!--                    <div class="innerText">-->
-                <!--                        <div class="caseId_label">-->
-                <!--                            <h1>Case Id: </h1>-->
-                <!--                        </div>-->
-                <!--                        <h1>Location: </h1>-->
-                <!--                        <h1>Time Commited: </h1>-->
-                <!--                    </div>-->
-                <!--                </div>-->
+                <div class="Left_Area_Result" id="left_area__Result">
+                    <!--                <div class="resultArea__innerText">-->
+                    <!--                    <div class="innerText">-->
+                    <!--                        <div class="caseId_label">-->
+                    <!--                            <h1>Case Id: </h1>-->
+                    <!--                        </div>-->
+                    <!--                        <h1>Location: </h1>-->
+                    <!--                        <h1>Time Commited: </h1>-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
 
-                <!--                <div class="description__Area">-->
-                <!--                    <div class="description_Area__text" id="">-->
-                <!--                        <h1>Description: </h1>-->
-                <!--                    </div>-->
-                <!--                    <div class="description__Area___render" id="description_area_render">-->
-                <!--                        <p>lsjldfkjsl;djfsldkj;asdkfja;kds alsdjflkajsd;lfkj a;sldkjfal;ksdj</p>-->
-                <!--                    </div>-->
-                <!--                </div>-->
+                    <!--                <div class="description__Area">-->
+                    <!--                    <div class="description_Area__text" id="">-->
+                    <!--                        <h1>Description: </h1>-->
+                    <!--                    </div>-->
+                    <!--                    <div class="description__Area___render" id="description_area_render">-->
+                    <!--                        <p>lsjldfkjsl;djfsldkj;asdkfja;kds alsdjflkajsd;lfkj a;sldkjfal;ksdj</p>-->
+                    <!--                    </div>-->
+                    <!--                </div>-->
+                </div>
+
+                <div class="comment_section_Result">
+
+                    <div class="comment_Container">
+                        <div class="commentTitle">
+                            <h1>Comments:</h1>
+                        </div>
+                        <div class="comment_header">
+                            <div class="userProfileImage">
+                            </div>
+                            <div class="comment_userName">
+                                <h1>YoloMan69</h1>
+                            </div>
+                            <div class="comment_postTime">
+                                <h1>Posted: 11:45 AM</h1>
+                            </div>
+                        </div>
+                        <div class="comment_text">
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>

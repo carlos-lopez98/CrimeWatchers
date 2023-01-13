@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CrimeResponse {
 
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("caseId")
+    private String caseId;
 
     @JsonProperty("borough")
     private String borough;
@@ -25,11 +25,13 @@ public class CrimeResponse {
     private String zonedDateTime;
 
     public String getCaseId() {
-        return id;
+
+        return caseId;
     }
 
     public void setCaseId(String caseId) {
-        this.id = caseId;
+
+        this.caseId = caseId;
     }
 
     public String getBorough() {

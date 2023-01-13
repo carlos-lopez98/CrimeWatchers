@@ -30,6 +30,24 @@ export default class BaseClass {
             style: {
                 background: "white",
                 color: "black",
+                boxShadow: "5px 5px 20px black",
+            }
+        }).showToast();
+    }
+
+
+    showMessageTrending(message) {
+        Toastify({
+            text: message,
+            duration: 4500,
+            gravity: "top",
+            position: 'right',
+            close: true,
+            style: {
+                background: "white",
+                color: "black",
+                boxShadow: "20px 20px 20px black",
+                height: "25px",
             }
         }).showToast();
     }

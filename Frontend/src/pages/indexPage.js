@@ -1,6 +1,7 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import CrimeClient from "../api/CrimeClient";
+import TrendingData from "../util/TrendingData";
 
 
 /**
@@ -12,6 +13,7 @@ class IndexPage extends BaseClass {
         super();
         this.bindClassMethods(['onGetByBorough', 'onCreate', 'renderExample', 'renderTrendingSection', 'onGetAll'], this);
         this.dataStore = new DataStore();
+        this.TrendingData = new TrendingData();
     }
 
 
@@ -24,19 +26,17 @@ class IndexPage extends BaseClass {
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
 
         window.addEventListener("load", this.onGetAll);
-
         this.client = new CrimeClient();
 
         this.dataStore.addChangeListener(this.renderExample)
-
-        this.dataStore.addChangeListener(this.renderTrendingSection)
+        this.TrendingData.addChangeListener(this.renderTrendingSection)
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderExample() {
 
-        let resultArea = document.getElementById("result_Area");
+        let resultArea = document.getElementById("left_area__Result");
 
         const crimes = this.dataStore.get("borough_crime_list");
 
@@ -48,12 +48,16 @@ class IndexPage extends BaseClass {
                     <div class="innerText">
 
                         <div class="caseId_label">
-                            <h1>Case Id: ${crime.id}</h1>
+                            <h1>Case Id:<span class="resultArea_innerText_headers"> ${crime.caseId}</span></h1>
                         </div>
 
-                        <h1>Location: ${crime.borough}</h1>
+                        <div class="caseId_label2">
+                        <h1>Location: <span class="resultArea_innerText_headers">${crime.borough}</span></h1>
+                        </div>
 
-                        <h1>Time Commited: ${crime.zonedDateTime}</h1>
+                        <div class="caseId_label3">
+                        <h1>Time Commited: <span class="resultArea_innerText_headers">${crime.zonedDateTime}</span></h1>
+                        </div>
 
                     </div>
 
@@ -86,7 +90,7 @@ class IndexPage extends BaseClass {
 
         let resultArea = document.getElementById("trending_container_section");
 
-        const trendingCrimes = this.dataStore.get("trendingCrimes");
+        const trendingCrimes = this.TrendingData.get("trendingCrimes");
 
         let myHtml = "";
 
@@ -98,7 +102,7 @@ class IndexPage extends BaseClass {
                 <div class="trending_content__container">
                     <div class="trending_content__container_header">
                         <div class="h1_text">
-                            <h1>CaseId:&nbsp;&nbsp; ${crime.id}</h1>
+                            <h1>CaseId:&nbsp;&nbsp; ${crime.caseId}</h1>
                         </div>
 
                         <div class="h2_text">
@@ -138,10 +142,10 @@ class IndexPage extends BaseClass {
 
         let result = await this.client.getAllCrimes(this.errorHandler);
 
-        this.dataStore.set("trendingCrimes", result);
+        this.TrendingData.set("trendingCrimes", result);
 
         if (result) {
-            this.showMessage(`Checkout our New Trending Crime Section`)
+            this.showMessageTrending(`Checkout our New Trending Crime Section!`)
         } else {
             this.errorHandler("Error doing GET!  Try again...");
         }
@@ -164,7 +168,7 @@ class IndexPage extends BaseClass {
 
 
         if (result) {
-            this.showMessage(`Got ${result}!`)
+            this.showMessage(`Checkout what's going on in ${result[0].borough} area!`)
         } else {
             this.errorHandler("Error doing GET!  Try again...");
         }
@@ -173,15 +177,17 @@ class IndexPage extends BaseClass {
     async onCreate(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-        this.dataStore.set("example", null);
 
-        let name = document.getElementById("create-name-field").value;
+        let borough = document.getElementById("create-borough-field").value;
+        let description = document.getElementById("create-description-field").value;
+        let crimeType = document.getElementById("create-type-field").value;
 
-        const createdExample = await this.client.createExample(name, this.errorHandler);
-        this.dataStore.set("example", createdExample);
+        const createdCrime = await this.client.addCrime(borough, description, crimeType, this.errorHandler);
 
-        if (createdExample) {
-            this.showMessage(`Created ${createdExample.name}!`)
+        console.log(createdCrime.caseId)
+
+        if (createdCrime) {
+            this.showMessage(`Your new Crime Id: ${createdCrime.caseId} is up for review for the ${createdCrime.borough} area`)
         } else {
             this.errorHandler("Error creating!  Try again...");
         }
