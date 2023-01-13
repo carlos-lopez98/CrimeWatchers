@@ -108,6 +108,13 @@ public class CrimeService {
         return crimeDataList;
     }
 
+    public List<CrimeData> getAllClosedCases() {
+
+        List<CrimeData> allClosedCrimes = lambdaServiceClient.getAllClosedCases();
+
+        return allClosedCrimes;
+    }
+
     public CrimeData addClosedCase(CrimeData crimeData) {
         CrimeDataResponse addedCrime = lambdaServiceClient.addClosedCase(dataToRequest(crimeData));
 
@@ -139,6 +146,7 @@ public class CrimeService {
 
         return request;
     }
+
     //TODO implement findCrimeByBorough through CrudRepository
     // Example getting data from the lambda
     //ExampleData dataFromLambda = lambdaServiceClient.getExampleData(crimeType);

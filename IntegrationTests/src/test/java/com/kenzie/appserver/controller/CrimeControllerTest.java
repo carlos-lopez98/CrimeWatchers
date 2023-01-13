@@ -77,7 +77,6 @@ public class CrimeControllerTest {
         createCrimeRequest.setCaseId("1243");
         createCrimeRequest.setZonedDateTime("kjlkjlksjd");
 
-
         ResultActions actions = mvc.perform(post("/crimes")
                         .content(mapper.writeValueAsString(createCrimeRequest))
                         .accept(MediaType.APPLICATION_JSON)
@@ -89,7 +88,6 @@ public class CrimeControllerTest {
         CrimeResponse response = mapper.readValue(responseBody, CrimeResponse.class);
 
         assertThat(response.getCaseId()).isNotEmpty();
-
     }
 
 

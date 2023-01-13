@@ -210,15 +210,15 @@
 
 
 .h1_text {
-margin-left: 10px;
+    margin-left: 10px;
 }
 
 .trending_content__container_header .h2_text {
-margin-left: 20px;
+    margin-left: 20px;
 }
 
 .trending_content__container_header .h3_text {
-margin-left: 20px;
+    margin-left: 20px;
 }
 
 .provideInfo_link {
@@ -244,10 +244,10 @@ margin-left: 20px;
 }
 
 p.description_text {
-padding: 0px;
-margin-bottom: 10px;
-color: rgba(191, 191, 191);
-font-size: 15px;
+    padding: 0px;
+    margin-bottom: 10px;
+    color: rgba(191, 191, 191);
+    font-size: 15px;
 }
 
 .card_recentlyClosed {
@@ -407,12 +407,12 @@ button:hover {
     padding: 75px;
 }
 
-.search_form{
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: space-around;
-width: 100%;
+.search_form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .text__Search {
@@ -421,24 +421,24 @@ width: 100%;
     margin: 0px 20px;
 }
 
-.inputBox{
-height: 35px;
-width: 300px;
-font-family: slogan;
+.inputBox {
+    height: 35px;
+    width: 300px;
+    font-family: slogan;
 }
 
-.submit_button{
-background-color: black;
-height: 35px;
-width: 60px;
-border-radius: 10%;
-color: white;
+.submit_button {
+    background-color: black;
+    height: 35px;
+    width: 60px;
+    border-radius: 10%;
+    color: white;
 }
 
-.submit_button:Hover{
-background: gray;
-color: white;
-cursor: pointer;
+.submit_button:Hover {
+    background: gray;
+    color: white;
+    cursor: pointer;
 }
 
 .filter {

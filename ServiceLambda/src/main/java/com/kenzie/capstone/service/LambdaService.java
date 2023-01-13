@@ -69,7 +69,16 @@ public class LambdaService {
         return dataToResponse(record);
     }
 
+    public List<CrimeData> getAllClosedCases() {
 
+        List<CrimeDataRecord> records = crimeDao.getAllClosedCases();
+
+        if(!records.isEmpty()){
+            return records.stream().map(this::recordToData).collect(Collectors.toList());
+        }
+
+        return null;
+    }
 
     private CrimeData recordToData(CrimeDataRecord record) {
         CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(), record.getCrimeType(),
@@ -101,4 +110,6 @@ public class LambdaService {
 
         return record;
     }
+
+
 }

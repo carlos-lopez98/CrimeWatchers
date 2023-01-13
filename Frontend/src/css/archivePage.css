@@ -1,0 +1,90 @@
+@font-face {
+    font-family: myFont;
+    src: url(./fonts/BebasNeue-Regular.ttf);
+}
+
+@font-face {
+    font-family: slogan;
+    src: url(./fonts/BreeSerif-Regular.ttf);
+}
+
+.header_holder {
+    color: white;
+    font-family: myFont;
+    font-size: 25px;
+}
+
+.background_archivePage {
+    background-color: rgba(0, 0, 0);
+    margin: 0;
+    counter-reset: section;
+}
+
+.hero_archivePage {
+    width: 100%;
+    height: 100vh;
+    background-image: url(./images/snazzy-image.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+}
+
+.text__Area_ArchivePage {
+    margin-top: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.resultArea__bg_archivePage {
+    background-color: black;
+    height: 88%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.resultArea_archivePage {
+    display: flex;
+    flex-direction: column;
+    font-family: slogan;
+    background-color: white;
+    color: black;
+    margin: 15px 15px;
+    width: 100%;
+    overflow-y: scroll;
+    background-color: rgb(209, 209, 209);
+
+}
+
+.title_holder_archivePage {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    border-top: black 5px solid;
+}
+
+.title_archivePage {
+    font-family: slogan;
+    margin-left: 30px;
+}
+
+.title_name {
+    color: rgb(66, 66, 180);
+    margin-left: 10px;
+    font-size: 2rem;
+}
+
+.description_title_archivePage {
+    margin-left: 10px;
+}
+
+.description_text_archivePage {
+    font-family: slogan;
+    color: rgb(66, 66, 180);
+    font-size: 1.8rem;
+    margin-left: 15px;
+}
