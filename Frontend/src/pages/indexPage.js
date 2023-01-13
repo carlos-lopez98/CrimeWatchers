@@ -79,8 +79,6 @@ class IndexPage extends BaseClass {
         }
 
 
-
-
     }
 
 
@@ -149,7 +147,6 @@ class IndexPage extends BaseClass {
         }
 
     }
-
 
 
     async onGetByBorough(event) {
