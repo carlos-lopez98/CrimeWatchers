@@ -526,16 +526,14 @@ button:hover {
 .resultArea__innerText {
     height: 10%;
     width: .99;
-    margin: 10px;
     text-align: left;
-    font-size: 1rem;
+    font-size: .75rem;
     border-top: white 1px solid;
 
 }
 
-.resultArea__innerText:hover {
-    background-color: rgb(100, 100, 100);
-
+.hover_Gray_container:hover {
+    background-color: rgb(49, 49, 49);
 }
 
 .innerText {
@@ -546,7 +544,6 @@ button:hover {
 .description__Area {
     height: cover;
     width: .99;
-    margin: 10px;
     color: white;
     font-family: slogan;
 }
@@ -566,6 +563,15 @@ button:hover {
 
 .description_Area__text {
     margin-left: 5px;
+}
+
+.description__Area___render {
+    padding-bottom: 10px;
+}
+
+.description__Area___render p {
+    margin: 0px;
+    font-size: 1.25rem;
 }
 
 .comment_section_Result {
@@ -605,7 +611,7 @@ button:hover {
     height: 25px;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
-    margin: 9px 0px;
+    margin: 0px 0px;
 }
 
 .commentTitle h1 {
