@@ -122,6 +122,17 @@ public class CrimeController {
         return ResponseEntity.ok(crimeResponse);
     }
 
+    @GetMapping("/closed/all")
+    public ResponseEntity<List<CrimeResponse>> getAllClosedCases(){
+
+        List<CrimeData> closedCases = crimeService.getAllClosedCases();
+
+        List<CrimeResponse> crimeResponseList = closedCases.stream().map(this::crimeDatatoResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(crimeResponseList);
+    }
+
     private CrimeData requestToCrimeData(CreateCrimeRequest request){
         return new CrimeData(request.getCaseId(), request.getBorough(), request.getState(), request.getCrimeType(), request.getDescription(),
                 request.getZonedDateTime());

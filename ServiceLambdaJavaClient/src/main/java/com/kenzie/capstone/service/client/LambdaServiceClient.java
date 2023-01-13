@@ -14,6 +14,7 @@ public class LambdaServiceClient {
 
     private static final String GET_CLOSED_CASE = "crimeByBorough/{borough}";
     private static final String SET_CLOSED_CASE = "crimeById/add";
+    private static final String GETALL_CLOSED_CASE = "crimes/all";
 
     private ObjectMapper mapper;
 
@@ -75,6 +76,24 @@ public class LambdaServiceClient {
 //        crimeDataResponse.setCrimeType(crimeData.getCrimeType());
 //        crimeDataResponse.setDescription(crimeData.getDescription());
 //        crimeDataResponse.setZonedDateTime(crimeData.getTime().toString());
+
+        return crimeDataResponse;
+    }
+
+    public List<CrimeData> getAllClosedCases() {
+
+        EndpointUtility endpointUtility = new EndpointUtility();
+
+
+        String response = endpointUtility.getEndpoint(GETALL_CLOSED_CASE);
+        List<CrimeData> crimeDataResponse;
+
+
+        try {
+            crimeDataResponse = mapper.readValue(response, new TypeReference<>() {});
+        } catch (Exception e) {
+            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        }
 
         return crimeDataResponse;
     }

@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service.dao;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
 import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.model.CrimeDataRecord;
@@ -52,6 +53,11 @@ public class CrimeDao{
         return recordToData(crimeDataRecord);
     }
 
+    public List<CrimeDataRecord> getAllClosedCases() {
+
+        return mapper.scan(CrimeDataRecord.class, new DynamoDBScanExpression());
+    }
+
 
     private CrimeDataRecord dataToRecord(CrimeData data) {
     CrimeDataRecord record = new CrimeDataRecord();
@@ -69,6 +75,8 @@ private CrimeData recordToData(CrimeDataRecord record){
                 record.getCrimeType(), record.getDescription(),record.getTime());
         return data;
 }
+
+
     //Don't need this
     /*    public ExampleData storeExampleData(ExampleData exampleData) {
 
