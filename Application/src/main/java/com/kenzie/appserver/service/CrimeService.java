@@ -97,7 +97,7 @@ public class CrimeService {
         return records.stream().map(this::crimeRecordToCrime).collect(Collectors.toList());
     }
 
-    public List<CrimeData>  getClosedCases(String borough) {
+    public List<CrimeData> getClosedCases(String borough) {
 
         List<CrimeData> crimeDataList = lambdaServiceClient.getClosedCases(borough);
 

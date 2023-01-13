@@ -87,7 +87,7 @@ class ArchivePage extends BaseClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const archivePage= new ArchivePage();
+    const archivePage = new ArchivePage();
     archivePage.mount();
 };
 
