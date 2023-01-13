@@ -48,7 +48,7 @@ public class CrimeController {
         crimeResponse.setBorough(crime.getBorough());
         crimeResponse.setState(crime.getState());
         crimeResponse.setCrimeType(crime.getCrimeType());
-        crimeResponse.setZonedDateTime(crime.getDateAndTime());
+        crimeResponse.setZonedDateTime(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
         crimeResponse.setDescription(crime.getDescription());
 
         return ResponseEntity.ok(crimeResponse);
@@ -169,7 +169,7 @@ public class CrimeController {
 
     private Crime requestToCrime (CreateCrimeRequest request){
         return new Crime(request.getCaseId(), request.getBorough(), request.getState()
-                , request.getCrimeType(), request.getDescription(), request.getZonedDateTime());
+                , request.getCrimeType(), request.getDescription(), new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
     }
 
     private CrimeResponse crimeToResponse(Crime crime){

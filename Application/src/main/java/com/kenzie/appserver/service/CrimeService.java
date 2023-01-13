@@ -59,9 +59,14 @@ public class CrimeService {
 
     public Crime addNewActiveCrime(Crime crime) {
 
+
+        List<Crime> allCrimes = this.findAllActiveCrimes();
+
+        String id = String.valueOf (allCrimes.size() + 1);
+
         // Example sending data to the local repository
         CrimeRecord crimeRecord = new CrimeRecord();
-        crimeRecord.setId(crime.getCaseId());
+        crimeRecord.setId(id);
         crimeRecord.setBorough(crime.getBorough());
         crimeRecord.setState(crime.getState());
         crimeRecord.setDescription(crime.getDescription());
@@ -69,7 +74,7 @@ public class CrimeService {
         crimeRecord.setCrimeType(crime.getCrimeType());
         crimeRepository.save(crimeRecord);
 
-        return new Crime(crime.getCaseId(), crime.getBorough(),
+        return new Crime(id, crime.getBorough(),
                 crime.getState(),crime.getCrimeType(), crime.getDescription(), crime.getDateAndTime());
     }
 

@@ -71,18 +71,22 @@ export default class CrimeClient extends BaseClass {
 
     /**
      * Creates a new crime given the caseId, borough, and state
-     * @param caseId
+     *
      * @param borough
      * @param state
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns a new crime
      */
-    async addCrime(caseId, borough, state, errorCallback) {
+    async addCrime(borough, description, crimeType, errorCallback) {
+
+        let state = "New York";
+
         try {
             const response = await this.client.post(`/crimes`, {
-                caseId: caseId,
                 borough: borough,
                 state: state,
+                description: description,
+                crimeType: crimeType,
             });
             return response.data;
         } catch (error) {
