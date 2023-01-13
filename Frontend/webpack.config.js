@@ -45,6 +45,21 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+          template: './src/defense.html',
+          filename: 'defense.html',
+          inject: false
+        }),
+    new HtmlWebpackPlugin({
+              template: './src/security.html',
+              filename: 'security.html',
+              inject: false
+            }),
+     new HtmlWebpackPlugin({
+                  template: './src/cpr.html',
+                  filename: 'cpr.html',
+                  inject: false
+                }),
     new CopyPlugin({
       patterns: [
         {
