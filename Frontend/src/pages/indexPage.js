@@ -44,35 +44,43 @@ class IndexPage extends BaseClass {
             let myHtml = "";
             for (let crime of crimes) {
                 myHtml += `
+
+
+                <div class="hover_Gray_container">
+                
                 <div class="resultArea__innerText" >
-                    <div class="innerText">
+                <div class="innerText">
 
-                        <div class="caseId_label">
-                            <h1>Case Id:<span class="resultArea_innerText_headers"> ${crime.caseId}</span></h1>
-                        </div>
+                    <div class="caseId_label">
+                        <h1>Case Id:<span class="resultArea_innerText_headers"> ${crime.caseId}</span></h1>
+                    </div>
 
-                        <div class="caseId_label2">
-                        <h1>Location: <span class="resultArea_innerText_headers">${crime.borough}</span></h1>
-                        </div>
+                    <div class="caseId_label2">
+                    <h1>Location: <span class="resultArea_innerText_headers">${crime.borough}</span></h1>
+                    </div>
 
-                        <div class="caseId_label3">
-                        <h1>Time Commited: <span class="resultArea_innerText_headers">${crime.zonedDateTime}</span></h1>
-                        </div>
-
+                    <div class="caseId_label3">
+                    <h1>Time Commited: <span class="resultArea_innerText_headers">${crime.zonedDateTime}</span></h1>
                     </div>
 
                 </div>
 
-                 <div class="description__Area">
+            </div>
+             <div class="description__Area">
 
-                    <div class="description_Area__text">
-                        <h1>Description</h1>
-                    </div>
+                <div class="description_Area__text">
+                    <h1>Description</h1>
+                </div>
 
-                    <div class="description__Area___render" id="description_area_render">
-                        <p>${crime.description}</p>
-                    </div>
-                 </div>
+                <div class="description__Area___render" id="description_area_render">
+                    <p>${crime.description}</p>
+                </div>
+             </div>
+                
+                
+                </div>
+
+             
             `
             }
             myHtml += ""
