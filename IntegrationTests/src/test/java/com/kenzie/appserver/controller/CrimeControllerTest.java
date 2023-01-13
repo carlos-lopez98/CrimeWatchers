@@ -1,7 +1,10 @@
 package com.kenzie.appserver.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.CreateCrimeRequest;
+import com.kenzie.appserver.controller.model.CrimeResponse;
+import com.kenzie.appserver.converter.ZonedDateTimeConverter;
 import com.kenzie.appserver.service.CrimeService;
 import com.kenzie.appserver.service.model.Crime;
 
@@ -12,16 +15,22 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+
+import java.time.ZonedDateTime;
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @IntegrationTest
 class CrimeControllerTest {
+
     @Autowired
     private MockMvc mvc;
 
@@ -33,23 +42,23 @@ class CrimeControllerTest {
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void getById_Exists() throws Exception {
+    public void getAllActiveCrimes_success() throws Exception {
 
-        String crimeType = mockNeat.strings().valStr();
-        String description = mockNeat.strings().valStr();
-        Crime crime = new Crime("12345", "That Borough", "NewState"
-                , crimeType,description, "2022/12/25");
+        Crime crimeToAdd = new Crime(mockNeat.uuids().get(), mockNeat.names().get(), mockNeat.names().get(),
+                mockNeat.names().get(), mockNeat.names().get(), mockNeat.names().get());
 
-        Crime persistedCrime = crimeService.addNewActiveCrime(crime);
-        mvc.perform(get("/crimes/{caseId}", persistedCrime.getCaseId())
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("caseId")
-                        .isString())
-                .andExpect(jsonPath("crimeType")
-                        .value(is(crimeType)))
-                .andExpect(jsonPath("description")
-                        .value(is(description)))
+        crimeService.addNewActiveCrime(crimeToAdd);
+
+        ResultActions actions = mvc.perform(get("/crimes/all")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
+
+        String responseBody = actions.andReturn().getResponse().getContentAsString();
+
+        List<CrimeResponse> responses = mapper.readValue(responseBody, new TypeReference<List<CrimeResponse>>() {});
+
+        assertThat(responses.size()).isGreaterThan(0);
     }
 
     @Test
@@ -72,34 +81,7 @@ class CrimeControllerTest {
 //                .andExpect(status().is2xxSuccessful());
     }
 
-    @Test
-    public void updateCase_success() {
-        //GIVEN
 
-        //WHEN
-
-        //THEN
-    }
-
-    @Test
-    public void updateCase_invalidCase(){
-
-        //GIVEN
-
-        //WHEN
-
-        //THEN
-    }
-
-    @Test
-    public void getAllCases_success() throws Exception {
-        //GIVEN
-        CreateCrimeRequest crimeRequest = new CreateCrimeRequest();
-//        crimeRequest.setCaseId(mockNeat.names();
-        //WHEN
-
-        //THEN
-    }
 
     @Test
     public void getCaseById_success(){
