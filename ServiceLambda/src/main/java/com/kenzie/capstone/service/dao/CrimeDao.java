@@ -2,7 +2,7 @@ package com.kenzie.capstone.service.dao;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.kenzie.capstone.service.converter.ZonedDateTimeConverter;
-import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.ClosedCrimeData;
 import com.kenzie.capstone.service.model.CrimeDataRecord;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -35,13 +35,7 @@ public class CrimeDao{
     }
 
     //Will add a closed case to our Lambda Table -- Case must be closed
-    public CrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
-
-//        new DynamoDBSaveExpression()
-//                .withExpected(ImmutableMap.of(
-//                        "borough",
-//                        new ExpectedAttributeValue().withExists(false)
-//                ))
+    public ClosedCrimeData addClosedCase(CrimeDataRecord crimeDataRecord) {
 
         try {
             mapper.save(crimeDataRecord);
@@ -53,44 +47,18 @@ public class CrimeDao{
         return recordToData(crimeDataRecord);
     }
 
-    public List<CrimeDataRecord> getAllClosedCases() {
 
+
+    public List<CrimeDataRecord> getAllClosedCases() {
         return mapper.scan(CrimeDataRecord.class, new DynamoDBScanExpression());
     }
 
 
-    private CrimeDataRecord dataToRecord(CrimeData data) {
-    CrimeDataRecord record = new CrimeDataRecord();
-    record.setDescription(data.getDescription());
-    record.setBorough(data.getBorough());
-    record.setTime(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
-    record.setCrimeType(data.getCrimeType());
-    record.setState(data.getState());
-    record.setId(data.getId());
-    return record;
-}
 
-private CrimeData recordToData(CrimeDataRecord record){
-        CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(),
-                record.getCrimeType(), record.getDescription(),record.getTime());
+private ClosedCrimeData recordToData(CrimeDataRecord record){
+        ClosedCrimeData data = new ClosedCrimeData(record.getId(), record.getBorough(), record.getState(),
+                record.getCrimeType(), record.getDescription(),record.getDateClosed(), record.getStatus());
+
         return data;
 }
-
-
-    //Don't need this
-    /*    public ExampleData storeExampleData(ExampleData exampleData) {
-
-        try {
-            mapper.save(exampleData, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "id",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-        } catch (ConditionalCheckFailedException e) {
-            throw new IllegalArgumentException("id has already been used");
-        }
-
-        return exampleData;
-    }*/
-
 }

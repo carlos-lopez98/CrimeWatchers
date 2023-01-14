@@ -51,17 +51,20 @@ class LambdaServiceTest {
         crimeDataRecord.setBorough("New York");
         crimeDataRecord.setDescription("Killer killed someone");
         crimeDataRecord.setState("New York");
-        crimeDataRecord.setTime(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
+        crimeDataRecord.setDateClosed(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
+        crimeDataRecord.setStatus("111111");
 
-        CrimeData crimeData = new CrimeData(crimeDataRecord.getId(), crimeDataRecord.getBorough(),
+        ClosedCrimeData crimeData = new ClosedCrimeData(crimeDataRecord.getId(), crimeDataRecord.getBorough(),
                 crimeDataRecord.getState(), crimeDataRecord.getCrimeType(), crimeDataRecord.getDescription(),
-                crimeDataRecord.getTime());
+                crimeDataRecord.getDateClosed(), crimeDataRecord.getStatus());
 
         when(crimeDao.addClosedCase(crimeDataRecord)).thenReturn(crimeData);
 
         // WHEN
         CrimeDataResponse response = this.lambdaService.addClosedCase(new CrimeDataRequest(crimeDataRecord.getId(),
-                crimeDataRecord.getBorough(), crimeDataRecord.getState(), crimeDataRecord.getCrimeType(), crimeDataRecord.getDescription()));
+                crimeDataRecord.getBorough(), crimeDataRecord.getState(), crimeDataRecord.getCrimeType(),
+                crimeDataRecord.getDescription(), crimeDataRecord.getDateClosed(),
+                crimeDataRecord.getStatus()));
 
         // THEN
         verify(crimeDao, times(1)).addClosedCase(recordArgumentCaptor.capture());
@@ -89,7 +92,7 @@ class LambdaServiceTest {
         when(crimeDao.getClosedCases(borough)).thenReturn(Arrays.asList(record));
 
         // WHEN
-        List<CrimeData> crimeDataList = this.lambdaService.getClosedCases(borough);
+        List<ClosedCrimeData> crimeDataList = this.lambdaService.getClosedCases(borough);
 
         // THEN
         verify(crimeDao, times(1)).getClosedCases(boroughCaptor.capture());

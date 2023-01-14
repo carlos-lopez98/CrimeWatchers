@@ -21,8 +21,11 @@ public class CrimeDataResponse {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("zonedDateTime")
-    private String zonedDateTime;
+    @JsonProperty("dateClosed")
+    private String dateClosed;
+
+    @JsonProperty("status")
+    private String status;
 
     public String getCaseId() {
         return caseId;
@@ -64,11 +67,15 @@ public class CrimeDataResponse {
         this.description = description;
     }
 
-    public String getZonedDateTime() {
-        return zonedDateTime;
+    public String getDateClosed() {
+        return dateClosed;
     }
 
-    public void setZonedDateTime(String zonedDateTime) {
-        this.zonedDateTime = zonedDateTime;
+    public void setDateClosed(String zonedDateTime) {
+        this.dateClosed = zonedDateTime;
     }
+
+    public String getStatus(){return status;}
+
+    public void setStatus(String status){this.status = status;}
 }

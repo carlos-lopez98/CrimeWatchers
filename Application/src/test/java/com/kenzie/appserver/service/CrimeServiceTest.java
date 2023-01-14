@@ -2,13 +2,11 @@ package com.kenzie.appserver.service;
 
 
 import com.kenzie.appserver.repositories.CrimeRepository;
-//import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
 import com.kenzie.appserver.service.model.Crime;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import com.kenzie.capstone.service.model.CrimeData;
-import com.kenzie.capstone.service.model.CrimeDataRequest;
-import com.kenzie.capstone.service.model.CrimeDataResponse;
+import com.kenzie.capstone.service.model.ClosedCrimeData;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,11 +45,6 @@ public class CrimeServiceTest {
         String zonedDateTime = "some date";
 
         Crime crime = new Crime(id, borough, state, crimeType, description, zonedDateTime);
-
-
-//        CrimeId crimeId = new CrimeId();
-//        crimeId.setId(id);
-//        crimeId.setBorough("Anywhere");
 
         CrimeRecord record = new CrimeRecord();
         record.setId(crime.getCaseId());
@@ -147,20 +140,20 @@ public class CrimeServiceTest {
     void findAllClosedCrimes(){
         //GIVEN
         String borough = "thisBorough";
-        List<CrimeData> crimeDataList = new ArrayList<>();
+        List<ClosedCrimeData> crimeDataList = new ArrayList<>();
 
-        CrimeData crimeData1 = new CrimeData("1029389laksjd",borough,"New York"
-                ,"Murder","some one was killed","yesterday");
+        ClosedCrimeData crimeData1 = new ClosedCrimeData("1029389laksjd",borough,"New York"
+                ,"Murder","some one was killed","yesterday", "11111");
 
-        CrimeData crimeData2 = new CrimeData("293847qpwoeir",borough,"New York"
-                ,"Arson","a house was set on fire","today");
+        ClosedCrimeData crimeData2 = new ClosedCrimeData("293847qpwoeir",borough,"New York"
+                ,"Arson","a house was set on fire","today", "1111");
 
         crimeDataList.add(crimeData1);
         crimeDataList.add(crimeData2);
 
         when(lambdaServiceClient.getClosedCases(borough)).thenReturn(crimeDataList);
         //WHEN
-        List<CrimeData> actualDataList = crimeService.getClosedCases(borough);
+        List<ClosedCrimeData> actualDataList = crimeService.getClosedCases(borough);
         //THEN
         Assertions.assertNotNull(actualDataList, "List of crimes not returned");
         Assertions.assertTrue(actualDataList.size() > 1, "Crimes List is not populated with enough crimes");
@@ -176,7 +169,7 @@ public class CrimeServiceTest {
     void getClosedCases_throws_RunTimeException(){
         //GIVEN
         String borough = "No Crime Borough";
-        List<CrimeData> emptyCrimeList =  new ArrayList<>();
+        List<ClosedCrimeData> emptyCrimeList =  new ArrayList<>();
 
         when(lambdaServiceClient.getClosedCases(borough)).thenReturn(emptyCrimeList);
         //WHEN
@@ -191,13 +184,13 @@ public class CrimeServiceTest {
     void getClosedCases(){
         //GIVEN
         String borough = "thisBorough";
-        List<CrimeData> crimeDataList = new ArrayList<>();
+        List<ClosedCrimeData> crimeDataList = new ArrayList<>();
 
-        CrimeData crimeData1 = new CrimeData("1029389laksjd",borough,"New York"
-                ,"Murder","some one was killed","yesterday");
+        ClosedCrimeData crimeData1 = new ClosedCrimeData("1029389laksjd",borough,"New York"
+                ,"Murder","some one was killed","yesterday", "11111");
 
-        CrimeData crimeData2 = new CrimeData("293847qpwoeir",borough,"New York"
-                ,"Arson","a house was set on fire","today");
+        ClosedCrimeData crimeData2 = new ClosedCrimeData("293847qpwoeir",borough,"New York"
+                ,"Arson","a house was set on fire","today", "111111");
 
         crimeDataList.add(crimeData1);
         crimeDataList.add(crimeData2);

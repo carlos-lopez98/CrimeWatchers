@@ -2,7 +2,7 @@ package com.kenzie.capstone.service.lambda;
 
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.ClosedCrimeData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -50,7 +50,7 @@ public class GetClosedCases implements RequestHandler<APIGatewayProxyRequestEven
         }
 
         try {
-            List<CrimeData> crimeData = lambdaCrimeService.getClosedCases(borough);
+            List<ClosedCrimeData> crimeData = lambdaCrimeService.getClosedCases(borough);
             String output = gson.toJson(crimeData);
             return response
                     .withStatusCode(200)

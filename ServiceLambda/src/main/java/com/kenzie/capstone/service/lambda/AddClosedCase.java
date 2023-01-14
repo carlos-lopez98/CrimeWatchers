@@ -3,7 +3,6 @@ package com.kenzie.capstone.service.lambda;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.converter.JsonStringToCrimeRecordConverter;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.model.CrimeData;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 
 import com.amazonaws.services.lambda.runtime.Context;

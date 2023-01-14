@@ -45,9 +45,8 @@ class IndexPage extends BaseClass {
             for (let crime of crimes) {
                 myHtml += `
 
-
                 <div class="hover_Gray_container">
-                
+
                 <div class="resultArea__innerText" >
                 <div class="innerText">
 

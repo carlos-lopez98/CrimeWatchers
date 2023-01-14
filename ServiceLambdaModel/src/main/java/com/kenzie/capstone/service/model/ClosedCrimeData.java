@@ -2,26 +2,46 @@ package com.kenzie.capstone.service.model;
 
 import java.util.Objects;
 
-public class CrimeData {
+public class ClosedCrimeData {
 
     String id;
     String borough;
     String state;
     String crimeType;
     String description;
-    String time;
+    String dateClosed;
+    String status;
 
-    public CrimeData(String id, String borough, String state, String crimeType, String description, String time) {
+    public ClosedCrimeData(String id, String borough,
+                           String state, String crimeType,
+                           String description, String dateClosed, String status) {
         this.id = id;
         this.borough = borough;
         this.state = state;
         this.crimeType = crimeType;
         this.description = description;
-        this.time = time;
+        this.dateClosed = dateClosed;
+        this.status = status;
     }
 
-    public CrimeData(){
+    public ClosedCrimeData(){
 
+    }
+
+    public String getDateClosed() {
+        return dateClosed;
+    }
+
+    public void setDateClosed(String closedDate) {
+        this.dateClosed = closedDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getId() {
@@ -44,10 +64,6 @@ public class CrimeData {
         return description;
     }
 
-    public String getTime() {
-        return time;
-    }
-
     public void setId(String id) {
         this.id = id;
     }
@@ -68,17 +84,13 @@ public class CrimeData {
         this.description = description;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
 
     //If the Ids are equal to each other, then we're looking at the same CrimeData
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CrimeData)) return false;
-        CrimeData crimeData = (CrimeData) o;
+        if (!(o instanceof ClosedCrimeData)) return false;
+        ClosedCrimeData crimeData = (ClosedCrimeData) o;
         return getId().equals(crimeData.getId());
     }
 

@@ -1,17 +1,16 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.controller.model.ClosedCrimeResponse;
+import com.kenzie.appserver.controller.model.CreateCrimeRequestClosed;
 import com.kenzie.appserver.converter.ZonedDateTimeConverter;
 import com.kenzie.appserver.repositories.CrimeRepository;
-//import com.kenzie.appserver.repositories.model.CrimeId;
 import com.kenzie.appserver.repositories.model.CrimeRecord;
 import com.kenzie.appserver.service.model.Crime;
 
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.ClosedCrimeData;
 import com.kenzie.capstone.service.model.CrimeDataRequest;
 import com.kenzie.capstone.service.model.CrimeDataResponse;
-import com.sun.jdi.event.ExceptionEvent;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -102,9 +101,9 @@ public class CrimeService {
         return records.stream().map(this::crimeRecordToCrime).collect(Collectors.toList());
     }
 
-    public List<CrimeData> getClosedCases(String borough) {
+    public List<ClosedCrimeData> getClosedCases(String borough) {
 
-        List<CrimeData> crimeDataList = lambdaServiceClient.getClosedCases(borough);
+        List<ClosedCrimeData> crimeDataList = lambdaServiceClient.getClosedCases(borough);
 
         if(crimeDataList.isEmpty()){
             throw new RuntimeException("LambdaServiceClient is not finding any cases for that borough");
@@ -113,17 +112,17 @@ public class CrimeService {
         return crimeDataList;
     }
 
-    public List<CrimeData> getAllClosedCases() {
+    public List<ClosedCrimeData> getAllClosedCases() {
 
-        List<CrimeData> allClosedCrimes = lambdaServiceClient.getAllClosedCases();
+        List<ClosedCrimeData> allClosedCrimes = lambdaServiceClient.getAllClosedCases();
 
         return allClosedCrimes;
     }
 
-    public CrimeData addClosedCase(CrimeData crimeData) {
+    public ClosedCrimeData addClosedCase(ClosedCrimeData crimeData) {
         CrimeDataResponse addedCrime = lambdaServiceClient.addClosedCase(dataToRequest(crimeData));
 
-        CrimeData data = crimeResponseToData(addedCrime);
+        ClosedCrimeData data = crimeResponseToData(addedCrime);
         return data;
     }
 
@@ -137,16 +136,16 @@ public class CrimeService {
         return crime;
     }
 
-    private CrimeData crimeResponseToData(CrimeDataResponse response){
-        CrimeData data = new CrimeData(response.getCaseId(), response.getBorough(), response.getState(),
-                response.getCrimeType(), response.getDescription(), response.getZonedDateTime());
+    private ClosedCrimeData crimeResponseToData(CrimeDataResponse response){
+        ClosedCrimeData data = new ClosedCrimeData(response.getCaseId(), response.getBorough(), response.getState(),
+                response.getCrimeType(), response.getDescription(), response.getDateClosed(), response.getStatus());
         return data;
     }
 
-    private CrimeDataRequest dataToRequest(CrimeData data){
+    private CrimeDataRequest dataToRequest(ClosedCrimeData data){
 
         CrimeDataRequest request = new CrimeDataRequest(data.getId(), data.getBorough(),
-                data.getState(), data.getCrimeType(), data.getDescription());
+                data.getState(), data.getCrimeType(), data.getDescription(), data.getDateClosed(), data.getStatus());
 
 
         return request;

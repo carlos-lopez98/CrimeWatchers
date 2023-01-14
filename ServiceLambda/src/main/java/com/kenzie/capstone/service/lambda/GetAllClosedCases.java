@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
-import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.ClosedCrimeData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,7 +39,7 @@ public class GetAllClosedCases implements RequestHandler<APIGatewayProxyRequestE
 
 
         try {
-            List<CrimeData> crimeData = lambdaCrimeService.getAllClosedCases();
+            List<ClosedCrimeData> crimeData = lambdaCrimeService.getAllClosedCases();
 
             String output = gson.toJson(crimeData);
 
