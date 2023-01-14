@@ -62,7 +62,7 @@ export default class CrimeClient extends BaseClass {
      */
     async getAllCrimes(errorCallback) {
         try {
-            const response = await this.client.get(`/crimes/closed/all`);
+            const response = await this.client.get(`/crimes/all`);
             return response.data;
         } catch (error) {
             this.handleError("getAllClosedCrimes", error, errorCallback)

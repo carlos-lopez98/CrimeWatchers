@@ -512,7 +512,7 @@ button:hover {
 }
 
 .Left_Area_Result::-webkit-scrollbar {
-    width: 2px;
+    width: 5px;
 }
 
 .Left_Area_Result::-webkit-scrollbar-track {
@@ -577,10 +577,12 @@ button:hover {
 .comment_section_Result {
     border-left: white 1px solid;
     overflow-y: scroll;
+    overflow-x: hidden;
+    width: 35%;
 }
 
 .comment_section_Result::-webkit-scrollbar {
-    width: 2px;
+    width: 5px;
 }
 
 .comment_section_Result::-webkit-scrollbar-track {
@@ -595,23 +597,42 @@ button:hover {
     margin-left: 5px;
 }
 
+.comment_Container:hover {
+    background-color: rgb(49, 49, 49);
+}
+
 .comment_header {
     display: grid;
-    grid-template-columns: 60px 100px 350px;
+    grid-template-columns: 60px 350px 350px;
 }
 
 .userProfileImage {
     width: 40px;
     height: 40px;
-    border: 1px solid orange;
+    margin-top: 10px;
+    /* border: 1px solid orange; */
 }
 
+.profileImage {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: solid 3px white;
+    margin-left: 6px;
+}
+
+.profileImage:hover {
+
+    transition-duration: 2.1s;
+    scale: 250%;
+    transition-delay: 2.1s;
+}
 
 .commentTitle {
     height: 25px;
     border-top: 1px solid white;
     border-bottom: 1px solid white;
-    margin: 0px 0px;
+    margin-left: 5px;
 }
 
 .commentTitle h1 {
