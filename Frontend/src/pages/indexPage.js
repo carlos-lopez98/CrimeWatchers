@@ -2,6 +2,7 @@ import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import CrimeClient from "../api/CrimeClient";
 import TrendingData from "../util/TrendingData";
+import RecentlyClosedData from "../util/RecentlyClosedData";
 
 
 /**
@@ -11,9 +12,12 @@ class IndexPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGetByBorough', 'onCreate', 'renderExample', 'renderTrendingSection', 'onGetAll'], this);
+        this.bindClassMethods(['onGetByBorough', 'onCreate', 'renderExample', 'renderTrendingSection', 'onGetAll',
+            'onGetAllClosed',
+            'renderRecentlyClosed', 'renderComments'], this);
         this.dataStore = new DataStore();
         this.TrendingData = new TrendingData();
+        this.RecentlyClosedData = new RecentlyClosedData();
     }
 
 
@@ -26,10 +30,16 @@ class IndexPage extends BaseClass {
         document.getElementById('create-form').addEventListener('submit', this.onCreate);
 
         window.addEventListener("load", this.onGetAll);
+        window.addEventListener("load", this.onGetAllClosed);
+
         this.client = new CrimeClient();
 
         this.dataStore.addChangeListener(this.renderExample)
+        this.dataStore.addChangeListener(this.renderComments)
+
         this.TrendingData.addChangeListener(this.renderTrendingSection)
+        this.RecentlyClosedData.addChangeListener(this.renderRecentlyClosed)
+
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
@@ -86,7 +96,7 @@ class IndexPage extends BaseClass {
             resultArea.innerHTML = myHtml;
 
         } else {
-            resultArea.innerHTML = "No Item";
+            resultArea.innerHTML = "Rendering...";
         }
 
 
@@ -141,6 +151,148 @@ class IndexPage extends BaseClass {
 
     }
 
+
+    async renderRecentlyClosed() {
+
+        let resultArea = document.getElementById("RecentlyClosed_Container");
+        const recentCrimes = this.RecentlyClosedData.get("recentlyClosed");
+        let myHtml = "";
+        if (recentCrimes) {
+            for (let recentCrime of recentCrimes) {
+                myHtml += `
+                <div class="trending_content__container">
+                    <div class="trending_content__container_header">
+                        <div class="h1_text">
+                            <h1>CaseId:&nbsp;&nbsp; ${recentCrime.caseId}</h1>
+                        </div>
+
+                        <div class="h2_text">
+                            <h1>Date and Time:&nbsp;&nbsp; ${recentCrime.dateClosed}</h1>
+                        </div>
+
+                        <div class="h3_text">
+                            <a href="" class="provideInfo_link">
+                                <h1>Provide Info</h1>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="trending_content__container_description">
+                        <h1 class="description_title">Wanted For:&nbsp;&nbsp; ${recentCrime.crimeType}</h1>
+                        <h1>Description</h1>
+                        <p class="description_text">${recentCrime.description}</p>
+                    </div>
+                </div>
+                
+                `
+            }
+            myHtml += "";
+            resultArea.innerHTML = myHtml;
+        } else {
+            resultArea.innerHTML = "Error loading from Database";
+        }
+
+    }
+
+    async renderComments() {
+
+        let listOfComments = [
+            {
+                id: 1,
+                profileImage: "./css/images/profileImages/chocolateGuyHeadshot.png",
+                comment: "I'd like to buy all your chocolates",
+                username: "ChocolateEater69",
+            },
+            {
+                id: 2,
+                profileImage: "./css/images/profileImages/chocoMomHeadshot.jpg",
+                comment: "Oh Sweet Sweet Chocolate, I hate IT! ",
+                username: "chocoHater123",
+            },
+            {
+                id: 3,
+                profileImage: "./css/images/profileImages/garyHeadshot.jpg",
+                comment: "Meowww meow meow meowwww, meow",
+                username: "MeowMeow",
+            },
+            {
+                id: 4,
+                profileImage: "./css/images/profileImages/HansomeSquidward.jpg",
+                comment: "You're almost as handsome as I am ",
+                username: "HandsomeMan7",
+            },
+            {
+                id: 5,
+                profileImage: "./css/images/profileImages/mrKrabs.jpg",
+                comment: "Hello, I like Money",
+                username: "MrKrabbyPatty22",
+            },
+            {
+                id: 6,
+                profileImage: "./css/images/profileImages/PatrickHeadshot.jpg",
+                comment: "I wumbo, You Wumbo, he, she, they Wumbo, The study of Wumbology, it's third grad",
+                username: "NotPatrick72",
+            },
+            {
+                id: 7,
+                profileImage: "./css/images/profileImages/plankton.jpg",
+                comment: "F is Fire, U is for Uranium Bombs, N is for no Survivors... ",
+                username: "BestEvilVillain3",
+            },
+            {
+                id: 8,
+                profileImage: "./css/images/profileImages/sandyHeadshot.jpg",
+                comment: "HIYAH!",
+                username: "KarateGirl67",
+            },
+            {
+                id: 9,
+                profileImage: "./css/images/profileImages/smitty.jpg",
+                comment: "I am number one",
+                username: "DeadGuy31",
+            },
+            {
+                id: 10,
+                profileImage: "./css/images/profileImages/spongebob headshot.jpg",
+                comment: "The best time to wear a striped sweater is all the time",
+                username: "BestFryCook25",
+            },
+        ];
+
+        const result_Area = document.getElementById("comment_render_container");
+
+        let myHtml = `
+        <div class="commentTitle">
+         <h1>Comments:</h1>
+        </div>
+        `;
+
+        for (let comment of listOfComments) {
+            myHtml += `
+            <div class="comment_Container">
+            <div class="comment_header">
+                <div class="userProfileImage">
+                <img class="profileImage" src="${comment.profileImage}"/>
+                </div>
+                <div class="comment_userName">
+                    <h1>@${comment.username}</h1>
+                </div>
+                <div class="comment_postTime">
+                    <h1>Posted: 11:45 AM</h1>
+                </div>
+            </div>
+            <div class="comment_text">
+                <p>${comment.comment}</p>
+            </div>
+            </div>
+        </div>
+            `
+        }
+
+        myHtml += "";
+        result_Area.innerHTML += myHtml;
+    }
+
     // Event Handlers --------------------------------------------------------------------------------------------------
 
     async onGetAll(event) {
@@ -158,6 +310,21 @@ class IndexPage extends BaseClass {
         }
 
     }
+    async onGetAllClosed(event) {
+
+        event.preventDefault();
+
+        let result = await this.client.getAllClosedCrimes(this.errorHandler);
+
+        this.RecentlyClosedData.set("recentlyClosed", result);
+
+        if (result) {
+
+        } else {
+            this.errorHandler("Error doing GET!  Try again...");
+        }
+
+    }
 
 
     async onGetByBorough(event) {
@@ -167,7 +334,6 @@ class IndexPage extends BaseClass {
         let borough = document.getElementById("borough_input").value;
 
         //This is the data being stored in our current state
-        this.dataStore.set("borough_crime_list", null);
 
         let result = await this.client.getCrimeByBorough(borough, this.errorHandler);
 
