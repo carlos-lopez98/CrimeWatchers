@@ -38,7 +38,7 @@ public class LambdaService {
 //    }
 
     //Calls CrimeDao to get a closed case
-    public List<CrimeData> getClosedCases(String borough) {
+    public List<ClosedCrimeData> getClosedCases(String borough) {
 
         if(borough.isEmpty()){
             throw new IllegalArgumentException("When getting closed case, borough cannot be empty");
@@ -63,13 +63,13 @@ public class LambdaService {
 
         //String id = UUID.randomUUID().toString();
         String id = crimeDataRecord.getId();
-        CrimeData record = crimeDao.addClosedCase(requestToRecord(crimeDataRecord));
+        ClosedCrimeData record = crimeDao.addClosedCase(requestToRecord(crimeDataRecord));
 
 
         return dataToResponse(record);
     }
 
-    public List<CrimeData> getAllClosedCases() {
+    public List<ClosedCrimeData> getAllClosedCases() {
 
         List<CrimeDataRecord> records = crimeDao.getAllClosedCases();
 
@@ -80,21 +80,28 @@ public class LambdaService {
         return null;
     }
 
-    private CrimeData recordToData(CrimeDataRecord record) {
-        CrimeData data = new CrimeData(record.getId(), record.getBorough(), record.getState(), record.getCrimeType(),
-                record.getDescription(), record.getTime());
+    private ClosedCrimeData recordToData(CrimeDataRecord record) {
+        ClosedCrimeData data = new ClosedCrimeData();
+        data.setId(record.getId());
+        data.setDateClosed(record.getDateClosed());
+        data.setBorough(record.getBorough());
+        data.setDescription(record.getDescription());
+        data.setCrimeType(record.getCrimeType());
+        data.setState(record.getState());
+        data.setStatus(record.getStatus());
 
         return data;
     }
 
-    private CrimeDataResponse dataToResponse(CrimeData record) {
+    private CrimeDataResponse dataToResponse(ClosedCrimeData record) {
         CrimeDataResponse response = new CrimeDataResponse();
         response.setBorough(record.getBorough());
         response.setState(record.getState());
         response.setDescription(record.getDescription());
         response.setCrimeType(record.getCrimeType());
         response.setCaseId(record.getId());
-        response.setZonedDateTime(record.getTime());
+        response.setDateClosed(record.getDateClosed());
+        response.setStatus(record.getStatus());
 
         return response;
     }
@@ -102,11 +109,12 @@ public class LambdaService {
     private CrimeDataRecord requestToRecord(CrimeDataRequest request){
         CrimeDataRecord record = new CrimeDataRecord();
         record.setId(request.getId());
-        record.setTime(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
+        record.setDateClosed(new ZonedDateTimeConverter().convert(ZonedDateTime.now()));
         record.setState(request.getState());
         record.setDescription(request.getDescription());
         record.setBorough(request.getBorough());
         record.setCrimeType(request.getCrimeType());
+        record.setStatus(request.getStatus());
 
         return record;
     }

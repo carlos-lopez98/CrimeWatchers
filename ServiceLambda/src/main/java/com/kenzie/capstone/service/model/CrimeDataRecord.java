@@ -13,7 +13,8 @@ public class CrimeDataRecord {
     String state;
     String crimeType;
     String description;
-    String time;
+    String dateClosed;
+    String status;
 
 
     @DynamoDBRangeKey(attributeName = "id")
@@ -36,10 +37,12 @@ public class CrimeDataRecord {
     public String getDescription() {
         return description;
     }
-    @DynamoDBAttribute(attributeName = "time")
-    public String getTime() {
-        return time;
+    @DynamoDBAttribute(attributeName = "dateClosed")
+    public String getDateClosed() {
+        return dateClosed;
     }
+    @DynamoDBAttribute(attributeName = "status")
+    public String getStatus(){return status;}
 
     public void setId(String id) {
         this.id = id;
@@ -60,9 +63,11 @@ public class CrimeDataRecord {
         this.description = description;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateClosed(String dateClosed) {
+        this.dateClosed = dateClosed;
     }
+
+    public void setStatus(String status) {this.status = status;}
 
     @Override
     public boolean equals(Object o) {
@@ -76,4 +81,5 @@ public class CrimeDataRecord {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
 }

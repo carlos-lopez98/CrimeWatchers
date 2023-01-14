@@ -1,7 +1,7 @@
 package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.ClosedCrimeData;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
@@ -23,13 +23,25 @@ public class CreateCrimeRequestClosed {
     @NotEmpty
     @JsonProperty("description")
     String description;
+    @NotEmpty
+    @JsonProperty("dateClosed")
+    String dateClosed;
+    @NotEmpty
+    @JsonProperty("status")
+    String status;
 
-    public CreateCrimeRequestClosed(String id, String borough, String state, String crimeType, String description ) {
+
+
+    public CreateCrimeRequestClosed(String id, String borough,
+                                    String state, String crimeType,
+                                    String description, String dateClosed, String status ) {
         this.id = id;
         this.borough = borough;
         this.state = state;
         this.crimeType = crimeType;
         this.description = description;
+        this.dateClosed = dateClosed;
+        this.status = status;
     }
 
     public String getId() {
@@ -50,6 +62,23 @@ public class CreateCrimeRequestClosed {
 
     public String getDescription() {
         return description;
+    }
+
+
+    public String getDateClosed() {
+        return dateClosed;
+    }
+
+    public void setDateClosed(String dateClosed) {
+        this.dateClosed = dateClosed;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setId(String id) {
@@ -76,8 +105,8 @@ public class CreateCrimeRequestClosed {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CrimeData)) return false;
-        CrimeData crimeData = (CrimeData) o;
+        if (!(o instanceof ClosedCrimeData)) return false;
+        ClosedCrimeData crimeData = (ClosedCrimeData) o;
         return getId().equals(crimeData.getId());
     }
 

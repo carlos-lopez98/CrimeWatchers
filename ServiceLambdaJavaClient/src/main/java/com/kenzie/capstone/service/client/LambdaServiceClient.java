@@ -3,7 +3,7 @@ package com.kenzie.capstone.service.client;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kenzie.capstone.service.model.CrimeData;
+import com.kenzie.capstone.service.model.ClosedCrimeData;
 import com.kenzie.capstone.service.model.CrimeDataRequest;
 import com.kenzie.capstone.service.model.CrimeDataResponse;
 import com.kenzie.capstone.service.model.ExampleData;
@@ -22,12 +22,12 @@ public class LambdaServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public List<CrimeData> getClosedCases(String borough) {
+    public List<ClosedCrimeData> getClosedCases(String borough) {
         EndpointUtility endpointUtility = new EndpointUtility();
 
         String response = endpointUtility.getEndpoint(GET_CLOSED_CASE.replace("{borough}", borough));
 
-        List<CrimeData> crimeDataList;
+        List<ClosedCrimeData> crimeDataList;
 
         try {
 
@@ -80,17 +80,15 @@ public class LambdaServiceClient {
         return crimeDataResponse;
     }
 
-    public List<CrimeData> getAllClosedCases() {
-
+    public List<ClosedCrimeData> getAllClosedCases() {
         EndpointUtility endpointUtility = new EndpointUtility();
 
-
         String response = endpointUtility.getEndpoint(GETALL_CLOSED_CASE);
-        List<CrimeData> crimeDataResponse;
+        List<ClosedCrimeData> crimeDataResponse;
 
 
         try {
-            crimeDataResponse = mapper.readValue(response, new TypeReference<>() {});
+            crimeDataResponse = mapper.readValue(response, new TypeReference<>(){});
         } catch (Exception e) {
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }

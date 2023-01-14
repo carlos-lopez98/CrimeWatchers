@@ -5,7 +5,6 @@ import com.amazonaws.services.apigateway.AmazonApiGatewayClientBuilder;
 import com.amazonaws.services.apigateway.model.GetRestApisRequest;
 import com.amazonaws.services.apigateway.model.GetRestApisResult;
 import com.amazonaws.services.apigateway.model.RestApi;
-import com.kenzie.capstone.service.model.CrimeData;
 
 import java.io.IOException;
 import java.net.URI;

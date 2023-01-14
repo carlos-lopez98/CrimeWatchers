@@ -8,6 +8,16 @@
     src: url(./fonts/BreeSerif-Regular.ttf);
 }
 
+.closed_case_container {
+    background-color: black;
+
+}
+
+.closed_case_container:hover {
+    background-color: rgb(49, 49, 49);
+    cursor: pointer;
+}
+
 .header_holder {
     color: white;
     font-family: myFont;
@@ -15,7 +25,7 @@
 }
 
 .background_archivePage {
-    background-color: rgba(0, 0, 0);
+    background-color: transparent;
     margin: 0;
     counter-reset: section;
 }
@@ -39,7 +49,7 @@
 }
 
 .resultArea__bg_archivePage {
-    background-color: black;
+    background-color: transparent;
     height: 88%;
     width: 100%;
     display: flex;
@@ -51,8 +61,8 @@
     flex-direction: column;
     font-family: slogan;
     background-color: white;
-    color: black;
-    margin: 15px 15px;
+    color: white;
+    margin: 0px 10px;
     width: 100%;
     overflow-y: scroll;
     background-color: rgb(209, 209, 209);
@@ -60,22 +70,23 @@
 }
 
 .title_holder_archivePage {
-    color: black;
+    color: white;
     display: flex;
     flex-direction: row;
     justify-content: left;
-    border-top: black 5px solid;
+    border-top: white 1px solid;
 }
 
 .title_archivePage {
     font-family: slogan;
     margin-left: 30px;
+    font-size: 12px;
 }
 
 .title_name {
-    color: rgb(66, 66, 180);
+    color: skyblue;
     margin-left: 10px;
-    font-size: 2rem;
+    font-size: 20px;
 }
 
 .description_title_archivePage {
@@ -84,7 +95,20 @@
 
 .description_text_archivePage {
     font-family: slogan;
-    color: rgb(66, 66, 180);
+    color: skyblue;
     font-size: 1.8rem;
     margin-left: 15px;
+}
+
+.resultArea_archivePage::-webkit-scrollbar {
+    width: 10px;
+}
+
+.resultArea_archivePage::-webkit-scrollbar-track {
+    background: black;
+}
+
+.resultArea_archivePage::-webkit-scrollbar-thumb {
+    background: skyblue;
+    border-radius: 10px;
 }
