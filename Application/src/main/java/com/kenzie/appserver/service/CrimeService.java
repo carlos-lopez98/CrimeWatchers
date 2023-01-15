@@ -31,6 +31,7 @@ public class CrimeService {
         this.crimeRepository = crimeRepository;
         this.lambdaServiceClient = lambdaServiceClient;
     }
+
     //Find all Active Crimes
     public List<Crime> findAllActiveCrimes(){
 

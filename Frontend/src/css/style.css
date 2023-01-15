@@ -625,7 +625,6 @@ button:hover {
 
     transition-duration: 2.1s;
     scale: 250%;
-    transition-delay: 2.1s;
 }
 
 .commentTitle {
@@ -651,6 +650,7 @@ button:hover {
     font-size: 8px;
     color: skyblue;
     font-family: slogan;
+    margin-left: 175px;
 }
 
 .comment_text {
