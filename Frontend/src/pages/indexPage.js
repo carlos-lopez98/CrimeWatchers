@@ -32,17 +32,35 @@ class IndexPage extends BaseClass {
         window.addEventListener("load", this.onGetAll);
         window.addEventListener("load", this.onGetAllClosed);
 
+
         this.client = new CrimeClient();
 
         this.dataStore.addChangeListener(this.renderExample)
-        this.dataStore.addChangeListener(this.renderComments)
 
+        // this.dataStore.addChangeListener(this.renderComments)
         this.TrendingData.addChangeListener(this.renderTrendingSection)
         this.RecentlyClosedData.addChangeListener(this.renderRecentlyClosed)
+        const commentSection = document.getElementById('left_area__Result');
 
+        commentSection.addEventListener('click', event => {
+            const target = event.target;
+
+            console.log(target.tagName)
+            const identification = target.id;
+
+            this.renderComments();
+        })
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
+
+    // async onClickRen(target) {
+
+    //     console.log("hello")
+    //     console.log(target.tagName)
+    // }
+
+
 
     async renderExample() {
 
@@ -78,7 +96,7 @@ class IndexPage extends BaseClass {
              <div class="description__Area">
 
                 <div class="description_Area__text">
-                    <h1>Description</h1>
+                    <h1 id=${crime.caseId}>Description</h1>
                 </div>
 
                 <div class="description__Area___render" id="description_area_render">
@@ -202,60 +220,70 @@ class IndexPage extends BaseClass {
                 profileImage: "./css/images/profileImages/chocolateGuyHeadshot.png",
                 comment: "I'd like to buy all your chocolates",
                 username: "ChocolateEater69",
+                time: "11:44 AM",
             },
             {
                 id: 2,
                 profileImage: "./css/images/profileImages/chocoMomHeadshot.jpg",
                 comment: "Oh Sweet Sweet Chocolate, I hate IT! ",
                 username: "chocoHater123",
+                time: "10:12 AM",
             },
             {
                 id: 3,
                 profileImage: "./css/images/profileImages/garyHeadshot.jpg",
                 comment: "Meowww meow meow meowwww, meow",
                 username: "MeowMeow",
+                time: "09:53 AM",
             },
             {
                 id: 4,
                 profileImage: "./css/images/profileImages/HansomeSquidward.jpg",
                 comment: "You're almost as handsome as I am ",
                 username: "HandsomeMan7",
+                time: "09:44 AM",
             },
             {
                 id: 5,
                 profileImage: "./css/images/profileImages/mrKrabs.jpg",
                 comment: "Hello, I like Money",
                 username: "MrKrabbyPatty22",
+                time: "09:40 AM",
             },
             {
                 id: 6,
                 profileImage: "./css/images/profileImages/PatrickHeadshot.jpg",
                 comment: "I wumbo, You Wumbo, he, she, they Wumbo, The study of Wumbology, it's third grad",
                 username: "NotPatrick72",
+                time: "09:16 AM",
             },
             {
                 id: 7,
                 profileImage: "./css/images/profileImages/plankton.jpg",
                 comment: "F is Fire, U is for Uranium Bombs, N is for no Survivors... ",
                 username: "BestEvilVillain3",
+                time: "08:40 AM",
             },
             {
                 id: 8,
                 profileImage: "./css/images/profileImages/sandyHeadshot.jpg",
                 comment: "HIYAH!",
                 username: "KarateGirl67",
+                time: "08:35 AM",
             },
             {
                 id: 9,
                 profileImage: "./css/images/profileImages/smitty.jpg",
                 comment: "I am number one",
                 username: "DeadGuy31",
+                time: "06:22 AM",
             },
             {
                 id: 10,
                 profileImage: "./css/images/profileImages/spongebob headshot.jpg",
                 comment: "The best time to wear a striped sweater is all the time",
                 username: "BestFryCook25",
+                time: "05:52 AM",
             },
         ];
 
@@ -263,7 +291,7 @@ class IndexPage extends BaseClass {
 
         let myHtml = `
         <div class="commentTitle">
-         <h1>Comments:</h1>
+         <h1>Comments (ProtoType):</h1>
         </div>
         `;
 
@@ -278,7 +306,7 @@ class IndexPage extends BaseClass {
                     <h1>@${comment.username}</h1>
                 </div>
                 <div class="comment_postTime">
-                    <h1>Posted: 11:45 AM</h1>
+                    <h1>${comment.time}</h1>
                 </div>
             </div>
             <div class="comment_text">
